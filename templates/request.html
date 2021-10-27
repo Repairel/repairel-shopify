@@ -8,12 +8,13 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>Home</title>
+  <title>Request</title>
 
 
 </head>
 
 <body>
+{% block content %}
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -65,7 +66,7 @@
     crossorigin="anonymous"></script>
 
   <center>
-    <h1>This is the home page.</h1>
+    <h1>This is the Request page.</h1>
   </center>
   <blockquote class="blockquote text-center">
     <p class="mb-0">
@@ -85,33 +86,51 @@
       the rumour of his coming. His own folk quail at him, and
       they would slay themselves at his bidding.’
     </p>
-    <div class="container">
-      {% for item in ongoing_list|slice:":25" %}
-      <div class="slide-it">
-        <div class="movie-item">
-          <div class="title-in">
-            <h6>{{ item.description }}</h6>
-              <h6><img src="{{ item.image.url }}"></a>
-                <h6>Price: {{ item.price }}</h6>
-                  <h6>Stock: {{ item.stock }}</h6>
-                    <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-                    </h6>
-                    <p>
-                      <i class="ion-android-star"></i><span>{{ item.rating }}</span>
-                      /10
-                    </p>
+    
+
+  <div class="movie-items">
+      <div class="container">
+          <div class="row ipad-width">
+              <div class="col-md-12">
+                  <div class="title-hd">
+                      <h2>Request Shoe Product</h2>
+                  </div>
+                  <div class="form-style-1 user-pro" action="#">
+                      <form action="." method="post" class="user">
+                          {% csrf_token %}
+                          <h4>Fill up the below details</h4>
+                          <div class="row">
+                              <div class="col-md-6 form-it">
+                                  <label>Shoe Name*</label>
+                                  {{ form.name }}
+                                  {#                                    <input type="text" placeholder="edwardkennedy">#}
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6 form-it">
+                                  <label>Shoe Description*</label>
+                                  {{ form.description }}
+                                  {#                                    <input type="text" placeholder="Edward ">#}
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6 form-it">
+                                  <label>Requestor Name</label>
+                                  {{ form.author }}
+                              </div>
+                          </div>
+                          <div class="row">
+                                <div class="col-md-12">
+                                    <button class="redbtn" type="submit">Create Request</button>
+                                </div>
+                            </div>
+                      </form>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-      {% endfor %}
-    </div>
-    </div>
-    <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-  </blockquote>
-  <p>
+  </div>
 
-
-  </p>
 </body>
-
+{% endblock %}
 </html>
