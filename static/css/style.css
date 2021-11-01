@@ -1,0 +1,209 @@
+:root {
+    --footer-height: 150px;
+    --white-color: white;
+    --black-color: black;
+    --text-hover-color: rgb(126, 126, 126);
+    --hamburger-size: 29px;
+    --header-personal-size: 30px;
+}
+
+* {
+    font-family: "Work Sans", sans-serif;
+    color: var(--black-color);
+    transition: all 0.2s;
+    transition-property: transform, color, background-color, border-radius;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    min-width: 360px;
+}
+*::-webkit-scrollbar {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+*::-webkit-scrollbar-thumb {
+    background: rgb(161, 161, 161);
+    border-radius: 100px;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background: rgb(121, 121, 121);
+}
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+
+.a_no_link {
+    color: red !important;
+    border-style: solid !important;
+    border-color: red !important;
+    border-width: 2px !important;
+}
+
+.a_small_link {
+    font-size: 0.7em;
+    text-decoration: none;
+    margin: 3px;
+}
+
+.a_small_link:hover {
+    text-decoration: underline;
+    color: var(--text-hover-color);
+}
+
+.p_small_text {
+    font-size: 0.7em;
+}
+
+.p_color_change {
+    color: var(--black-color);
+}
+
+.p_color_change:hover {
+    color: var(--white-color);
+    text-shadow: -1px -1px 0 var(--black-color), 1px -1px 0 var(--black-color), -1px 1px 0 var(--black-color), 1px 1px 0 var(--black-color);
+}
+
+.button_black, .button_white {
+    background-color: var(--black-color);
+    color: var(--white-color);
+    border-color: var(--black-color);
+    border-style: solid;
+    border-width: 1px;
+    padding: 7px 25px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button_white:not(.button_white:hover), .button_black:hover {
+    background-color: var(--white-color);
+    color: var(--black-color);
+    border-color: var(--black-color);
+    border-radius: 0px;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+
+.custom_body_wrapper {
+    max-width: 1250px;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    padding: 0 10px;
+}
+
+.custom_body {
+    min-height: calc(100% - var(--footer-height));
+}
+
+.custom_footer {
+    --social-icon-size: 22px;
+    height: var(--footer-height);
+    width: 100%;
+    position: relative;
+}
+
+.custom_footer svg {
+    width: var(--social-icon-size);
+    height: var(--social-icon-size);
+}
+
+.custom_footer * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.custom_footer h5 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.custom_footer > :first-child a {
+    display: block;
+    margin-right: 40px;
+}
+
+.custom_footer > :last-child {
+    display: block;
+}
+
+.custom_footer_social_link_wrapper {
+    margin-top: 10px;
+}
+
+.custom_header {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.custom_header * {
+    flex: 0 0;
+}
+
+.custom_hamburger {
+    --hamburger-line-size: 2px;
+    min-width: var(--hamburger-size);
+    min-height: var(--hamburger-size);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.custom_hamburger * {
+    width: 100%;
+    height: var(--hamburger-line-size);
+    background-color: var(--black-color);
+    margin: calc(33% - var(--hamburger-line-size)) 0;
+}
+
+.custom_header_middle {
+    flex: 1 1;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.custom_header_middle * {
+    display: inline-block;
+    text-align: center;
+    margin: 6px;
+}
+
+.custom_header_middle h2 {
+    cursor: pointer;
+}
+
+.custom_header_middle p {
+    letter-spacing: 1px;
+    font-size: 0.9em;
+}
+
+.custom_header_buttons {
+    white-space: nowrap;
+}
+
+.custom_header_buttons * {
+    margin: 0 10px;
+}
+
+.custom_header_personal {
+    height: var(--header-personal-size);
+    white-space: nowrap;
+    padding-left: 40px;
+    padding-right: 10px;
+}
+
+.custom_header_personal svg {
+    height: 100%;
+    width: var(--header-personal-size);
+}
+
+.custom_header_personal * {
+    margin: 0 5px;
+}
