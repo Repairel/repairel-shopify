@@ -12,6 +12,24 @@
         <script async src="{%static 'js/script.js'%}"></script>
     </head>
     <body style="height:100%; width: 100%; border-collapse:collapse; display: table; min-width: 450px;">
+        <div class="custom_hamburger_menu">
+            <div class="custom_hamburger_inside">
+                <a href="{%url 'repairelapp:index'%}"><svg class="custom_hamburger_menu_repairel_logo"><image xlink:href="{%static 'assets/icons/repairel_logo.svg'%}" height="100%"></image></svg></a>
+                <div>
+                    <h2 class="h2_light">SHOP</h2>
+                    <h2 class="h2_light">ACTIVISM</h2>
+                    <h2 class="h2_light">SUSTAINABILITY</h2>
+                    <h2 class="h2_light">ABOUT</h2>
+                    <h2 class="h2_light">FAQ</h2>
+                </div>
+                <div>
+                    <a target="_blank" href="https://www.facebook.com/RepairelHub"><svg><image xlink:href="{%static 'assets/icons/fb.svg'%}" height="100%"></image></svg></a>
+                    <a target="_blank" href="https://www.instagram.com/repairelhub?igshid=bersqmakpku6&hl=en"><svg><image xlink:href="{%static 'assets/icons/insta.svg'%}" height="100%"></image></svg></a>
+                    <a target="_blank" href="https://twitter.com/repairelhub?lang=en"><svg><image xlink:href="{%static 'assets/icons/twitter.svg'%}" height="100%"></image></svg></a>
+                    <a target="_blank" href="https://www.linkedin.com/company/repairel-cic"><svg><image xlink:href="{%static 'assets/icons/l_in.svg'%}" height="100%"></image></svg></a>
+                </div>
+            </div>
+        </div>
         <div class="custom_body_wrapper">
             <div class="custom_body">
                 <div class="custom_header">
@@ -27,14 +45,15 @@
                         </div>
                     </div>
                     <div class="custom_header_buttons">
-                        <button class="button_black">WIN A PRIZE</button>
-                        <button class="button_white">REQUEST</button>
+                        <a class="a_no_link" href=""><button class="button_black">WIN A PRIZE</button></a>
+                        <a class="a_no_link" href=""><button class="button_white">REQUEST</button></a>
                     </div>
                     <div class="custom_header_personal">
                         <a class="a_no_link" href=""><img height="100%" src="{%static 'assets/icons/login.png'%}" alt="login"></a>
                         <a class="a_no_link" href=""><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg></a>
                     </div>
                 </div>
+                <div style="height: 2000px;"></div>
                 {% block page %}{% endblock %}
             </div>
             <div class="custom_footer">

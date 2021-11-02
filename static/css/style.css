@@ -70,6 +70,10 @@ body {
     text-shadow: -1px -1px 0 var(--black-color), 1px -1px 0 var(--black-color), -1px 1px 0 var(--black-color), 1px 1px 0 var(--black-color);
 }
 
+.h2_light {
+    font-weight: lighter;
+}
+
 .button_black, .button_white {
     background-color: var(--black-color);
     color: var(--white-color);
@@ -154,6 +158,7 @@ body {
     min-height: var(--hamburger-size);
     padding: 5px;
     cursor: pointer;
+    z-index: 11;
 }
 
 .custom_hamburger * {
@@ -161,6 +166,7 @@ body {
     height: var(--hamburger-line-size);
     background-color: var(--black-color);
     margin: calc(33% - var(--hamburger-line-size)) 0;
+    text-align: center;
 }
 
 .custom_header_middle {
@@ -206,4 +212,46 @@ body {
 
 .custom_header_personal * {
     margin: 0 5px;
+}
+
+.custom_hamburger_menu {
+    --logo-size: 150px;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 10;
+}
+
+.custom_hamburger_menu_repairel_logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+}
+
+.custom_hamburger_inside {
+    --social-icon-size: 40px;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.custom_hamburger_inside > :last-child {
+    margin-top: 150px;
+}
+
+.custom_hamburger_inside > :last-child svg {
+    width: var(--social-icon-size);
+    height: var(--social-icon-size);
+    margin: 10px;
+}
+
+.custom_hamburger_inside > :nth-child(2) {
+    margin: 150px;
+}
+
+.custom_hamburger_inside > :nth-child(2) * {
+    margin: 25px;
 }
