@@ -12,15 +12,15 @@
         <script async src="{%static 'js/script.js'%}"></script>
     </head>
     <body style="height:100%; width: 100%; border-collapse:collapse; display: table; min-width: 450px;">
-        <div class="custom_hamburger_menu">
+        <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
                 <a href="{%url 'repairelapp:index'%}"><svg class="custom_hamburger_menu_repairel_logo"><image xlink:href="{%static 'assets/icons/repairel_logo.svg'%}" height="100%"></image></svg></a>
                 <div>
-                    <h2 class="h2_light">SHOP</h2>
-                    <h2 class="h2_light">ACTIVISM</h2>
-                    <h2 class="h2_light">SUSTAINABILITY</h2>
-                    <h2 class="h2_light">ABOUT</h2>
-                    <h2 class="h2_light">FAQ</h2>
+                    <a href="{%url 'repairelapp:index'%}" class="a_link"><h2 class="h2_light">SHOP</h2></a><br>
+                    <a href="{%url 'repairelapp:engage'%}" class="a_link"><h2 class="h2_light">ACTIVISM</h2></a><br>
+                    <a href="{%url 'repairelapp:scoring'%}" class="a_link"><h2 class="h2_light">SUSTAINABILITY</h2></a><br>
+                    <a href="{%url 'repairelapp:about'%}" class="a_link"><h2 class="h2_light">ABOUT</h2></a><br>
+                    <a href="{%url 'repairelapp:faq'%}" class="a_link"><h2 class="h2_light">FAQ</h2></a>
                 </div>
                 <div>
                     <a target="_blank" href="https://www.facebook.com/RepairelHub"><svg><image xlink:href="{%static 'assets/icons/fb.svg'%}" height="100%"></image></svg></a>
@@ -30,10 +30,10 @@
                 </div>
             </div>
         </div>
-        <div class="custom_body_wrapper">
+        <div id="body_wrapper" class="custom_body_wrapper">
             <div class="custom_body">
                 <div class="custom_header">
-                    <div class="custom_hamburger">
+                    <div id="hamburger" class="custom_hamburger" onclick="hamburger_menu_toggle()">
                         <div></div>
                         <div></div>
                         <div></div>
@@ -45,23 +45,22 @@
                         </div>
                     </div>
                     <div class="custom_header_buttons">
-                        <a class="a_no_link" href=""><button class="button_black">WIN A PRIZE</button></a>
-                        <a class="a_no_link" href=""><button class="button_white">REQUEST</button></a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdnUw91NbzvjkWSH9r8CnTaBG3MPDxHhjYW0tc3WNteCt0OKA/viewform"><button class="button_black">WIN A PRIZE</button></a>
+                        <a href="{%url 'repairelapp:product_request'%}"><button class="button_white">REQUEST</button></a>
                     </div>
                     <div class="custom_header_personal">
-                        <a class="a_no_link" href=""><img height="100%" src="{%static 'assets/icons/login.png'%}" alt="login"></a>
-                        <a class="a_no_link" href=""><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg></a>
+                        <a href="{%url 'repairelapp:login'%}"><img height="100%" src="{%static 'assets/icons/login.png'%}" alt="login"></a>
+                        <a href="{%url 'repairelapp:shopping_cart'%}"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg></a>
                     </div>
                 </div>
-                <div style="height: 2000px;"></div>
                 {% block page %}{% endblock %}
             </div>
             <div class="custom_footer">
                 <div>
                     <h5>INFORMATION</h5>
-                    <a target="_blank" href="" class="a_small_link a_no_link">About</a>
-                    <a target="_blank" href="" class="a_small_link a_no_link">Terms & Conditions</a>
-                    <a target="_blank" href="" class="a_small_link a_no_link">GDPR</a>
+                    <a target="_blank" href="{%url 'repairelapp:about'%}" class="a_small_link">About</a>
+                    <a target="_blank" href="{%url 'repairelapp:terms'%}" class="a_small_link">Terms & Conditions</a>
+                    <a target="_blank" href="{%url 'repairelapp:gdpr'%}" class="a_small_link">GDPR</a>
                     <a target="_blank" href="https://localgiving.org/charity/repairel/" class="a_small_link">Donate</a>
                 </div>
                 <div>

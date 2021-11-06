@@ -13,10 +13,178 @@ class IndexView(View):
         ongoing_list = ShoeItem.objects.filter(in_stock=True).order_by("-updated")
         rated_list = ShoeItem.objects.filter(in_stock=True).order_by("-rating")
 
+        #TODO remove
+        #create a list of shoes for testing purposes
+        test_items = [
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/1cf81d24ab2037ff96e818898e9740f2_888c369d0c.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "1",
+            "size": "9",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/1460smooth_1080x_1ed4f99fc5.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "2",
+            "size": "4",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/15933002_b96c8ca547.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "3",
+            "size": "5",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_boots_1_e4deb66ad5.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "4",
+            "size": "11",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/wvs_hiking_shoe_women_64d7789834.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "1",
+            "size": "9",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/1220509_removebg_preview_1_d6610b1840.png",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "2",
+            "size": "4",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/23812002_R_651a79e150.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "3",
+            "size": "5",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/small_ezgif_com_gif_maker_a8b62e041f_fd29e9b64d.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "4",
+            "size": "11",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/22389101_b0372bb10d.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "1",
+            "size": "9",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/assw_2_838ffe854d.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "2",
+            "size": "4",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/nyw_5_50de1f0e89.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "3",
+            "size": "5",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/cbw_5_680f849035.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "4",
+            "size": "11",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/obw_3_9ff89c9c12.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "1",
+            "size": "9",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/khw_3_fe58073308.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "2",
+            "size": "4",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/gwbm_3_76c5f1e55d.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "3",
+            "size": "5",
+        },
+        {
+            "name": "Nike Air Max",
+            "price": "100",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg",
+            "description": "This is a test shoe",
+            "rating": "4.5",
+            "in_stock": True,
+            "id": "4",
+            "size": "11",
+        },
+        ]
+
+
         context = {
             'latest_list': latest_updated,
             'ongoing_list': ongoing_list,
             'rated_list': rated_list,
+            #TODO remove
+            'test_items': test_items,
         }
         return render(self.request, "index.html", context)
 
@@ -128,3 +296,6 @@ class RequestView(View):
         else:
             messages.info(self.request, "Something went wrong! Please retry after some time.")
             return redirect("repairelapp:request")
+
+class ScoringView(TemplateView):
+    template_name = 'scoring.html'

@@ -1,3 +1,18 @@
 {%extends "base.html"%}
 {%block page%}
+<div class="custom_index_tools">
+    <div><h3>Filter</h3></div>
+    <div><h3>Compare</h3></div>
+</div>
+<div class="custom_index_shoe_wrapper">
+    {%for i in test_items%}
+        <div class="custom_index_shoe">
+            <div><img loading="lazy" src="{{i.image}}"></div>
+            <div>
+                <div><span class="custom_index_shoe_name">{{i.name}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{i.size}}</span></div>
+                <div><span>£</span><span>{{i.price}}</span></div>
+            </div>
+        </div>
+    {%endfor%}
+</div>
 {%endblock%}
