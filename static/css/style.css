@@ -1,0 +1,439 @@
+:root {
+    --footer-height: 150px;
+    --white-color: white;
+    --black-color: black;
+    --text-hover-color: rgb(105, 105, 105);
+    --hamburger-size: 29px;
+    --header-personal-size: 30px;
+    --text-color: rgb(90, 90, 90);
+}
+
+* {
+    font-family: "Work Sans", sans-serif;
+    color: var(--black-color);
+    transition: all 0.2s;
+    transition-property: transform, color, background-color, border-radius, opacity;
+}
+
+p, span {
+    color: var(--text-color);
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    min-width: 360px;
+}
+*::-webkit-scrollbar {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+*::-webkit-scrollbar-thumb {
+    background: rgb(161, 161, 161);
+    border-radius: 100px;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background: rgb(121, 121, 121);
+}
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+
+.a_no_link {
+    color: red !important;
+    border-style: solid !important;
+    border-color: red !important;
+    border-width: 2px !important;
+}
+
+.a_link, .a_small_link {
+    text-decoration: none;
+    margin: 3px;
+}
+
+.a_small_link {
+    font-size: 0.7em;
+}
+
+.a_link:hover, .a_small_link:hover, .a_link:hover *, .a_small_link:hover * {
+    text-decoration: underline;
+    color: var(--text-hover-color);
+}
+
+.p_small_text {
+    font-size: 0.7em;
+}
+
+.p_color_change {
+    color: var(--black-color);
+}
+
+.p_color_change:hover {
+    color: var(--white-color);
+    text-shadow: -1px -1px 0 var(--black-color), 1px -1px 0 var(--black-color), -1px 1px 0 var(--black-color), 1px 1px 0 var(--black-color);
+}
+
+.h2_light {
+    font-weight: lighter;
+}
+
+.h_section {
+    position: relative;
+    padding: 10px 0px;
+}
+
+@keyframes h_section_animation {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.h_section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--black-color);
+    animation-name: h_section_animation;
+    animation-duration: 2s;
+    animation-delay: 0.2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.button_black, .button_white {
+    background-color: var(--black-color);
+    color: var(--white-color);
+    border-color: var(--black-color);
+    border-style: solid;
+    border-width: 1px;
+    padding: 7px 25px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button_white:not(.button_white:hover), .button_black:hover {
+    background-color: var(--white-color);
+    color: var(--black-color);
+    border-color: var(--black-color);
+    border-radius: 0px;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+
+.custom_body_wrapper {
+    max-width: 1250px;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    padding: 0 10px;
+}
+
+.custom_body {
+    min-height: calc(100% - var(--footer-height));
+}
+
+.custom_footer {
+    --social-icon-size: 22px;
+    height: var(--footer-height);
+    width: 100%;
+    position: relative;
+}
+
+.custom_footer svg {
+    width: var(--social-icon-size);
+    height: var(--social-icon-size);
+}
+
+.custom_footer * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.custom_footer h5 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.custom_footer > :first-child a {
+    display: block;
+    margin-right: 40px;
+}
+
+.custom_footer > :last-child {
+    display: block;
+}
+
+.custom_footer_social_link_wrapper {
+    margin-top: 10px;
+}
+
+.custom_header {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.custom_header * {
+    flex: 0 0;
+}
+
+.custom_hamburger {
+    --hamburger-line-size: 2px;
+    min-width: var(--hamburger-size);
+    min-height: var(--hamburger-size);
+    padding: 5px;
+    cursor: pointer;
+    z-index: 11;
+}
+
+.custom_hamburger * {
+    width: 100%;
+    height: var(--hamburger-line-size);
+    background-color: var(--black-color);
+    margin: calc(33% - var(--hamburger-line-size)) 0;
+    text-align: center;
+    transform-origin: center left;
+}
+
+.custom_hamburger_active > :nth-child(2) {
+    opacity: 0;
+}
+
+.custom_hamburger_active > :nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.custom_hamburger_active > :nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+.custom_header_middle {
+    flex: 1 1;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.custom_header_middle * {
+    display: inline-block;
+    text-align: center;
+    margin: 6px;
+}
+
+.custom_header_middle h2 {
+    cursor: pointer;
+}
+
+.custom_header_middle p {
+    letter-spacing: 1px;
+    font-size: 0.9em;
+}
+
+.custom_header_buttons {
+    white-space: nowrap;
+}
+
+.custom_header_buttons * {
+    margin: 0 10px;
+}
+
+.custom_header_personal {
+    height: var(--header-personal-size);
+    white-space: nowrap;
+    padding-left: 40px;
+    padding-right: 10px;
+}
+
+.custom_header_personal svg {
+    height: 100%;
+    width: var(--header-personal-size);
+}
+
+.custom_header_personal * {
+    margin: 0 5px;
+}
+
+.custom_hamburger_menu {
+    --logo-size: 150px;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 10;
+    display: none;
+}
+
+.custom_hamburger_menu_repairel_logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+}
+
+.custom_hamburger_inside {
+    --social-icon-size: 40px;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.custom_hamburger_inside > :last-child {
+    margin-top: 150px;
+}
+
+.custom_hamburger_inside > :last-child svg {
+    width: var(--social-icon-size);
+    height: var(--social-icon-size);
+    margin: 10px;
+}
+
+.custom_hamburger_inside > :nth-child(2) {
+    margin: 150px;
+}
+
+.custom_hamburger_inside > :nth-child(2) * {
+    display: inline-block;
+}
+
+.custom_hamburger_inside > :nth-child(2) h2 {
+    margin: 10px;
+}
+
+.custom_hamburger_menu_active {
+    display: block;
+}
+
+.custom_body_wrapper_active {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.custom_index_tools {
+    margin: 20px 10px;
+    display: flex;
+}
+
+.custom_index_tools > * {
+    flex: 1 1;
+    display: inline-block;
+    text-align: center;
+}
+
+.custom_index_tools > * > * {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.custom_index_shoe_name {
+    font-size: 1.1em;
+}
+
+.custom_index_shoe_faded {
+    opacity: 0.5;
+}
+
+.custom_index_shoe_wrapper {
+    padding: 30px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.custom_index_shoe_wrapper > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.custom_index_shoe img {
+    width: 100%;
+}
+
+.custom_index_shoe > :last-child {
+    padding: 15px 0px;
+}
+
+.custom_index_shoe:hover img {
+    transform: scale(1.03);
+}
+
+.custom_index_shoe > :first-child {
+    overflow: hidden;
+}
+
+.custom_engage_button {
+    text-align: center;
+    margin: 60px;
+}
+
+.custom_scoring_balls > div:first-child * {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    border-radius: 1000px;
+    margin: 0 2px;
+}
+
+.custom_scoring_balls > div:first-child {
+    width: 100px;
+}
+
+.custom_scoring_balls > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 6px 10px;
+    background-color: transparent;
+}
+
+.custom_scoring_balls_green * {
+    background-color: rgb(84,173,11);
+}
+
+.custom_scoring_balls_orange * {
+    background-color: rgb(255,159,56);
+}
+
+.custom_scoring_balls_red * {
+    background-color: rgb(255,117,112);
+}
+
+.custom_criteria_entry {
+    --icon-size: 40px;
+    display: flex;
+    padding: 40px 0;
+}
+
+.custom_criteria_entry * {
+    display: inline-block;
+}
+
+.custom_criteria_entry > :nth-child(1) {
+    margin: 0 15px;
+    flex: 0 0 var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+}
+
+.custom_criteria_entry > :nth-child(2) {
+    display: inline-block;
+    flex: 0 0 200px;
+}
+
+.custom_criteria_entry > :nth-child(3) {
+    flex: 1 1;
+    max-width: 680px;
+}
