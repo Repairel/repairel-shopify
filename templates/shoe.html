@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{%block page%}
+<div class="custom_shoe_image_area">
+    {%for i in shoe.images%}
+        <img loading="lazy" src="{{i}}">
+    {%endfor%}
+</div>
+<div class="custom_shoe_title_wrapper">
+    <h3 class="custom_shoe_title">{{shoe.name}}</h3><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{shoe.size}}</span>
+    <div><span>£</span><span>{{shoe.price}}</span></div>
+</div>
+    <hr>
+    <div class="custom_shoe_buttons">
+        <a href="https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg"><button class="button_white">SHOP THIS BRAND</button></a>
+        <a href="https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg"><button class="button_white">ADD TO WISHLIST</button></a>
+    </div>
+<p><b>Description</b></p>
+<p>{{shoe.description}}</p>
+<a href="{%url 'repairelapp:scoring'%}" class="custom_shoe_eas_link"><p><b>Ethics and Sustainability</b></p></a>
+{%endblock%}

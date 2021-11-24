@@ -299,3 +299,28 @@ class RequestView(View):
 
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
+
+class ShoeView(TemplateView):
+    def get(self, *args, **kwargs):
+        #TODO
+        shoe = {
+                "name": "Nike Air Max",
+                "price": "100",
+                "image": "https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg",
+                "description": "This is a test shoe,This is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoe,This is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoe,This is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoe,This is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoeThis is a test shoe",
+                "rating": "4.5",
+                "in_stock": True,
+                "id": "4",
+                "size": "11",
+                "images": [
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/small_hiking_shoe_1_square_dc390e7097_Copy_38cc032709.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_shoe_4_0861cc0ae0.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_shoe_3_3b186f1ccb.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_shoe_6_f922e7f808.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/small_hiking_shoe_1_square_dc390e7097_Copy_38cc032709.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_shoe_4_0861cc0ae0.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_shoe_3_3b186f1ccb.jpg",
+                    "https://se04-images.s3.eu-west-2.amazonaws.com/hiking_shoe_6_f922e7f808.jpg",
+                ],
+            }
+        return render(self.request, 'shoe.html', {"shoe": shoe})
