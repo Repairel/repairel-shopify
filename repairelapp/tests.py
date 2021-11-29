@@ -1,5 +1,10 @@
-from django.urls import resolve
-from django.test import TestCase
+from django.urls import (resolve,
+                         reverse,
+                        )
+from django.test import (TestCase,
+                         Client,
+                        )
+                         
 from repairelapp.models import ShoeItem
 from repairelapp.views import (IndexView, 
                                AboutView,
@@ -12,18 +17,57 @@ from repairelapp.views import (IndexView,
                                TermsView,
                                RequestView,
                                GDPRView,
-                               ScoringView,
-                               
+                               ScoringView, 
                                )
+import datetime
+from django.utils import timezone
+from django.test.utils import setup_test_environment
+
+
+
 
 # Create your tests here.
+# setup_test_environment()
+client=Client()
 
+def create_shoe(title, days):
+    time = timezone.now() + datetime.timedelta(days=days)
+    return ShoeItem.objects.create(title=title, created=time)
 
 class HomePageTest(TestCase):
     def test_resolve_to_index_page_view(self):
         resolver = resolve('/')
         self.assertEqual(resolver.func.__name__, IndexView.as_view().__name__)
         
+    def test_no_questions(self):
+        response = self.client.get(reverse('repairelapp:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No shoes are available.")
+        self.assertQuerysetEqual(response.context['latest_list'], [])
+        self.assertTemplateUsed(response, 'index.html')
+        
+    def test_past_shoe(self):
+        shoe = create_shoe(title="Past shoe.", days=-30)
+        response = self.client.get(reverse('repairelapp:index'))
+        self.assertQuerysetEqual(response.context['latest_list'], [shoe])
+        
+    def test_two_past_shoes(self):
+        shoe1 = create_shoe(title="Past shoe 1.", days=-30)
+        shoe2 = create_shoe(title="Past shoe 2.", days=-5)
+        response = self.client.get(reverse('repairelapp:index'))
+        self.assertQuerysetEqual(response.context['latest_list'], [shoe2, shoe1])
+        
+    def test_future_shoe(self):
+        create_shoe(title="Future shoe.", days=30)
+        response = self.client.get(reverse('repairelapp:index'))
+        self.assertContains(response, "No shoes are available.")
+        self.assertQuerysetEqual(response.context['latest_list'], [])
+        
+    def test_future_shoe_and_past_shoe(self):
+        shoe = create_shoe(title="Past shoe.", days=-30)
+        create_shoe(title="Future shoe.", days=30)
+        response = self.client.get(reverse('repairelapp:index'))
+        self.assertQuerysetEqual(response.context['latest_list'], [shoe])
         
 
 class AboutPageTest(TestCase):
@@ -109,3 +153,37 @@ class PageTest(TestCase):
         resolver = resolve('/faq/')
         self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
         
+        
+
+
+
+class ShoeItemModelTests(TestCase):
+    def test_was_published_recently_with_future_shoe_item(self):
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_shoe_item = ShoeItem(created=time)
+        self.assertIs(future_shoe_item.was_published_recently(), False)
+         
+    def test_was_published_recently_with_old_shoe_item(self):
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        old_shoe_item = ShoeItem(created=time)
+        self.assertIs(old_shoe_item.was_published_recently(), False)
+        
+    def test_was_published_recently_with_recent_shoe_item(self):
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        recent_shoe_item = ShoeItem(created=time)
+        self.assertIs(recent_shoe_item.was_published_recently(), True)
+        
+    def test_was_updated_recently_with_future_shoe_item(self):
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_shoe_item = ShoeItem(updated=time)
+        self.assertIs(future_shoe_item.was_updated_recently(), False)
+         
+    def test_was_updated_recently_with_old_shoe_item(self):
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        old_shoe_item = ShoeItem(updated=time)
+        self.assertIs(old_shoe_item.was_updated_recently(), False)
+        
+    def test_was_updated_recently_with_recent_shoe_item(self):
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        recent_shoe_item = ShoeItem(updated=time)
+        self.assertIs(recent_shoe_item.was_updated_recently(), True)

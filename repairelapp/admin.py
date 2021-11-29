@@ -5,6 +5,7 @@ class ShoeItemAdmin(admin.ModelAdmin):
     list_display = ['title',
                     'rating',
                     'description',
+                    'created',
                     'updated',
                     'image',
                     'in_stock']

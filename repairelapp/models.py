@@ -1,5 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
+import datetime
+from django.utils import timezone
 
 
 DEFAULT_DESCRIPTION = """It was night again ere news came. A man rode in haste from the fords, saying that a host had issued from Minas Morgul and was already drawing nigh to Osgiliath; and it had been joined by regiments from the South, Haradrim, cruel and tall. ‘And we have learned,’ said the messenger, ‘that the Black Captain leads them once again, and the fear of him has passed before him over the River.’ With those ill-boding words the third day closed since Pippin came to Minas Tirith. Few went to rest, for small
@@ -17,7 +19,7 @@ class ShoeItem(models.Model):
     brand = models.CharField(max_length=100, default="Nike")
     in_stock = models.BooleanField(default=True)
     editors_pick = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField('date created')
     updated = models.DateTimeField(auto_now=True)
     design_score = models.FloatField(default=5.0)
     raw_materials_score = models.FloatField(default=5.0)
@@ -27,6 +29,14 @@ class ShoeItem(models.Model):
     use_score = models.FloatField(default=5.0)
     disposal_score = models.FloatField(default=5.0)
 
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.created <= now
+    
+    def was_updated_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.updated <= now
+    
     def get_absolute_url(self):
         return reverse("repairelapp:index", kwargs={'pk': self.id})
 
