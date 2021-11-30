@@ -4,11 +4,19 @@ from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm, LoginForm, RegistrationForm
 from django.contrib import messages
 from repairelapp import shopify_products
+import datetime
+from django.utils import timezone
 
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
 
+
+
 class IndexView(View):
+
+    def get_queryset(self):
+        return ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
+
     def get(self, *args, **kwargs):
         latest_updated = latest_updated_list()
         ongoing_list = ShoeItem.objects.filter(in_stock=True).order_by("-updated")
