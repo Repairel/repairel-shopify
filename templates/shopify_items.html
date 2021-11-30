@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{%block page%}
+    <div class="custom_index_tools">
+        <div><h3>Filter</h3></div>
+        <div><h3>Compare</h3></div>
+    </div>
+    <div class="custom_index_shoe_wrapper">
+        {%for i in products%}
+            {% if i.status == 'active' %}
+            <div class="custom_index_shoe">
+                <div><img loading="lazy" src="{{i.image.src}}"></div>
+                <div>
+                    <div><span class="custom_index_shoe_name">{{i.title}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: </span></div>
+                    <div><span>£</span><span>{{i.variants.0.price}}</span></div>
+                </div>
+            </div>
+            {% endif %}
+        {%endfor%}
+    </div>
+{%endblock%}
