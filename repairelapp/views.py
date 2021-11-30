@@ -78,7 +78,7 @@ class IndexView(View):
         {
             "name": "Nike Air Max",
             "price": "100",
-            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/1220509_removebg_preview_1_d6610b1840.png",
+            "image": "https://se04-images.s3.eu-west-2.amazonaws.com/wvs_hiking_shoe_women_64d7789834.jpg",
             "description": "This is a test shoe",
             "rating": "4.5",
             "in_stock": True,
