@@ -18,7 +18,7 @@ class IndexView(View):
         return ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
 
     def get(self, *args, **kwargs):
-        latest_updated = latest_updated_list()
+        latest_updated = ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
         ongoing_list = ShoeItem.objects.filter(in_stock=True).order_by("-updated")
         rated_list = ShoeItem.objects.filter(in_stock=True).order_by("-rating")
 
