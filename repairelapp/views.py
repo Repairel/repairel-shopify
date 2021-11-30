@@ -313,7 +313,6 @@ class ShopifyView(View):
     def get(self, *args, **kwargs):
         get_products = shopify_products.get_products()
         products = get_products['products']
-        print(type(products[0]['variants']))
         context = {
             'products': products
         }
