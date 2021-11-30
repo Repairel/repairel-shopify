@@ -5,13 +5,13 @@
     <div><h3>Compare</h3></div>
 </div>
 <div class="custom_index_shoe_wrapper">
-    <!-- {{ latest_list }} -->
-    {% if latest_list %}
-    {%for i in latest_list %}
+    <!-- {{ test_items }} -->
+    {% if test_items %}
+    {%for i in test_items %}
         <div class="custom_index_shoe">
             <div><img loading="lazy" src="{{i.image}}"></div>
             <div>
-                <div><span class="custom_index_shoe_name">{{i.title}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{i.size}}</span></div>
+                <div><span class="custom_index_shoe_name">{{i.name}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{i.size}}</span></div>
                 <div><span>£</span><span>{{i.price}}</span></div>
             </div>
         </div>
