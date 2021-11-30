@@ -3,6 +3,7 @@ from .models import ShoeItem, ShoeRequest, UserAccount
 from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm, LoginForm, RegistrationForm
 from django.contrib import messages
+from repairelapp import shopify_products
 
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
@@ -299,3 +300,13 @@ class RequestView(View):
 
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
+
+class ShopifyView(View):
+    def get(self, *args, **kwargs):
+        get_products = shopify_products.get_products()
+        products = get_products['products']
+        print(type(products[0]['variants']))
+        context = {
+            'products': products
+        }
+        return render(self.request, "shopify_items.html", context)
