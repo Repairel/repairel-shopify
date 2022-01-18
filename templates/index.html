@@ -1,14 +1,15 @@
 {%extends "base.html"%}
 {%block page%}
 <div class="custom_index_tools">
-    <div><h3>Filter</h3></div>
+    <div><h3 onclick="toggle_filter(this)">Filter</h3></div>
     <div><h3>Compare</h3></div>
 </div>
+<div id="filter"></div>
 <div class="custom_index_shoe_wrapper">
     <!-- {{ test_items }} -->
     {% if test_items %}
     {%for i in test_items %}
-        <a href="{%url 'repairelapp:shoe' '87b17db4-77f2-11ec-90d6-0242ac120003'%}">
+        <a href="{%url 'repairelapp:shoe' '87b17db4-77f2-11ec-90d6-0242ac120003'%}" class="shoe_wrapper" data-price={{i.price}} data-condition="{{i.condition}}" data-size={{i.size}} data-brand="{{i.brand}}">
             <div class="custom_index_shoe">
                 <div><img loading="lazy" src="{{i.image}}"></div>
                 <div>

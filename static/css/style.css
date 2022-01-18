@@ -42,6 +42,11 @@ body {
     background: rgb(121, 121, 121);
 }
 
+.underline_thick {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////*/
 
 .a_no_link {
@@ -222,7 +227,7 @@ body {
 .custom_header_middle {
     flex: 1 1;
     text-align: right;
-    padding-right: 20px;
+    padding-right: 200px;
 }
 
 .custom_header_middle * {
@@ -336,6 +341,10 @@ body {
     cursor: pointer;
 }
 
+.custom_index_shoe {
+    max-width: 450px;
+}
+
 .custom_index_shoe_name {
     font-size: 1.1em;
 }
@@ -346,6 +355,8 @@ body {
 
 .custom_index_shoe_wrapper {
     padding: 30px;
+    padding-top: 70px;
+    padding-bottom: 150px;
     display: grid;
     gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -509,4 +520,38 @@ body {
     border: 1px solid black;
     margin-left: -1px;
     position: relative;
+}
+
+.custom_filter_inner {
+    display: inline-block;
+    border: solid 1px black;
+    padding: 20px;
+    padding-top: 0;
+    max-width: 600px;
+}
+
+.custom_filter_content * {
+    font-weight: 100;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.custom_filter_content > :first-child {
+    padding-left: 0;
+}
+
+.custom_filter_inner > button {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.filter_option_active {
+    text-decoration: underline;
+}
+
+.custom_no_shoe_text {
+    text-align: center;
 }
