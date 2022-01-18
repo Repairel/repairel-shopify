@@ -317,3 +317,8 @@ class ShopifyView(View):
             'products': products
         }
         return render(self.request, "shopify_items.html", context)
+
+class ShoeView(TemplateView):
+    def get(self, *args, **kwargs):
+        shoe = {"name": "Test", "size": 15, "images": ["https://media.wired.com/photos/60149f34056378f4af9cf9f1/master/w_1920%2Cc_limit/Gear-Topo-Athletic-Ultraventure-Pro.jpg","https://media.wired.com/photos/60149f34056378f4af9cf9f1/master/w_1920%2Cc_limit/Gear-Topo-Athletic-Ultraventure-Pro.jpg","https://media.wired.com/photos/60149f34056378f4af9cf9f1/master/w_1920%2Cc_limit/Gear-Topo-Athletic-Ultraventure-Pro.jpg"]}
+        return render(self.request, "shoe.html", {"shoe": shoe})
