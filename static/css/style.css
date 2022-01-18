@@ -499,6 +499,7 @@ body {
 .custom_shoe_balls_wrapper {
     display: flex;
     padding: 10px;
+    margin-bottom: 150px;
 }
 
 .custom_shoe_balls {
