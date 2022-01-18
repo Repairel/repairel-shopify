@@ -24,8 +24,6 @@ urlpatterns = [
     path('donate/', IndexView.as_view(), name="donate"),
 
     #this has to be last
-    path('<uuid:shoe_id>/', IndexView.as_view(), name="index"),
+    path('<uuid:shoe_id>/', ShoeView.as_view(), name="shoe"),
 
-    #TODO only for testing
-    path('test/', ShoeView.as_view(), name="shoe"),
 ]
