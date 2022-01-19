@@ -1,6 +1,6 @@
 {% load static%}
 <meta name="viewport" content="width=device-width">
-<html>
+<html style="overflow-x: hidden;">
     <head>
         <title>REPAIREL</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -11,7 +11,7 @@
         <link rel="icon" type="image/png" href="{%static 'assets/icons/favicon.ico'%}">
         <script async src="{%static 'js/script.js'%}"></script>
     </head>
-    <body style="height:100%; width: 100%; border-collapse:collapse; display: table; min-width: 450px;">
+    <body style="height:100%; width: 100vw; border-collapse:collapse; display: table; min-width: 450px;">
         <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
                 <a href="{%url 'repairelapp:index'%}"><svg class="custom_hamburger_menu_repairel_logo"><image xlink:href="{%static 'assets/icons/repairel_logo.svg'%}" height="100%"></image></svg></a>

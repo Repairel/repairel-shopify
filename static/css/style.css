@@ -136,11 +136,13 @@ body {
 /*////////////////////////////////////////////////////////////////////////////////*/
 
 .custom_body_wrapper {
-    max-width: 1250px;
+    max-width: min(1250px, 100vw);
     height: 100%;
     width: 100%;
     margin: auto;
     padding: 0 10px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .custom_body {
@@ -201,6 +203,7 @@ body {
     padding: 5px;
     cursor: pointer;
     z-index: 11;
+    margin-right: 150px;
 }
 
 .custom_hamburger * {
@@ -226,8 +229,7 @@ body {
 
 .custom_header_middle {
     flex: 1 1;
-    text-align: right;
-    padding-right: 200px;
+    text-align: center;
 }
 
 .custom_header_middle * {
@@ -305,7 +307,7 @@ body {
 }
 
 .custom_hamburger_inside > :nth-child(2) {
-    margin: 150px;
+    margin: 150px 10px;
 }
 
 .custom_hamburger_inside > :nth-child(2) * {
@@ -455,15 +457,18 @@ body {
 }
 
 .custom_shoe_image_area {
+    --max-height: max(min(500px, 40vw), 250px);
     overflow-y: hidden;
     overflow-x: auto;
     white-space: nowrap;
+    max-height: var(--max-height);
 }
 
 .custom_shoe_image_area > * {
     display: inline-block;
     margin: 0 30px;
     vertical-align: middle;
+    max-height: var(--max-height);
 }
 
 .custom_shoe_title {
@@ -511,6 +516,8 @@ body {
     display: flex;
     padding: 10px;
     margin-bottom: 150px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .custom_shoe_balls {
@@ -520,6 +527,8 @@ body {
     border: 1px solid black;
     margin-left: -1px;
     position: relative;
+    max-width: 170px;
+    min-width: 100px;
 }
 
 .custom_filter_inner {
@@ -530,14 +539,19 @@ body {
     max-width: 600px;
 }
 
-.custom_filter_content * {
-    font-weight: 100;
-    padding: 0 10px;
-    cursor: pointer;
+.custom_filter_inner h4 {
+    margin-bottom: 10px;
 }
 
-.custom_filter_content > :first-child {
-    padding-left: 0;
+.custom_filter_content {
+    margin-left: -10px;
+}
+
+.custom_filter_content * {
+    font-weight: 100;
+    padding: 10 10px;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .custom_filter_inner > button {
@@ -554,4 +568,19 @@ body {
 
 .custom_no_shoe_text {
     text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+    .custom_header_buttons {
+        display: none;
+    }
+
+    .custom_hamburger {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .custom_header_personal {
+        padding-left: 0;
+    }
 }
