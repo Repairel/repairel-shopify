@@ -9,7 +9,7 @@
 }
 
 * {
-    font-family: "Work Sans", sans-serif;
+    font-family: "Montserrat", "Work Sans", sans-serif;
     color: var(--black-color);
     transition: all 0.2s;
     transition-property: transform, color, background-color, border-radius, opacity;
