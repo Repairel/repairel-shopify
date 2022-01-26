@@ -9,7 +9,7 @@
 }
 
 * {
-    font-family: "Work Sans", sans-serif;
+    font-family: "Montserrat", "Work Sans", sans-serif;
     color: var(--black-color);
     transition: all 0.2s;
     transition-property: transform, color, background-color, border-radius, opacity;
@@ -40,6 +40,11 @@ body {
 }
 *::-webkit-scrollbar-thumb:hover {
     background: rgb(121, 121, 121);
+}
+
+.underline_thick {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
 }
 
 /*////////////////////////////////////////////////////////////////////////////////*/
@@ -131,11 +136,13 @@ body {
 /*////////////////////////////////////////////////////////////////////////////////*/
 
 .custom_body_wrapper {
-    max-width: 1250px;
+    max-width: min(1250px, 100vw);
     height: 100%;
     width: 100%;
     margin: auto;
     padding: 0 10px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .custom_body {
@@ -196,6 +203,7 @@ body {
     padding: 5px;
     cursor: pointer;
     z-index: 11;
+    margin-right: 150px;
 }
 
 .custom_hamburger * {
@@ -221,8 +229,7 @@ body {
 
 .custom_header_middle {
     flex: 1 1;
-    text-align: right;
-    padding-right: 20px;
+    text-align: center;
 }
 
 .custom_header_middle * {
@@ -300,7 +307,7 @@ body {
 }
 
 .custom_hamburger_inside > :nth-child(2) {
-    margin: 150px;
+    margin: 150px 10px;
 }
 
 .custom_hamburger_inside > :nth-child(2) * {
@@ -336,6 +343,10 @@ body {
     cursor: pointer;
 }
 
+.custom_index_shoe {
+    max-width: 450px;
+}
+
 .custom_index_shoe_name {
     font-size: 1.1em;
 }
@@ -346,6 +357,8 @@ body {
 
 .custom_index_shoe_wrapper {
     padding: 30px;
+    padding-top: 70px;
+    padding-bottom: 150px;
     display: grid;
     gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -358,6 +371,8 @@ body {
     cursor: pointer;
     gap: 5px;
     text-decoration: none;
+    position: relative;
+    padding-bottom: 55px;
 }
 
 .custom_index_shoe img {
@@ -365,7 +380,9 @@ body {
 }
 
 .custom_index_shoe > :last-child {
-    padding: 15px 0px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .custom_index_shoe:hover img {
@@ -440,15 +457,18 @@ body {
 }
 
 .custom_shoe_image_area {
+    --max-height: max(min(500px, 40vw), 250px);
     overflow-y: hidden;
     overflow-x: auto;
     white-space: nowrap;
+    max-height: var(--max-height);
 }
 
 .custom_shoe_image_area > * {
     display: inline-block;
     margin: 0 30px;
     vertical-align: middle;
+    max-height: var(--max-height);
 }
 
 .custom_shoe_title {
@@ -482,4 +502,85 @@ body {
 
 .custom_shoe_eas_link:hover * {
     color: var(--text-color);
+}
+
+.custom_shoe_balls > div > :first-child{
+    width: auto !important;
+    margin-left: 0 !important;
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+}
+
+.custom_shoe_balls_wrapper {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 150px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.custom_shoe_balls {
+    width: 100%;
+    flex: 1 1 0px;
+    padding: 20px;
+    border: 1px solid black;
+    margin-left: -1px;
+    position: relative;
+    max-width: 170px;
+    min-width: 100px;
+}
+
+.custom_filter_inner {
+    display: inline-block;
+    border: solid 1px black;
+    padding: 20px;
+    padding-top: 0;
+    max-width: 600px;
+}
+
+.custom_filter_inner h4 {
+    margin-bottom: 10px;
+}
+
+.custom_filter_content {
+    margin-left: -10px;
+}
+
+.custom_filter_content * {
+    font-weight: 100;
+    padding: 10 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.custom_filter_inner > button {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.filter_option_active {
+    text-decoration: underline;
+}
+
+.custom_no_shoe_text {
+    text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+    .custom_header_buttons {
+        display: none;
+    }
+
+    .custom_hamburger {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .custom_header_personal {
+        padding-left: 0;
+    }
 }

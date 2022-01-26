@@ -1,6 +1,6 @@
 {% load static%}
 <meta name="viewport" content="width=device-width">
-<html>
+<html style="overflow-x: hidden;">
     <head>
         <title>REPAIREL</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -9,9 +9,10 @@
         <meta name="author" content="Roman Polek, Lewis Haggerty, Morad Elfleet, Nadim Abdel Rahman">
         <link rel="stylesheet" href="{%static 'css/style.css'%}">
         <link rel="icon" type="image/png" href="{%static 'assets/icons/favicon.ico'%}">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
         <script async src="{%static 'js/script.js'%}"></script>
     </head>
-    <body style="height:100%; width: 100%; border-collapse:collapse; display: table; min-width: 450px;">
+    <body style="height:100%; width: 100vw; border-collapse:collapse; display: table; min-width: 450px;">
         <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
                 <a href="{%url 'repairelapp:index'%}"><svg class="custom_hamburger_menu_repairel_logo"><image xlink:href="{%static 'assets/icons/repairel_logo.svg'%}" height="100%"></image></svg></a>
@@ -45,7 +46,6 @@
                         </div>
                     </div>
                     <div class="custom_header_buttons">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdnUw91NbzvjkWSH9r8CnTaBG3MPDxHhjYW0tc3WNteCt0OKA/viewform"><button class="button_black">WIN A PRIZE</button></a>
                         <a href="{%url 'repairelapp:product_request'%}"><button class="button_white">REQUEST</button></a>
                     </div>
                     <div class="custom_header_personal">
