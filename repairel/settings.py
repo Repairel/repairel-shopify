@@ -20,7 +20,7 @@ import os
 Delete the above line later
 '''
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'repairel.settings')
 
 
@@ -35,7 +35,7 @@ RUNNING_DEVSERVER = 'RDS_DB_NAME' not in os.environ
 #DEBUG = True if RUNNING_DEVSERVER else False
 DEBUG = RUNNING_DEVSERVER
 
-ALLOWED_HOSTS = ["Repairel-env.eba-b8zm5er6.eu-west-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["Repairel-env.eba-b8zm5er6.eu-west-2.elasticbeanstalk.com", "localhost"]
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
