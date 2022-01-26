@@ -35,7 +35,7 @@ RUNNING_DEVSERVER = 'RDS_DB_NAME' not in os.environ
 #DEBUG = True if RUNNING_DEVSERVER else False
 DEBUG = RUNNING_DEVSERVER
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["Repairel-env.eba-b8zm5er6.eu-west-2.elasticbeanstalk.com"]
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
