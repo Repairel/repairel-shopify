@@ -1,4 +1,4 @@
-from attr import attributes
+#from attr import attributes
 from django.shortcuts import render, redirect
 from .models import ShoeItem, ShoeRequest, UserAccount
 from django.views.generic import View, TemplateView
