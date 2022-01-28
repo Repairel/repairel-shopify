@@ -357,6 +357,7 @@ body {
     justify-content: center;
     cursor: pointer;
     gap: 5px;
+    text-decoration: none;
 }
 
 .custom_index_shoe img {
@@ -436,4 +437,49 @@ body {
 .custom_criteria_entry > :nth-child(3) {
     flex: 1 1;
     max-width: 680px;
+}
+
+.custom_shoe_image_area {
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.custom_shoe_image_area > * {
+    display: inline-block;
+    margin: 0 30px;
+    vertical-align: middle;
+}
+
+.custom_shoe_title {
+    font-weight: lighter;
+    color: var(--text-color);
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.custom_shoe_title_wrapper {
+    margin: 15px 10px;
+}
+
+.custom_shoe_title_wrapper > :last-child * {
+    color: var(--text-color);
+}
+
+.custom_shoe_buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.custom_shoe_eas_link {
+    text-decoration: none;
+}
+
+.custom_shoe_eas_link:hover {
+    text-decoration: underline;
+}
+
+.custom_shoe_eas_link:hover * {
+    color: var(--text-color);
 }
