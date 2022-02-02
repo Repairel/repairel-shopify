@@ -346,8 +346,23 @@ class ShopifyView(View):
     def get(self, *args, **kwargs):
         get_products = shopify_products.get_products()
         products = get_products['products']
+        display_items = []
+        for prod in products:
+            if prod["status"] != "active":
+                continue
+            sizes = [variant["option1"] for variant in prod["variants"]]
+            price = min([variant["price"] for variant in prod["variants"]])
+            max_size = max(sizes)
+            min_size = min(sizes)
+            display_items.append({
+                "title": prod["title"],
+                "image": prod["image"]["src"],
+                "size": f'{min_size}-{max_size}',
+                "price": price,
+            })
+            
         context = {
-            'products': products
+            'products': display_items,
         }
         return render(self.request, "shopify_items.html", context)
 
