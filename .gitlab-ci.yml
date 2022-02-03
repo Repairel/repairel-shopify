@@ -1,17 +1,42 @@
-default:
-    tags:
-        - test
-
+image: docker:latest
+variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
 stages:
-    - Build
-    - Test
-
-Dependencies:
-    stage: Build
+    - deploy-dev
+    - deploy-prod
+deploy-dev:
+    stage: deploy-dev
+    tags:
+        - docker
+    services:
+        - docker:dind
     script:
-        - python3 -m pip install -r requirements.txt
-
-Testing:
-    stage: Test
+        - export KEY_FILE=$ID_RSA
+        - export DOCKER_CONTEXT=docker-context
+        - export DEPLOYMENT_USER=$SERVER_USER
+        - export DEPLOYMENT_HOST=$DEV_SERVER_IP
+        - /bin/sh ./deployment.sh
+    only:
+        - pipeline-dev
+    environment:
+        name: development
+        url: http://${DEV_SERVER_IP}
+deploy-prod:
+    stage: deploy-prod
+    tags:
+        - docker
+    services:
+        - docker:dind
     script:
-        - python3 manage.py test
+        - export KEY_FILE=$PROD_PRIVATE_KEY
+        - export DOCKER_CONTEXT=docker-context
+        - export DEPLOYMENT_USER=$PROD_SERVER_USER
+        - export DEPLOYMENT_HOST=$PROD_SERVER_IP
+        - /bin/sh ./deployment.sh
+    only:
+        - main
+    environment:
+        name: production
+        url: http://${PROD_SERVER_IP}
