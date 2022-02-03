@@ -6,7 +6,7 @@ stages:
     - Build
     - Test
 
-Dependencies
+Dependencies:
     stage: Build
     script:
         - pwd | cat
