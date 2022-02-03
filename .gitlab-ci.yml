@@ -9,5 +9,9 @@ stages:
 Dependencies:
     stage: Build
     script:
-        - pwd | cat
-        - echo Hello
+        - python3 -m pip install -r requirements.txt
+
+Testing:
+    stage: Test
+    script:
+        - python3 manage.py test
