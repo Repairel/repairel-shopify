@@ -20,7 +20,7 @@ import os
 Delete the above line later
 '''
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'repairel.settings')
 
 
@@ -31,9 +31,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'repairel.settings')
 SECRET_KEY = 'django-insecure-7er1h8_#kfij$!o@-lb&g1iy8n#312t#m6(+d1_gfiec36y95*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+RUNNING_DEVSERVER = 'RDS_DB_NAME' not in os.environ
+#DEBUG = True if RUNNING_DEVSERVER else False
+DEBUG = RUNNING_DEVSERVER
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["Repairel-env.eba-b8zm5er6.eu-west-2.elasticbeanstalk.com", "localhost"]
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
@@ -84,12 +86,28 @@ WSGI_APPLICATION = 'repairel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',    
+        }
     }
-}
+else:
+    if 'RDS_DB_NAME' in os.environ:
+        #connect to database using this command:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': os.environ['RDS_DB_NAME'],
+                'USER': os.environ['RDS_USERNAME'],
+                'PASSWORD': os.environ['RDS_PASSWORD'],
+                'HOST': os.environ['RDS_HOSTNAME'],
+                'PORT': os.environ['RDS_PORT'],
+            }
+        }
+    else:
+        print("database not found")
 
 
 # Password validation
@@ -129,8 +147,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/'),]
+STATIC_ROOT = 'static_root'
+STATICFILES_DIRS = ["static"]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
