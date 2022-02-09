@@ -1,0 +1,19 @@
+branch-defaults:
+  roman-nadim-deployment:
+    environment: Repairel-env
+environment-defaults:
+  Repairel-env:
+    branch: null
+    repository: null
+global:
+  application_name: repairel
+  default_ec2_keyname: null
+  default_platform: Python 3.8 running on 64bit Amazon Linux 2
+  default_region: eu-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: repairel
+  sc: git
+  workspace_type: Application
