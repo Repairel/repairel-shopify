@@ -9,5 +9,4 @@ stages:
 Dependencies:
     stage: Build
     script:
-        #- python3 -m pip install -r requirements.txt
-        - ls
+        - python3 -m pip install -r requirements.txt
