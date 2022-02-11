@@ -144,3 +144,38 @@ function toggle_filter(filter_button) {
     }
     filter_button.classList.toggle("underline_thick")
 }
+
+//shoe_balls is the parent object - the parent of the attribute and balls.
+function show_shoe_balls_description(shoe_balls) {
+    shoe_balls_description = document.getElementById("shoe_balls_description")
+    //clear the description
+    shoe_balls_description.innerHTML = ""
+
+    //now create the necessary elements
+    var header = document.createElement("div")
+    
+    var image = document.createElement("img")
+    image.src = shoe_balls.dataset.image
+
+    var title = document.createElement("h3")
+    title.innerHTML = shoe_balls.dataset.title
+
+    var description = document.createElement("p")
+    description.innerHTML = shoe_balls.dataset.description
+
+
+    header.appendChild(image)
+    header.appendChild(title)
+
+    shoe_balls_description.appendChild(header)
+    shoe_balls_description.appendChild(description)
+
+
+    //finally make the selected shoe_balls black
+    var all_shoe_balls = document.querySelectorAll(".custom_shoe_balls")
+    all_shoe_balls.forEach(function(element) {
+        element.classList.remove("custom_shoe_balls_black")
+    })
+    shoe_balls.classList.add("custom_shoe_balls_black")
+
+}
