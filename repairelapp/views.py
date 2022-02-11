@@ -3,8 +3,6 @@ from .models import ShoeItem, ShoeRequest, UserAccount
 from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm, LoginForm, RegistrationForm
 from django.contrib import messages
-from repairelapp import shopify_products
-import datetime
 from django.utils import timezone
 
 def latest_updated_list():
@@ -340,15 +338,6 @@ class RequestView(View):
 
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
-
-class ShopifyView(View):
-    def get(self, *args, **kwargs):
-        get_products = shopify_products.get_products()
-        products = get_products['products']
-        context = {
-            'products': products
-        }
-        return render(self.request, "shopify_items.html", context)
 
 class ShoeView(TemplateView):
     def get(self, *args, **kwargs):
