@@ -366,6 +366,26 @@ class ShopifyView(View):
         }
         return render(self.request, "shopify_items.html", context)
 
+class BlogView(TemplateView):
+    def get(self, *args, **kwargs):
+        blog_posts = shopify_products.get_blog()
+        blogs = []
+
+        for blog in blog_posts:
+            published = blog['published_at']
+            y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
+            blogs.append({
+                'title': blog['title'],
+                'date': str(f'Published: {d}/{m}/{y} {t}'),
+                'body': blog['body_html'],
+            })
+
+        context = {
+            'blogs': blogs
+        }
+
+        return render(self.request, "blog.html", context)
+
 class ShoeView(TemplateView):
     def get(self, *args, **kwargs):
         shoe = {

@@ -18,6 +18,7 @@ urlpatterns = [
     path('gdpr/', GDPRView.as_view(), name="gdpr"),
     path('scoring/', ScoringView.as_view(), name="scoring"),
     path('shopify_items/', ShopifyView.as_view(), name="shopify_items"),
+    path('blog/', BlogView.as_view(), name="blog"),
 
     #TODO these. They are not working yet.
     path('product_request/', IndexView.as_view(), name="product_request"),
