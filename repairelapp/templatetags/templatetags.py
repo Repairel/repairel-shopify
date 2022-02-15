@@ -8,10 +8,12 @@ def get_value(dict, key):
 
 @register.filter(name='times') 
 def times(number):
+    number = int(number)
     return range(number)
 
 @register.simple_tag
 def shoe_decide_ball_color(number):
+    number = int(number)
     base = "custom_scoring_balls_"
     if(number < 3):
         return base + "red"

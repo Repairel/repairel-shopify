@@ -24,19 +24,20 @@ except:
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
 class ShopifyProduct:
-    def __init__(self, product_id, title, description, thumbnail, price, tags, product_type, vendor, advanced_info=None):
-        self.id = product_id
-        self.name = title
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, extra_info=None):
+        self.id = id
+        self.name = name
         self.description = description
         self.thumbnail = thumbnail
+        self.images = images
         self.price = price
         self.tags = tags
         self.type = product_type
         self.vendor = vendor
-        self.advanced_info = advanced_info
+        self.extra_info = extra_info
 
     def __str__(self):
-        return '%s: %s' % (self.product_id, self.product_name)
+        return '%s: %s' % (self.id, self.name)
 
 class ShopifyProductAdvancedInfo:
     def __init__(self, environmental_impact):
@@ -44,7 +45,11 @@ class ShopifyProductAdvancedInfo:
         self.environmental_impact = environmental_impact
 
 def _shopify_construct_product(shopify_product):
-    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], shopify_product["variants"][0]["price"], shopify_product["tags"], shopify_product["product_type"], shopify_product["vendor"])
+    #construct image urls
+    images = []
+    for image in shopify_product["images"]:
+        images.append(image["src"])
+    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"], shopify_product["product_type"], shopify_product["vendor"])
 
 def shopify_all_products():
     result = []
@@ -81,8 +86,8 @@ def shopify_get_product(id):
             if "text" not in environmental_impact[key]:
                 environmental_impact[key]["text"] = None
 
-    advanced_info = ShopifyProductAdvancedInfo(environmental_impact)
-    result.advanced_info = advanced_info
+    extra_info = ShopifyProductAdvancedInfo(environmental_impact)
+    result.extra_info = extra_info
     return result
 
 def api_view(request, key, password, request_type, argument=None):
@@ -101,8 +106,8 @@ def api_view(request, key, password, request_type, argument=None):
                 result["products"].append(i.__dict__)
         elif request_type == 'product':
             result = shopify_get_product(argument).__dict__
-            if result["advanced_info"]:
-                result["advanced_info"] = result["advanced_info"].__dict__
+            if result["extra_info"]:
+                result["extra_info"] = result["extra_info"].__dict__
         else:
             return HttpResponse('Unknown request type', status=400)
 

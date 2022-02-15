@@ -29,6 +29,6 @@ urlpatterns = [
 
 
     #this has to be last
-    path('<uuid:shoe_id>/', ShoeView.as_view(), name="shoe"),
+    path('<str:shoe_id>/', ShoeView.as_view(), name="shoe"),
 
 ]
