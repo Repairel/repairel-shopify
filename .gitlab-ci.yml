@@ -1,10 +1,7 @@
-default:
-    tags:
-        - test
-
 stages:
     - Build
     - Test
+    - Deployment
 
 Dependencies:
     stage: Build
@@ -12,6 +9,8 @@ Dependencies:
         - python3 -m pip install -r requirements.txt
 
 Testing:
+    tags:
+        - test
     stage: Test
     script:
         - python3 manage.py test
@@ -25,3 +24,9 @@ Testing:
         REPAIREL_API_PASSWORD:
             $REPAIREL_API_PASSWORD
 
+Deploy:
+    tags:
+        - deploy
+    stage: Deployment
+    script:
+        - echo "Do CD here"
