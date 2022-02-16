@@ -12,7 +12,12 @@
 </div>
     <hr>
     <div class="custom_shoe_buttons">
-        <a href="https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg"><button class="button_white">SHOP THIS BRAND</button></a>
+        {%if shoe.extra_info.is_affiliate%}
+            <a href="{{shoe.extra_info.affiliate_link}}"><button class="button_white">SHOP THIS BRAND</button></a>
+        {%else%}
+            <!--TODO-->
+            <a href=""><button class="button_white">ADD TO CART</button></a>
+        {%endif%}
         <a href="https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg"><button class="button_white">ADD TO WISHLIST</button></a>
     </div>
 <p><b>Description</b></p>
