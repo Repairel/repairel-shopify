@@ -40,9 +40,11 @@ class ShopifyProduct:
         return '%s: %s' % (self.id, self.name)
 
 class ShopifyProductAdvancedInfo:
-    def __init__(self, environmental_impact):
+    def __init__(self, environmental_impact, is_affiliate, affiliate_link):
         #environmental_impact is a dictionary of dictionaries (rating, text)
         self.environmental_impact = environmental_impact
+        self.is_affiliate = is_affiliate
+        self.affiliate_link = affiliate_link
 
 def _shopify_construct_product(shopify_product):
     #construct image urls
@@ -86,7 +88,19 @@ def shopify_get_product(id):
             if "text" not in environmental_impact[key]:
                 environmental_impact[key]["text"] = None
 
-    extra_info = ShopifyProductAdvancedInfo(environmental_impact)
+    #you can use this function for other values           
+    def get_metafield_value(name):
+        for metafield in metafields:
+            if metafield["key"] == name:
+                return metafield["value"]
+        return None
+
+    is_affiliate = get_metafield_value("Is Affiliate")
+    if is_affiliate == None:
+        is_affiliate = False
+    affiliate_link = get_metafield_value("Affiliate Link")
+
+    extra_info = ShopifyProductAdvancedInfo(environmental_impact, is_affiliate, affiliate_link)
     result.extra_info = extra_info
     return result
 
