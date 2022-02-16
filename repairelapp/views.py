@@ -139,43 +139,32 @@ class RequestView(View):
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
 
-class ShopifyView(View):
-    def get(self, *args, **kwargs):
-        get_products = shopify_products.get_products()
-        products = get_products['products']
-        display_items = []
-        for prod in products:
-            if prod["status"] != "active":
-                continue
-            sizes = [variant["option1"] for variant in prod["variants"]]
-            price = min([variant["price"] for variant in prod["variants"]])
-            max_size = max(sizes)
-            min_size = min(sizes)
-            display_items.append({
-                "title": prod["title"],
-                "image": prod["image"]["src"],
-                "size": f'{min_size}-{max_size}',
-                "price": price,
-            })
-
-        context = {
-            'products': display_items,
-        }
-        return render(self.request, "shopify_items.html", context)
+# class ShopifyView(View):
+#     def get(self, *args, **kwargs):
+#         get_products = shopify_products.get_products()
+#         products = get_products['products']
+#         display_items = []
+#         for prod in products:
+#             if prod["status"] != "active":
+#                 continue
+#             sizes = [variant["option1"] for variant in prod["variants"]]
+#             price = min([variant["price"] for variant in prod["variants"]])
+#             max_size = max(sizes)
+#             min_size = min(sizes)
+#             display_items.append({
+#                 "title": prod["title"],
+#                 "image": prod["image"]["src"],
+#                 "size": f'{min_size}-{max_size}',
+#                 "price": price,
+#             })
+#
+#         context = {
+#             'products': display_items,
+#         }
+#         return render(self.request, "shopify_items.html", context)
 
 class BlogView(TemplateView):
     def get(self, *args, **kwargs):
-        blog_posts = shopify_products.get_blog()
-        blogs = []
-
-        for blog in blog_posts:
-            published = blog['published_at']
-            y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
-            blogs.append({
-                'title': blog['title'],
-                'date': str(f'Published: {d}/{m}/{y} {t}'),
-                'body': blog['body_html'],
-            })
 
         context = {
             'blogs': blogs

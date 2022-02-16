@@ -6,20 +6,20 @@ SHOPIFY_API_KEY = None
 SHOPIFY_API_PASSWORD = None
 REPAIREL_API_KEY = None
 REPAIREL_API_PASSWORD = None
-try:
-    from repairelapp import keys
-    SHOPIFY_API_KEY = keys.API_KEY
-    SHOPIFY_API_PASSWORD = keys.PASSWORD
-    REPAIREL_API_KEY = keys.REPAIREL_API_KEY
-    REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
+#try:
+from repairelapp import keys
+SHOPIFY_API_KEY = keys.API_KEY
+SHOPIFY_API_PASSWORD = keys.PASSWORD
+REPAIREL_API_KEY = keys.REPAIREL_API_KEY
+REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
 
-except:
-    #alternative for AWS production server
-    import os
-    SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
-    SHOPIFY_API_PASSWORD = os.environ.get('SHOPIFY_API_PASSWORD')
-    REPAIREL_API_KEY = os.environ.get('REPAIREL_API_KEY')
-    REPAIREL_API_PASSWORD = os.environ.get('REPAIREL_API_PASSWORD')
+# except:
+#     #alternative for AWS production server
+#     import os
+#     SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
+#     SHOPIFY_API_PASSWORD = os.environ.get('SHOPIFY_API_PASSWORD')
+#     REPAIREL_API_KEY = os.environ.get('REPAIREL_API_KEY')
+#     REPAIREL_API_PASSWORD = os.environ.get('REPAIREL_API_PASSWORD')
 
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
@@ -44,6 +44,32 @@ class ShopifyProductAdvancedInfo:
         #environmental_impact is a dictionary of dictionaries (rating, text)
         self.environmental_impact = environmental_impact
 
+
+class BlogPost:
+    def __init__(self, title, date, body):
+        self.title = title
+        self.date = date
+        self.body = body
+
+def _shopify_construct_article(article):
+    published = article['published_at']
+    y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
+    date = str(f'Published: {d}/{m}/{y} {t}')
+
+    return BlogPost(article['title'], date, article['body_html'])
+
+def all_articles():
+    r = requests.get(shopify_api + "blogs.json")
+    blog = r.json()["blogs"][0]["id"]
+    articles = requests.get(shopify_api + f"blogs/{blog}/articles.json")
+    article_list = articles.json()["articles"]
+
+    articles = []
+    for article in article_list:
+        articles.append(_shopify_construct_article(article))
+
+    return articles
+
 def _shopify_construct_product(shopify_product):
     #construct image urls
     images = []
@@ -57,6 +83,8 @@ def shopify_all_products():
     data = response.json()
     products = data["products"]
     for product in products:
+        if product["status"] != "active":
+            continue
         result.append(_shopify_construct_product(product))
     return result
 
