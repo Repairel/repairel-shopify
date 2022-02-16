@@ -515,9 +515,33 @@ body {
 .custom_shoe_balls_wrapper {
     display: flex;
     padding: 10px;
-    margin-bottom: 150px;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.custom_shoe_balls_description {
+    margin-bottom: 130px;
+    padding: 10px 30px;
+}
+
+.custom_shoe_balls_description div {
+    --size: 1.2em;
+    font-size: var(--size);
+    height: var(--size);
+    margin-bottom: 40px;
+}
+
+.custom_shoe_balls_description img {
+    height: 100%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.custom_shoe_balls_description h3 {
+    font-size: inherit;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .custom_shoe_balls {
@@ -529,6 +553,20 @@ body {
     position: relative;
     max-width: 170px;
     min-width: 100px;
+}
+
+.custom_shoe_balls_black, .custom_shoe_balls:hover {
+    background-color: black;
+    cursor: pointer;
+}
+
+.custom_shoe_balls_black *, .custom_shoe_balls:hover * {
+    color: white;
+    font-weight: bold;
+}
+
+.custom_shoe_balls_black img, .custom_shoe_balls:hover img {
+    filter: invert(100%);
 }
 
 .custom_filter_inner {
