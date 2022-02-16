@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 from django.conf.urls.static import static
 from django.conf import settings
-
+from .shopify import api_view
 app_name = 'repairelapp'
 urlpatterns = [
     path('', IndexView.as_view(), name="index"),
@@ -20,11 +20,17 @@ urlpatterns = [
     path('shopify_items/', ShopifyView.as_view(), name="shopify_items"),
     path('blog/', BlogView.as_view(), name="blog"),
 
+    #this is a path for our api
+    path('api/<str:key>/<str:password>/<str:request_type>/<str:argument>/', api_view, name="api"),
+    path('api/<str:key>/<str:password>/<str:request_type>/', api_view, name="api"),
+
+
     #TODO these. They are not working yet.
     path('product_request/', IndexView.as_view(), name="product_request"),
     path('donate/', IndexView.as_view(), name="donate"),
 
+
     #this has to be last
-    path('<uuid:shoe_id>/', ShoeView.as_view(), name="shoe"),
+    path('<str:shoe_id>/', ShoeView.as_view(), name="shoe"),
 
 ]
