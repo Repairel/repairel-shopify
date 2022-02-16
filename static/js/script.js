@@ -162,7 +162,7 @@ function show_shoe_balls_description(shoe_balls) {
 
     var description = document.createElement("p")
     description.innerHTML = shoe_balls.dataset.description
-
+    
 
     header.appendChild(image)
     header.appendChild(title)
@@ -176,6 +176,12 @@ function show_shoe_balls_description(shoe_balls) {
     all_shoe_balls.forEach(function(element) {
         element.classList.remove("custom_shoe_balls_black")
     })
-    shoe_balls.classList.add("custom_shoe_balls_black")
+
+    if(shoe_balls.dataset.description == "" || shoe_balls.dataset.description == "None") {
+        shoe_balls_description.innerHTML = ""
+    }
+    else {
+        shoe_balls.classList.add("custom_shoe_balls_black")
+    }
 
 }
