@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import ShoeItem, ShoeRequest, UserAccount
+from .models import ShoeItem, ShoeRequest
 from django.views.generic import View, TemplateView
-from .forms import ShoeRequestForm, LoginForm, RegistrationForm
+from .forms import ShoeRequestForm
 from django.contrib import messages
 from django.utils import timezone
 from repairelapp.shopify import shopify_all_products, shopify_get_product, all_articles
@@ -32,65 +32,6 @@ class AboutView(TemplateView):
 
 class FAQView(TemplateView):
     template_name = 'faq.html'
-
-class LoginView(View):
-    def get(self, *args, **kwargs):
-        form = RegistrationForm()
-        context = {
-            'form' : form
-        }
-        return render(self.request, 'login.html', context)
-
-    def post(self, *args, **kwargs):
-        form = LoginForm(self.request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get('name')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            try:
-                user = UserAccount()
-                user.name = name
-                user.email = email
-                user.password = password
-                user.save()
-                messages.success(self.request, "We have successfully created your account. Thank You!")
-                return redirect("repairelapp:index")
-            except:
-                messages.info(self.request, "Something went wrong! Please retry after some time.")
-                return redirect("repairelapp:registration")
-        else:
-            messages.info(self.request, "Something went wrong! Please retry after some time.")
-            return redirect("repairelapp:registration")
-
-
-class RegistrationView(View):
-    def get(self, *args, **kwargs):
-        form = RegistrationForm()
-        context = {
-            'form' : form
-        }
-        return render(self.request, 'login.html', context)
-
-    def post(self, *args, **kwargs):
-        form = RegistrationForm(self.request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get('name')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            try:
-                user = UserAccount()
-                user.name = name
-                user.email = email
-                user.password = password
-                user.save()
-                messages.success(self.request, "We have successfully created your account. Thank You!")
-                return redirect("repairelapp:index")
-            except:
-                messages.info(self.request, "Something went wrong! Please retry after some time.")
-                return redirect("repairelapp:registration")
-        else:
-            messages.info(self.request, "Something went wrong! Please retry after some time.")
-            return redirect("repairelapp:registration")
 
 class ShoppingCartView(TemplateView):
     template_name = 'shopping-cart.html'
