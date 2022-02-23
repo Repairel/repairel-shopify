@@ -6,20 +6,20 @@ SHOPIFY_API_KEY = None
 SHOPIFY_API_PASSWORD = None
 REPAIREL_API_KEY = None
 REPAIREL_API_PASSWORD = None
-#try:
-from repairelapp import keys
-SHOPIFY_API_KEY = keys.API_KEY
-SHOPIFY_API_PASSWORD = keys.PASSWORD
-REPAIREL_API_KEY = keys.REPAIREL_API_KEY
-REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
+try:
+    from repairelapp import keys
+    SHOPIFY_API_KEY = keys.API_KEY
+    SHOPIFY_API_PASSWORD = keys.PASSWORD
+    REPAIREL_API_KEY = keys.REPAIREL_API_KEY
+    REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
 
-# except:
-#     #alternative for AWS production server
-#     import os
-#     SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
-#     SHOPIFY_API_PASSWORD = os.environ.get('SHOPIFY_API_PASSWORD')
-#     REPAIREL_API_KEY = os.environ.get('REPAIREL_API_KEY')
-#     REPAIREL_API_PASSWORD = os.environ.get('REPAIREL_API_PASSWORD')
+except:
+    #alternative for AWS production server
+    import os
+    SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
+    SHOPIFY_API_PASSWORD = os.environ.get('SHOPIFY_API_PASSWORD')
+    REPAIREL_API_KEY = os.environ.get('REPAIREL_API_KEY')
+    REPAIREL_API_PASSWORD = os.environ.get('REPAIREL_API_PASSWORD')
 
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 

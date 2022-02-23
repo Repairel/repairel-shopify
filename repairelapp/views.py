@@ -4,7 +4,7 @@ from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm, LoginForm, RegistrationForm
 from django.contrib import messages
 from django.utils import timezone
-from repairelapp.shopify import shopify_all_products, shopify_get_product
+from repairelapp.shopify import shopify_all_products, shopify_get_product, all_articles
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
 
@@ -139,33 +139,9 @@ class RequestView(View):
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
 
-# class ShopifyView(View):
-#     def get(self, *args, **kwargs):
-#         get_products = shopify_products.get_products()
-#         products = get_products['products']
-#         display_items = []
-#         for prod in products:
-#             if prod["status"] != "active":
-#                 continue
-#             sizes = [variant["option1"] for variant in prod["variants"]]
-#             price = min([variant["price"] for variant in prod["variants"]])
-#             max_size = max(sizes)
-#             min_size = min(sizes)
-#             display_items.append({
-#                 "title": prod["title"],
-#                 "image": prod["image"]["src"],
-#                 "size": f'{min_size}-{max_size}',
-#                 "price": price,
-#             })
-#
-#         context = {
-#             'products': display_items,
-#         }
-#         return render(self.request, "shopify_items.html", context)
-
 class BlogView(TemplateView):
     def get(self, *args, **kwargs):
-
+        blogs = all_articles()
         context = {
             'blogs': blogs
         }
