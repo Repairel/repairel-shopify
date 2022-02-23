@@ -14,7 +14,6 @@ urlpatterns = [
     path('engage/', EngageView.as_view(), name="engage"),
     path('sustainability/', SustainabilityView.as_view(), name="sustainability"),
     path('terms/', TermsView.as_view(), name="terms"),
-    path('request/', RequestView.as_view(), name="request"),
     path('gdpr/', GDPRView.as_view(), name="gdpr"),
     path('scoring/', ScoringView.as_view(), name="scoring"),
     #path('shopify_items/', ShopifyView.as_view(), name="shopify_items"),
