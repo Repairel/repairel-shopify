@@ -5,6 +5,7 @@ default:
 stages:
     - Build
     - Test
+    - Deployment
 
 Dependencies:
     stage: Build
@@ -15,3 +16,17 @@ Testing:
     stage: Test
     script:
         - python3 manage.py test
+    variables:
+        SHOPIFY_API_KEY:
+            $SHOPIFY_API_KEY
+        SHOPIFY_API_PASSWORD:
+            $SHOPIFY_API_PASSWORD
+        REPAIREL_API_KEY:
+            $REPAIREL_API_KEY
+        REPAIREL_API_PASSWORD:
+            $REPAIREL_API_PASSWORD
+
+Deploy:
+    stage: Deployment
+    script:
+        - echo "Do CD here"

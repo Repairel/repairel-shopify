@@ -46,16 +46,16 @@ class HomePageTest(TestCase):
     #     self.assertQuerysetEqual(response.context['latest_list'], [])
     #     self.assertTemplateUsed(response, 'index.html')
         
-    def test_past_shoe(self):
-        shoe = create_shoe(title="Past shoe.", days=-30)
-        response = self.client.get(reverse('repairelapp:index'))
-        self.assertQuerysetEqual(response.context['latest_list'], [shoe])
+    # def test_past_shoe(self):
+    #     shoe = create_shoe(title="Past shoe.", days=-30)
+    #     response = self.client.get(reverse('repairelapp:index'))
+    #     self.assertQuerysetEqual(response.context['latest_list'], [shoe])
         
-    def test_two_past_shoes(self):
-        shoe1 = create_shoe(title="Past shoe 1.", days=-30)
-        shoe2 = create_shoe(title="Past shoe 2.", days=-5)
-        response = self.client.get(reverse('repairelapp:index'))
-        self.assertQuerysetEqual(response.context['latest_list'], [shoe2, shoe1])
+    # def test_two_past_shoes(self):
+    #     shoe1 = create_shoe(title="Past shoe 1.", days=-30)
+    #     shoe2 = create_shoe(title="Past shoe 2.", days=-5)
+    #     response = self.client.get(reverse('repairelapp:index'))
+    #     self.assertQuerysetEqual(response.context['latest_list'], [shoe2, shoe1])
         
     # def test_future_shoe(self):
     #     create_shoe(title="Future shoe.", days=30)
@@ -63,11 +63,11 @@ class HomePageTest(TestCase):
     #     self.assertContains(response, "No shoes are available.")
     #     self.assertQuerysetEqual(response.context['latest_list'], [])
         
-    def test_future_shoe_and_past_shoe(self):
-        shoe = create_shoe(title="Past shoe.", days=-30)
-        create_shoe(title="Future shoe.", days=30)
-        response = self.client.get(reverse('repairelapp:index'))
-        self.assertQuerysetEqual(response.context['latest_list'], [shoe])
+    # def test_future_shoe_and_past_shoe(self):
+    #     shoe = create_shoe(title="Past shoe.", days=-30)
+    #     create_shoe(title="Future shoe.", days=30)
+    #     response = self.client.get(reverse('repairelapp:index'))
+    #     self.assertQuerysetEqual(response.context['latest_list'], [shoe])
         
 
 class AboutPageTest(TestCase):
