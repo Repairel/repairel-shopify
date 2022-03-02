@@ -9,8 +9,6 @@ from repairelapp.models import ShoeItem
 from repairelapp.views import (IndexView, 
                                AboutView,
                                FAQView,
-                               LoginView,
-                               RegistrationView,
                                ShoppingCartView,
                                EngageView,
                                SustainabilityView,
@@ -80,18 +78,6 @@ class FAQPageTest(TestCase):
     def test_resolve_to_faq_page_view(self):
         resolver = resolve('/faq/')
         self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
-     
-        
-class LoginPageTest(TestCase):
-    def test_resolve_to_login_page_view(self):
-        resolver = resolve('/login/')
-        self.assertEqual(resolver.func.__name__, LoginView.as_view().__name__)
-        
-        
-class RegistrationPageTest(TestCase):
-    def test_resolve_to_registration_page_view(self):
-        resolver = resolve('/registration/')
-        self.assertEqual(resolver.func.__name__, RegistrationView.as_view().__name__)
         
 
 class FAQPageTest(TestCase):
@@ -128,12 +114,6 @@ class FAQPageTest(TestCase):
     def test_resolve_to_faq_page_view(self):
         resolver = resolve('/faq/')
         self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
-        
-         
-class RequestPageTest(TestCase):
-    def test_resolve_to_request_page_view(self):
-        resolver = resolve('/request/')
-        self.assertEqual(resolver.func.__name__, RequestView.as_view().__name__)
         
   
 class GDPRPageTest(TestCase):
