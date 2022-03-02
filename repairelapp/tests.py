@@ -115,12 +115,6 @@ class FAQPageTest(TestCase):
         resolver = resolve('/faq/')
         self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
         
-         
-class RequestPageTest(TestCase):
-    def test_resolve_to_request_page_view(self):
-        resolver = resolve('/request/')
-        self.assertEqual(resolver.func.__name__, RequestView.as_view().__name__)
-        
   
 class GDPRPageTest(TestCase):
     def test_resolve_to_gdpr_page_view(self):
