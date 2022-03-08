@@ -97,7 +97,7 @@ def shopify_get_product(id):
     result = _shopify_construct_product(response_product.json()["product"])
 
     #now parse metafields
-    ENVIRONMENTAL_IMPACT_METAFIELDS = ["Design", "Raw Materials", "Material Manufacturing", "Footwear Manufacturing", "Retail", "Use", "Disposal"]
+    ENVIRONMENTAL_IMPACT_METAFIELDS = ["Design", "Raw Materials", "Material Manufacturing", "Footwear Manufacturing", "Retail", "Use", "Disposal", "Governance"]
     metafields = response_metafields.json()["metafields"]
     environmental_impact = {}
     for metafield in metafields:
