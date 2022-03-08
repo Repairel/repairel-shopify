@@ -1,33 +1,9 @@
 {%extends "base.html"%}
-{% load static%}
 {%block page%}
-<img src="{%static 'assets/img/about.jpeg'%}" alt="about image" style="width: 100%;">
-<h2 class="h_section">ABOUT US</h2>
-<p>We are REPAIREL, a Glasgow-based social enterprise startup focused on tackling the climate emergency and repairing the fashion industry- starting with footwear.</p>
-<p>REPAIREL meets people where they are in their sustainable journey to make shopping sustainable footwear as easy as possible. Incorporating sustainable practices into your life shouldn’t have to be a difficult or time consuming task. That is what led us to developing this platform.</p>
-<p><b>Why footwear?</b></p>
-<p>REPAIREL was created in response to the lack of awareness and pressure on the fast-fashion footwear industry to reckon with their contribution to the climate emergency. Often we read about the impact that the fast-fashion industry is having on the environment (as we should), yet the footwear industry seems to slip by unnoticed. With both industries set to continue growing in the following years we decided to make a stand.</p>
-<p>In our throwaway society, our clothes and footwear are made to be difficult to repair. Footwear in particular is incredibly difficult to repair or recycle at the end-of-life stage with some shoes taking as much as 1000 years to decompose.</p>
-<p><b>So what are we doing about this?</b></p>
-<p>REPAIREL targets this issue of waste created by footwear starting with our online retail and activist platform.</p>
-<p>We repair and refurbish second-hand shoes that would otherwise be sent to landfill or abroad to give them a chance at continued wear here in the UK.</p>
-<p>We also sell shoes from sustainable brands that have been pre-vetted by our team and assessed according to our Ethics and Sustainability Framework to ensure that only the best products are available for you.</p>
-<p><b>Our Framework</b></p>
-<p>REPAIREL recognises that sources on the sustainability and ethics of a brand can be unreliable at best and disingenuous at worst. So we created our Ethics and Sustainability Framework so that we could deliver this information to you in a digestible way.</p>
-<p>Each sustainable brand on our website has been assessed using this framework and only the best are given space on our platform. Each brand gains an overall rating which is displayed alongside their products and a breakdown of the brands efforts at every stage of the product lifecycle is published too.</p>
-<p>You can also compare sustainable brands while shopping on our site using our filter system so that you can pick a shoe without having to compromise on your time, money, or ethics.</p>
-<p><b>Engage for change</b></p>
-<p>Beyond our products REPAIREL is passionate about increasing awareness about the environmental and social impact of the fast fashion industry and to facilitate engagement between the public and the public sector about local environmental issues.</p>
-<p>Already we have hosted events for our local Glasgow community to converse with Council members and raise concerns for their area. Check out our Engage page to find out our latest news and opportunities for you.</p>
-<p><b>Our Supporters</b></p>
-<p>Young Innovators Award 2020/21</p>
-<p><b>Our values</b></p>
-<p>REPAIREL exists to repair the apparel industry, revolutionise the way we all consume, and live in a world with equitable solutions to climate change.</p>
-<p>Our mission is to push for radical and immediate action in tackling the climate emergency. We have to recognise that we need to take a two-pronged approach- one that accelerates individual change as well as system change, because the two are inherently linked.</p>
-<p><b>Footwear for the future</b></p>
-<p>We’re not stopping here.</p>
-<p>We plan to open an Innovation Lab by 2023 to facilitate more sustainable ways to design shoes for recycling and disposal at end-of-life. Our focus with this lab is system change, innovation and re-shaping the industry to a more regenerative model.</p>
-<p>We will also open a Repair Hub which will focus on engaging the local community with repair and teaching practical skills on how to extend the use-cycle of your own footwear.</p>
-<p>In 5 years' time we want to have launched all 3 stages of REPAIREL and make it a world-leading centre for circular economy in footwear.</p>
-<p><b>So put your best foot forward and help us tackle climate change together.</b></p>
+    {% autoescape off %}
+    <div>
+        {{ body }}
+    </div>
+    {% endautoescape %}
+    <br>
 {%endblock%}

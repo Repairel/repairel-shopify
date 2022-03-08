@@ -1,36 +1,9 @@
 {%extends "base.html"%}
-{% load static%}
 {%block page%}
-<h2 class="h_section">FAQ</h2>
-<p><b>Where do you get your second-hand shoes from?</b></p>
-<p>The second-hand shoes that we refurbish are donated items that we have received during our donation campaigns. Our recent campaign was focused on the donation of second-hand Doc Martens and we plan to run more donation campaigns in future.</p>
-<p><b>How do you refurbish your shoes?</b></p>
-<p>Our shoes are refurbished by a third-party business located in the centre of Glasgow. Each shoe is then thoroughly assessed by our team to ensure that each one has been repaired or refurbished to the best standard possible for that item.</p>
-<p>*Please note that the state of repair may vary based on the state we received it.</p>
-<p><b>Why are some of your shoes new?</b></p>
-<p>Some of our shoes are new as they come from sustainable shoe brands rather than second-hand donations. These shoes are from companies where sustainability is embedded in their business and each brand has gained a rating to reflect the steps they are taking to create sustainable and ethical products.</p>
-<p>You can learn more about how we rate brands by looking at our <a href="http://repairel.org/scoring">http://repairel.org/scoring</a> page.</p>
-<p><b>I'm worried the shoe won't fit- how do you size them?</b></p>
-<p>We follow the UK standard sizing on our website. We try to use the size given on the shoe but sometimes that is not possible due to wear and tear, therefore, we measure and state the size to the best of our ability</p>
-<p><b>UK vs EU</b></p>
-<ul>
-  <li>UK 3 = EU 36</li>
-  <li>UK 4 = EU 37</li>
-  <li>UK 5 = EU 38</li>
-  <li>UK 6 = EU 39</li>
-  <li>UK 7 = EU 41</li>
-  <li>UK 8 = EU 42</li>
-  <li>UK 9 = EU 43</li>
-</ul>
-<p><b>How do I know what condition the second-hand shoes are in?</b></p>
-<p>We developed our own grading system in order to represent the state of the second-hand products to the best of our ability. Each pair is assessed and given a grade based on the condition it is in. See the breakdown below for further information.</p>
-<ul>
-  <li><b>Like new/Almost new</b><span> - Item is in great condition with no scratches, stains, or repairs.</span></li>
-  <li><b>Very good</b><span> - Item appears slightly worn through wear and tear with a few minor scuff marks or wrinkles.</span></li>
-  <li><b>Good</b><span> - Item is visibly worn with either light scratches, scuff marks, wrinkles, and/or fading in less obvious places.</span></li>
-  <li><b>Acceptable</b><span> - Item is visibly worn with a combination of scratches, scuff marks, wrinkles, and fading in an obvious place.</span></li>
-</ul>
-<p><b>I can’t find the right size of refurbished shoe - can I request a size?</b></p>
-<p>Absolutely! In future we hope to have a wide range of shoe styles and sizes for our customers. If you haven’t been able to find what you were looking for then feel free to fill out our request form and we’ll notify you when your shoe comes into stock.</p>
-<br><br><br><br><br>
+    {% autoescape off %}
+    <div>
+        {{ body }}
+    </div>
+    {% endautoescape %}
+    <br>
 {%endblock%}

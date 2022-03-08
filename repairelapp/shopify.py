@@ -158,3 +158,14 @@ def api_view(request, key, password, request_type, argument=None):
         return HttpResponse("POST requests are not allowed", status=403)
 
     return HttpResponse(status=403)
+
+
+def all_pages():
+    r = requests.get(shopify_api + "pages.json")
+    page_dict = {}
+    for i in range(len(r.json()['pages'])):
+        page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
+
+    for i in page_dict:
+        print(i)
+    return page_dict
