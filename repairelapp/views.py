@@ -56,8 +56,17 @@ class FAQView(TemplateView):
 class ShoppingCartView(TemplateView):
     template_name = 'shopping-cart.html'
 
-class EngageView(TemplateView):
-    template_name = 'engage.html'
+class ActivismView(TemplateView):
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['Activism']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "activism.html", context)
+        except KeyError:
+            return 0
 
 class SustainabilityView(TemplateView):
     def get(self, *args, **kwargs):

@@ -166,6 +166,4 @@ def all_pages():
     for i in range(len(r.json()['pages'])):
         page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
 
-    for i in page_dict:
-        print(i)
     return page_dict
