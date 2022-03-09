@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 
 register = template.Library()
 
@@ -24,3 +25,41 @@ def shoe_decide_ball_color(number):
         return base + "orange"
     else:
         return base + "green"
+
+@register.simple_tag
+def product_get_sizes(product):
+    if product.options:
+        for option in product.options:
+            if option.name == "Size":
+                return option.values
+    return ""
+
+@register.simple_tag
+def array_to_string(array):
+    if array:
+        return ", ".join(array)
+    return ""
+
+@register.simple_tag
+def sizes_to_limit_string(array):
+    if array:
+        if len(array) == 1:
+            return array[0]
+        #convert each element to float
+        array = [float(x) for x in array]
+        maximum = max(array)
+        minimum = min(array)
+        return f"{minimum}-{maximum}"
+    return ""
+
+@register.simple_tag
+def cart_total_quantity(cart):
+    return sum([item["quantity"] for item in cart])
+
+@register.simple_tag
+def construct_checkout_url(cart):
+    #cart is a list of dictionaries
+    arguments = []
+    for item in cart:
+        arguments.append(item["variant_id"] + ":" + str(item["quantity"]))
+    return f"{settings.SHOPIFY_STORE_URL}cart/{','.join(arguments)}"
