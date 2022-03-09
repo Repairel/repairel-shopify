@@ -200,6 +200,16 @@ def api_view(request, key, password, request_type, argument=None):
 
     return HttpResponse(status=403)
 
+
+def all_pages():
+    r = requests.get(shopify_api + "pages.json")
+    page_dict = {}
+    for i in range(len(r.json()['pages'])):
+        page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
+
+    return page_dict
+
+
 def cart_remove_duplicates(request):
     cart = json.loads(request.session.get('cart', '[]'))
     #merge duplicate items

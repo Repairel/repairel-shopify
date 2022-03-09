@@ -10,7 +10,7 @@ from repairelapp.views import (IndexView,
                                AboutView,
                                FAQView,
                                ShoppingCartView,
-                               EngageView,
+                               ActivismView,
                                SustainabilityView,
                                TermsView,
                                RequestView,
@@ -92,10 +92,10 @@ class ShoppingCartPageTest(TestCase):
         self.assertEqual(resolver.func.__name__, ShoppingCartView.as_view().__name__)
         
         
-class EngagePageTest(TestCase):
+class ActivismPageTest(TestCase):
     def test_resolve_to_engage_page_view(self):
-        resolver = resolve('/engage/')
-        self.assertEqual(resolver.func.__name__, EngageView.as_view().__name__)
+        resolver = resolve('/activism/')
+        self.assertEqual(resolver.func.__name__, ActivismView.as_view().__name__)
         
      
 class SustainabilityPageTest(TestCase):

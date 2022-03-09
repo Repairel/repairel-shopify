@@ -5,7 +5,7 @@ from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm
 from django.contrib import messages
 from django.utils import timezone
-from repairelapp.shopify import shopify_all_products, shopify_get_product, all_articles, add_to_cart
+from repairelapp.shopify import shopify_all_products, shopify_get_product, all_articles, add_to_cart, all_pages
 import json
 
 def latest_updated_list():
@@ -31,19 +31,57 @@ class IndexView(View):
         return render(self.request, "index.html", context)
 
 class AboutView(TemplateView):
-    template_name = 'about.html'
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['About']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "about.html", context)
+        except KeyError:
+            return 0
+
 
 class FAQView(TemplateView):
-    template_name = 'faq.html'
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['FAQ']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "faq.html", context)
+        except KeyError:
+            return 0
+
 
 class ShoppingCartView(TemplateView):
     template_name = 'shopping-cart.html'
 
-class EngageView(TemplateView):
-    template_name = 'engage.html'
+class ActivismView(TemplateView):
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['Activism']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "activism.html", context)
+        except KeyError:
+            return 0
 
 class SustainabilityView(TemplateView):
-    template_name = 'sustainability.html'
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['Sustainability']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "sustainability.html", context)
+        except KeyError:
+            return 0
 
 class TermsView(TemplateView):
     template_name = 'terms.html'
