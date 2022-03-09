@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 import requests
-
+import json
 
 SHOPIFY_API_KEY = None
 SHOPIFY_API_PASSWORD = None
@@ -23,8 +23,24 @@ except:
 
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
+class Variant:
+    def __init__(self, id, title, price, option1, option2, option3):
+        self.id = id
+        self.title = title
+        self.price = price
+        self.option1 = option1
+        self.option2 = option2
+        self.option3 = option3
+
+class Option:
+    def __init__(self, name, position, values):
+        self.name = name
+        self.position = position
+        #array of possible values
+        self.values = values
+
 class ShopifyProduct:
-    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, extra_info=None):
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, options, variants, extra_info=None):
         self.id = id
         self.name = name
         self.description = description
@@ -34,10 +50,23 @@ class ShopifyProduct:
         self.tags = tags
         self.type = product_type
         self.vendor = vendor
+        self.options = options
+        self.variants = variants
         self.extra_info = extra_info
 
     def __str__(self):
         return '%s: %s' % (self.id, self.name)
+
+    def to_dict(self):
+        if self.options:
+            for i in range(len(self.options)):
+                self.options[i] = self.options[i].__dict__
+        if self.variants:
+            for i in range(len(self.variants)):
+                self.variants[i] = self.variants[i].__dict__
+        if self.extra_info:
+            self.extra_info = self.extra_info.__dict__
+        return self.__dict__
 
 class ShopifyProductAdvancedInfo:
     def __init__(self, environmental_impact, is_affiliate, affiliate_link):
@@ -46,12 +75,15 @@ class ShopifyProductAdvancedInfo:
         self.is_affiliate = is_affiliate
         self.affiliate_link = affiliate_link
 
-
 class BlogPost:
     def __init__(self, title, date, body):
         self.title = title
         self.date = date
         self.body = body
+
+class Cart:
+    def __init__(self, products):
+        self.products = products
 
 def _shopify_construct_article(article):
     published = article['published_at']
@@ -77,7 +109,18 @@ def _shopify_construct_product(shopify_product):
     images = []
     for image in shopify_product["images"]:
         images.append(image["src"])
-    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"], shopify_product["product_type"], shopify_product["vendor"])
+    
+    #construct options
+    options = []
+    for option in shopify_product["options"]: 
+        options.append(Option(option["name"], option["position"], option["values"]))
+
+    #construct variants
+    variants = []
+    for variant in shopify_product["variants"]:
+        variants.append(Variant(variant["id"], variant["title"], variant["price"], variant["option1"], variant["option2"], variant["option3"]))
+
+    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"], shopify_product["product_type"], shopify_product["vendor"], options, variants)
 
 def shopify_all_products():
     result = []
@@ -145,11 +188,9 @@ def api_view(request, key, password, request_type, argument=None):
             raw_result = shopify_all_products()
             result["products"] = []
             for i in raw_result:
-                result["products"].append(i.__dict__)
+                result["products"].append(i.to_dict())
         elif request_type == 'product':
-            result = shopify_get_product(argument).__dict__
-            if result["extra_info"]:
-                result["extra_info"] = result["extra_info"].__dict__
+            result = shopify_get_product(argument).to_dict()
         else:
             return HttpResponse('Unknown request type', status=400)
 
@@ -167,3 +208,29 @@ def all_pages():
         page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
 
     return page_dict
+
+
+def cart_remove_duplicates(request):
+    cart = json.loads(request.session.get('cart', '[]'))
+    #merge duplicate items
+    dictionary = {}
+    for item in cart:
+        dictionary[item['variant_id']] = dictionary.get(item['variant_id'], 0) + item['quantity']
+
+    #convert to list
+    result = []
+    for key, value in dictionary.items():
+        result.append({'variant_id': key, 'quantity': value})
+
+    #save back to session
+    request.session['cart'] = json.dumps(result)
+
+def add_to_cart(request, variant_id, quantity):
+    #TODO protection against taking more than stock
+    request.session['cart'] = json.dumps(json.loads(request.session.get('cart', '[]')) + [{'variant_id': variant_id, 'quantity': quantity}])
+    cart_remove_duplicates(request)
+
+#returns list [{'variant_id': x 'quantity': y}, ...]
+def get_cart(request):
+    cart_remove_duplicates(request)
+    return json.loads(request.session.get('cart', '[]'))

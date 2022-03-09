@@ -6,17 +6,33 @@
         <img loading="lazy" src="{{i}}">
     {%endfor%}
 </div>
+
+{%for i in shoe.variants%}
+<span class="custom_shoe_variants shoe_variants" data-id="{{i.id}}" data-title="{{i.title}}" data-price="{{i.price}}" data-option1="{{i.option1}}" data-option2="{{i.option2}}" data-option3="{{i.option3}}"></span>
+{%endfor%}
+
 <div class="custom_shoe_title_wrapper">
-    <h3 class="custom_shoe_title">{{shoe.name}}</h3><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{shoe.size}}</span>
+    <h3 class="custom_shoe_title">{{shoe.name}}</h3>
     <div><span>£</span><span>{{shoe.price}}</span></div>
+    <div class="custom_shoe_option_wrapper">
+        {%for option in shoe.options%}
+            <div class="custom_shoe_option">
+                <h4>{{option.name}}</h4>
+                <div class="custom_shoe_option_values">
+                    {%for i in option.values%}
+                        <span class="custom_shoe_option_value {%if forloop.counter0 == 0%}shoe_option_active{%endif%}" data-position="{{option.position}}" data-value="{{i}}" onclick="shoe_option_click(this)">{{i}}</span>
+                    {%endfor%}
+                </div>
+            </div>
+        {%endfor%}
+    </div>
 </div>
     <hr>
     <div class="custom_shoe_buttons">
         {%if shoe.extra_info.is_affiliate%}
             <a href="{{shoe.extra_info.affiliate_link}}"><button class="button_white">SHOP THIS BRAND</button></a>
         {%else%}
-            <!--TODO-->
-            <a href=""><button class="button_white">ADD TO CART</button></a>
+            <button class="button_white" onclick="shoe_add_to_cart(this.dataset.csrf)" data-csrf="{{csrf_token}}">ADD TO CART</button>
         {%endif%}
         <a href="https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg"><button class="button_white">ADD TO WISHLIST</button></a>
     </div>

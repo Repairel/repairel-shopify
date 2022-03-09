@@ -608,6 +608,44 @@ body {
     text-align: center;
 }
 
+.custom_shoe_option_values {
+    padding: 10px 0px;
+}
+
+.custom_shoe_option h4 {
+    margin-bottom: 0;
+}
+
+.custom_shoe_option_value {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin: 5px 0px;
+}
+
+.custom_shoe_option_value:hover, .shoe_option_active {
+    background-color: var(--black-color);
+    color: white !important;
+}
+
+.custom_shoe_variants {
+    display: none;
+}
+
+.custom_shopping_cart {
+    position: relative;
+}
+
+.custom_shopping_cart span {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 0.8em;
+    text-decoration: none;
+}
+
 @media screen and (max-width: 700px) {
     .custom_header_buttons {
         display: none;

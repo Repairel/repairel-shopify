@@ -1,4 +1,4 @@
-{% load static%}
+{% load static templatetags%}
 <meta name="viewport" content="width=device-width">
 <html style="overflow-x: hidden;">
     <head>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="custom_header_personal">
-                        <a href="{%url 'repairelapp:shopping_cart'%}"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg></a>
+                        <a href="{%construct_checkout_url cart%}" class="custom_shopping_cart"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
                     </div>
                 </div>
                 {% block page %}{% endblock %}
