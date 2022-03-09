@@ -48,13 +48,16 @@ function compute_filter() {
         //here additionally filter the other things
         var condition = get_option(".filter_option_Condition")
         if(condition)
-            pass &&= element.dataset.condition == condition || condition == "All Conditions"
+            pass &&= element.dataset.condition.includes(condition) || condition == "All Conditions"
+
         var size = get_option(".filter_option_Size")
         if(size)
-            pass &&= element.dataset.size == size || size == "All Sizes"
+            pass &&= element.dataset.size.includes(size) || size == "All Sizes"
+
         var brand = get_option(".filter_option_Brand")
         if(brand)
-            pass &&= element.dataset.brand == brand || brand == "All Brands"
+            pass &&= element.dataset.brand.includes(brand) || brand == "All Brands"
+
         if(pass) {
             element.style.display = "block"
             element.parentElement.appendChild(element)
@@ -184,4 +187,63 @@ function show_shoe_balls_description(shoe_balls) {
         shoe_balls.classList.add("custom_shoe_balls_black")
     }
 
+}
+
+function shoe_options_get_variant_id() {
+    //see what options are selected
+    var selected_options = document.querySelectorAll(".shoe_option_active")
+    var variants = document.querySelectorAll(".shoe_variants")
+
+    for(var i = 0; i < variants.length; i++) {
+        var variant = variants[i]
+        var match = true
+        for(var j = 0; j < selected_options.length; j++) {
+            var option = selected_options[j]
+            if(variant.dataset["option" + option.dataset.position] != option.dataset.value) {
+                match = false
+                break
+            }
+        }
+        if(match) {
+            return variant.dataset.id
+        }
+    }
+    return null
+}
+
+function shoe_option_click(element) {
+    var parent = element.parentElement
+    for(var i = 0; i < parent.children.length; i++) {
+        parent.children[i].classList.remove("shoe_option_active")
+    }
+    element.classList.toggle("shoe_option_active")
+}
+
+function shoe_add_to_cart(csrf_token) {
+    var variant = shoe_options_get_variant_id()
+    if(variant != null) {
+        fetch("", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrf_token
+            },
+            body: JSON.stringify({variant_id: variant})
+        }).then(function(response) {
+            if(response.status == 200) {
+                //success
+                //TODO
+                console.log("successfully added to cart")
+                location.reload()
+            }
+            else {
+                //failure
+                console.log("failed to add to cart")
+            }
+        })
+    }
+    else {
+        alert("There was an error adding this product to the cart")
+        console.log("there was an error adding this product to the cart")
+    }
 }

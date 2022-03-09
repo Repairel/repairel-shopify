@@ -8,7 +8,6 @@ urlpatterns = [
     path('', IndexView.as_view(), name="index"),
     path('about/', AboutView.as_view(), name="about"),
     path('faq/', FAQView.as_view(), name="faq"),
-    path('shopping_cart/', ShoppingCartView.as_view(), name="shopping_cart"),
     path('engage/', EngageView.as_view(), name="engage"),
     path('sustainability/', SustainabilityView.as_view(), name="sustainability"),
     path('terms/', TermsView.as_view(), name="terms"),

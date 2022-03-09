@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 import requests
-
+import json
 
 SHOPIFY_API_KEY = None
 SHOPIFY_API_PASSWORD = None
@@ -199,3 +199,28 @@ def api_view(request, key, password, request_type, argument=None):
         return HttpResponse("POST requests are not allowed", status=403)
 
     return HttpResponse(status=403)
+
+def cart_remove_duplicates(request):
+    cart = json.loads(request.session.get('cart', '[]'))
+    #merge duplicate items
+    dictionary = {}
+    for item in cart:
+        dictionary[item['variant_id']] = dictionary.get(item['variant_id'], 0) + item['quantity']
+
+    #convert to list
+    result = []
+    for key, value in dictionary.items():
+        result.append({'variant_id': key, 'quantity': value})
+
+    #save back to session
+    request.session['cart'] = json.dumps(result)
+
+def add_to_cart(request, variant_id, quantity):
+    #TODO protection against taking more than stock
+    request.session['cart'] = json.dumps(json.loads(request.session.get('cart', '[]')) + [{'variant_id': variant_id, 'quantity': quantity}])
+    cart_remove_duplicates(request)
+
+#returns list [{'variant_id': x 'quantity': y}, ...]
+def get_cart(request):
+    cart_remove_duplicates(request)
+    return json.loads(request.session.get('cart', '[]'))
