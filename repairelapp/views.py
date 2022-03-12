@@ -1,3 +1,4 @@
+from urllib import request
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import ShoeItem, ShoeRequest
@@ -5,30 +6,54 @@ from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm
 from django.contrib import messages
 from django.utils import timezone
-from repairelapp.shopify import shopify_all_products, shopify_get_product, all_articles, add_to_cart, all_pages
+from repairelapp.shopify import *
 import json
 
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
 
 class IndexView(View):
+    def get(self, *args, **kwargs):
+        return render(self.request, "index.html", {})
 
+class ShoesView(View):
     def get_queryset(self):
         return ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
 
     def get(self, *args, **kwargs):
+        type = kwargs.get("type", "")
         latest_updated = ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
         ongoing_list = ShoeItem.objects.filter(in_stock=True).order_by("-updated")
         rated_list = ShoeItem.objects.filter(in_stock=True).order_by("-rating")
 
         items = shopify_all_products()
+
+        tag_filter = None
+        if type == "new":
+            tag_filter = "New"
+        elif type == "refurbished":
+            tag_filter = "Refurbished"
+        elif type == "women":
+            tag_filter = "Women"
+        elif type == "men":
+            tag_filter = "Men"
+        else:
+            return HttpResponse(status=404)
+
+        if tag_filter:
+            filtered_items = []
+            for i in items:
+                if tag_filter in i.tags:
+                    filtered_items.append(i)
+            items = filtered_items
+
         context = {
             'latest_list': latest_updated,
             'ongoing_list': ongoing_list,
             'rated_list': rated_list,
             'items': items,
         }
-        return render(self.request, "index.html", context)
+        return render(self.request, "shoes.html", context)
 
 class AboutView(TemplateView):
     def get(self, *args, **kwargs):
@@ -123,11 +148,23 @@ class ScoringView(TemplateView):
 
 class BlogView(TemplateView):
     def get(self, *args, **kwargs):
-        blogs = all_articles()
-        context = {
-            'blogs': blogs
-        }
+        blog_name = kwargs.get("blog_name", "") 
+        blog_name = blog_name.replace("-", " ")
 
+        articles = all_articles()
+
+        article = None
+        for i in articles:
+            if i.title == blog_name:
+                article = i
+                break
+
+        if article == None:
+            return HttpResponse(status=404)
+
+        context = {
+            'article': article
+        }
         return render(self.request, "blog.html", context)
 
 class ShoeView(TemplateView):

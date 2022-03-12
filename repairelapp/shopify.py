@@ -84,7 +84,7 @@ class BlogPost:
 class Cart:
     def __init__(self, products):
         self.products = products
-
+        
 def _shopify_construct_article(article):
     published = article['published_at']
     y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
@@ -120,7 +120,7 @@ def _shopify_construct_product(shopify_product):
     for variant in shopify_product["variants"]:
         variants.append(Variant(variant["id"], variant["title"], variant["price"], variant["option1"], variant["option2"], variant["option3"]))
 
-    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"], shopify_product["product_type"], shopify_product["vendor"], options, variants)
+    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"].split(", "), shopify_product["product_type"], shopify_product["vendor"], options, variants)
 
 def shopify_all_products():
     result = []

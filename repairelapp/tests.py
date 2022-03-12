@@ -6,7 +6,7 @@ from django.test import (TestCase,
                         )
                          
 from repairelapp.models import ShoeItem
-from repairelapp.views import (IndexView, 
+from repairelapp.views import (ShoesView, 
                                AboutView,
                                FAQView,
                                ShoppingCartView,
@@ -35,7 +35,7 @@ def create_shoe(title, days):
 class HomePageTest(TestCase):
     def test_resolve_to_index_page_view(self):
         resolver = resolve('/')
-        self.assertEqual(resolver.func.__name__, IndexView.as_view().__name__)
+        self.assertEqual(resolver.func.__name__, ShoesView.as_view().__name__)
         
     # def test_no_shoe(self):
     #     response = self.client.get(reverse('repairelapp:index'))
