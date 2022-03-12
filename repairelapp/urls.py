@@ -15,6 +15,7 @@ urlpatterns = [
     path('terms/', TermsView.as_view(), name="terms"),
     path('gdpr/', GDPRView.as_view(), name="gdpr"),
     path('scoring/', ScoringView.as_view(), name="scoring"),
+    path('blog/', AllBlogsView.as_view(), name="all_blogs"),
     path('blog/<str:blog_name>', BlogView.as_view(), name="blog"),
 
     #this is a path for our api

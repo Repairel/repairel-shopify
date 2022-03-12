@@ -146,6 +146,27 @@ class RequestView(View):
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
 
+class AllBlogsView(TemplateView):
+    def get(self, *args, **kwargs):
+        blog_name = kwargs.get("blog_name", "") 
+        blog_name = blog_name.replace("-", " ")
+
+        articles = all_articles()
+
+        # article = None
+        # for i in articles:
+        #     if i.title == blog_name:
+        #         article = i
+        #         break
+
+        # if article == None:
+            # return HttpResponse(status=404)
+
+        context = {
+            'articles': articles
+        }
+        return render(self.request, "all_blogs.html", context)
+
 class BlogView(TemplateView):
     def get(self, *args, **kwargs):
         blog_name = kwargs.get("blog_name", "") 

@@ -1,0 +1,11 @@
+{%extends "base.html"%}
+{%block page%}
+{%load templatetags%}
+
+{%for i in articles%}
+{%blog_get_url i as blog_url%}
+<a class="custom_all_blogs_blog" href="{{blog_url}}">
+    {{i.title}}
+</a>
+{%endfor%}
+{%endblock%}
