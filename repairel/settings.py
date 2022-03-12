@@ -159,3 +159,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SHOPIFY_STORE_URL = "https://repairel-dev.myshopify.com/"
+
+DEBUG = True
