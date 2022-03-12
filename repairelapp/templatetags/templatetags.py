@@ -46,7 +46,10 @@ def sizes_to_limit_string(array):
         if len(array) == 1:
             return array[0]
         #convert each element to float
-        array = [float(x) for x in array]
+        try:
+            array = [float(x) for x in array]
+        except:
+            return ""
         maximum = max(array)
         minimum = min(array)
         return f"{minimum}-{maximum}"
