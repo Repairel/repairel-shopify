@@ -47,7 +47,7 @@ def create_customer_subscriber():
     customer = shopify.Customer()
     customer.email = "subscribertest@gmail.com"
     customer.accepts_marketing = True
-    is_customer_saved = customer.save()
+    customer = customer.save()
 
 class HomePageTest(TestCase):
     def test_resolve_to_index_page_view(self):
