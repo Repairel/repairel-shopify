@@ -23,14 +23,15 @@ from repairelapp.views import (ShoesView,
                                IndexView,
                                )
 
-from repairelapp import (keys, 
-                         shopify
-                        )
+from repairelapp import shopify
 import shopify, requests, time, datetime
 
+from repairelapp.access_keys import get_keys
+SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_KEY = get_keys()
+
+shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
 client=Client()
-shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (keys.API_KEY, keys.PASSWORD)
 
 def create_shoe(title, days):
     time = timezone.now() + datetime.timedelta(days=days)
@@ -39,7 +40,7 @@ def create_shoe(title, days):
 def connect():
     shop_url = "repairel-dev.myshopify.com"
     api_version = '2020-10'
-    session = shopify.Session(shop_url, api_version, keys.PASSWORD)
+    session = shopify.Session(shop_url, api_version, SHOPIFY_API_PASSWORD)
     shopify.ShopifyResource.activate_session(session)
     
 def create_customer_subscriber():
