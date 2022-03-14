@@ -37,10 +37,16 @@ class ShoesView(View):
             tag_filter = "Women"
         elif type == "men":
             tag_filter = "Men"
+        elif type == "unisex":
+            tag_filter = "Unisex"
+        elif type == "kids":
+            tag_filter = "Kids"
+        elif type == "all":
+            tag_filter = ""
         else:
             return HttpResponse(status=404)
 
-        if tag_filter:
+        if tag_filter != "":
             filtered_items = []
             for i in items:
                 if tag_filter in i.tags:

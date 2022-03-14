@@ -15,13 +15,26 @@
     <body style="height:100%; width: 100vw; border-collapse:collapse; display: table; min-width: 450px;">
         <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
-                <a href="{%url 'repairelapp:index'%}"><svg class="custom_hamburger_menu_repairel_logo"><image xlink:href="{%static 'assets/icons/repairel_logo.svg'%}" height="100%"></image></svg></a>
-                <div>
-                    <a href="{%url 'repairelapp:index'%}" class="a_link"><h2 class="h2_light">SHOP</h2></a><br>
-                    <a href="{%url 'repairelapp:activism'%}" class="a_link"><h2 class="h2_light">ACTIVISM</h2></a><br>
-                    <a href="{%url 'repairelapp:sustainability'%}" class="a_link"><h2 class="h2_light">SUSTAINABILITY</h2></a><br>
-                    <a href="{%url 'repairelapp:about'%}" class="a_link"><h2 class="h2_light">ABOUT</h2></a><br>
-                    <a href="{%url 'repairelapp:faq'%}" class="a_link"><h2 class="h2_light">FAQ</h2></a>
+                <div class="custom_hamburger_inside_mid">
+                    <div>
+                        <a href="{%url 'repairelapp:shoes' 'new'%}" class="a_link"><h3 class="h2_light">New Shoes</h3></a>
+                        <a href="{%url 'repairelapp:shoes' 'refurbished'%}" class="a_link"><h3 class="h2_light">Refurbished Shoes</h3></a>
+                        <a href="{%url 'repairelapp:shoes' 'women'%}" class="a_link"><h3 class="h2_light">Women's Shoes</h3></a>
+                        <a href="{%url 'repairelapp:shoes' 'men'%}" class="a_link"><h3 class="h2_light">Men's Shoes</h3></a>
+                        <a href="{%url 'repairelapp:shoes' 'unisex'%}" class="a_link"><h3 class="h2_light">Unisex Shoes</h3></a>
+                        <a href="{%url 'repairelapp:shoes' 'kids'%}" class="a_link"><h3 class="h2_light">Kid's Shoes</h3></a>
+                        <a href="{%url 'repairelapp:shoes' 'all'%}" class="a_link"><h3 class="h2_light">All Shoes</h3></a>
+                        <a href="" class="a_link a_no_link"><h3 class="h2_light">Other Products</h3></a>
+                        <a href="" class="a_link a_no_link"><h3 class="h2_light">All Products</h3></a>
+                    </div>
+                    <div>
+                        <a href="{%url 'repairelapp:about'%}" class="a_link"><h3 class="h2_light">About Us</h3></a>
+                        <a href="{%url 'repairelapp:activism'%}" class="a_link"><h3 class="h2_light">Activism</h3></a>
+                        <a href="{%url 'repairelapp:sustainability'%}" class="a_link"><h3 class="h2_light">Sustainability</h3></a>
+                        <a href="{%url 'repairelapp:faq'%}" class="a_link"><h3 class="h2_light">FAQ</h3></a>
+                        <a href="" class="a_link a_no_link"><h3 class="h2_light">Terms & Conditions</h3></a>
+                        <a href="" class="a_link a_no_link"><h3 class="h2_light">GDPR</h3></a>
+                    </div>
                 </div>
                 <div>
                     <a target="_blank" href="https://www.facebook.com/RepairelHub"><svg><image xlink:href="{%static 'assets/icons/fb.svg'%}" height="100%"></image></svg></a>
@@ -34,19 +47,16 @@
         <div id="body_wrapper" class="custom_body_wrapper">
             <div class="custom_body">
                 <div class="custom_header">
-                    <div id="hamburger" class="custom_hamburger" onclick="hamburger_menu_toggle()">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                    <div class="custom_header_middle">
-                        <div>
-                            <a href="{%url 'repairelapp:index'%}"><h2 class="p_color_change">REPAIREL</h2></a><br>
-                            <p>The one stop shop for sustainable footwear</p>
+                    <a href="{%url 'repairelapp:index'%}"><img class="custom_logo" src="{%static 'assets/icons/logo.png'%}" alt="Repairel logo"></a>
+                    <div class="custom_header_right_wrapper">
+                        <div class="custom_header_personal">
+                            <a href="{%construct_checkout_url cart%}" class="custom_shopping_cart"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
                         </div>
-                    </div>
-                    <div class="custom_header_personal">
-                        <a href="{%construct_checkout_url cart%}" class="custom_shopping_cart"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
+                        <div id="hamburger" class="custom_hamburger" onclick="hamburger_menu_toggle()">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
                 {% block page %}{% endblock %}

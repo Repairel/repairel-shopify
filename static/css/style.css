@@ -51,11 +51,8 @@ body {
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 
-.a_no_link {
+.a_no_link, .a_no_link * {
     color: red !important;
-    border-style: solid !important;
-    border-color: red !important;
-    border-width: 2px !important;
 }
 
 .a_link, .a_small_link {
@@ -117,7 +114,7 @@ body {
     animation-timing-function: ease-in-out;
 }
 
-.button_black, .button_white {
+.button_black, .button_white, .button_primary {
     background-color: var(--black-color);
     color: var(--white-color);
     border-color: var(--black-color);
@@ -135,6 +132,19 @@ body {
     border-radius: 0px;
 }
 
+.button_primary {
+    background-color: var(--primary-color);
+    color: var(--black-color);
+    border-radius: 0;
+    border: none;
+    padding: 7px 45px;
+    font-size: 1.2em;
+}
+
+.button_primary:hover {
+    transform: scale(1.05);
+}
+
 /*////////////////////////////////////////////////////////////////////////////////*/
 
 .custom_body_wrapper {
@@ -145,6 +155,7 @@ body {
     padding: 0 10px;
     overflow: hidden;
     box-sizing: border-box;
+    position: relative;
 }
 
 .custom_body {
@@ -190,12 +201,23 @@ body {
 .custom_header {
     display: flex;
     align-items: center;
-    padding-top: 15px;
+    padding-top: 25px;
     padding-bottom: 15px;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.custom_header * {
-    flex: 0 0;
+.custom_logo {
+    position: relative;
+    z-index: 100;
+    height: 40px;
+    padding-left: 10px;
+}
+
+.custom_header_right_wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .custom_hamburger {
@@ -205,7 +227,8 @@ body {
     padding: 5px;
     cursor: pointer;
     z-index: 11;
-    margin-right: 150px;
+    display: inline-block;
+    padding-right: 30px;
 }
 
 .custom_hamburger * {
@@ -229,30 +252,6 @@ body {
     transform: rotate(-45deg);
 }
 
-.custom_header_middle {
-    flex: 1 1;
-    text-align: center;
-}
-
-.custom_header_middle * {
-    display: inline-block;
-    text-align: center;
-    margin: 6px;
-}
-
-.custom_header_middle h2 {
-    cursor: pointer;
-}
-
-.custom_header_middle p {
-    letter-spacing: 1px;
-    font-size: 0.9em;
-}
-
-.custom_header_buttons {
-    white-space: nowrap;
-}
-
 .custom_header_buttons * {
     margin: 0 10px;
 }
@@ -260,8 +259,8 @@ body {
 .custom_header_personal {
     height: var(--header-personal-size);
     white-space: nowrap;
-    padding-left: 40px;
-    padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 40px;
 }
 
 .custom_header_personal svg {
@@ -294,29 +293,27 @@ body {
     --social-icon-size: 40px;
     position: relative;
     text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 85px;
+}
+
+.custom_hamburger_inside_mid {
+    max-width: 450px;
+}
+
+.custom_hamburger_inside_mid * {
+    text-align: left;
 }
 
 .custom_hamburger_inside > :last-child {
-    margin-top: 150px;
+    margin-top: 15px;
 }
 
 .custom_hamburger_inside > :last-child svg {
     width: var(--social-icon-size);
     height: var(--social-icon-size);
-    margin: 10px;
-}
-
-.custom_hamburger_inside > :nth-child(2) {
-    margin: 150px 10px;
-}
-
-.custom_hamburger_inside > :nth-child(2) * {
-    display: inline-block;
-}
-
-.custom_hamburger_inside > :nth-child(2) h2 {
     margin: 10px;
 }
 
@@ -330,19 +327,21 @@ body {
 }
 
 .custom_index_tools {
-    margin: 20px 10px;
+    margin: 40px 10px 20px 10px;
     display: flex;
+    justify-content: center;
 }
 
-.custom_index_tools > * {
-    flex: 1 1;
-    display: inline-block;
-    text-align: center;
+.custom_index_tools > :first-child > * {
+    background-color: var(--black-color);
+    color: var(--white-color);
 }
 
 .custom_index_tools > * > * {
     display: inline-block;
+    margin: 0 50px;
     cursor: pointer;
+    width: 180px;
 }
 
 .custom_index_shoe {
@@ -689,16 +688,19 @@ body {
 }
 
 @media screen and (max-width: 700px) {
-    .custom_header_buttons {
-        display: none;
+    .custom_logo {
+        height: 30px;
     }
 
-    .custom_hamburger {
-        margin-right: 20px;
-        margin-left: 20px;
+    .custom_splitter_entry h1{
+        font-size: 1.5em;
     }
 
-    .custom_header_personal {
-        padding-left: 0;
+    .custom_shoe_button_buy {
+        width: 100%;
+    }
+
+    .custom_index_tools > * > * {
+        margin: 0 10px;
     }
 }
