@@ -1,11 +1,30 @@
 {%extends "base.html"%}
 {%block page%}
 {%load templatetags%}
-
+{% load static %}
+<center>
+    <h1>Blog Menu</h1>
+</center>
 {%for i in articles%}
 {%blog_get_url i as blog_url%}
-<a class="custom_all_blogs_blog" href="{{blog_url}}">
-    {{i.title}}
-</a>
+<div class="wrapper">
+    <div class="center-line">
+        <a href="#" class="scroll-icon"><i class="fas fa-caret-up"></i></a>
+    </div>
+    <div class="{% if forloop.counter|divisibleby:2 %}row row-1{% else %}row row-2{% endif %}">
+        <section>
+            <i class="icon fas fa-home"></i>
+            <div class="details">
+                <span class="title">{{i.title}}</span>
+                <span>{{i.date}}</span>
+            </div>
+            <p>{{ i.body|striptags|truncatechars:250 }}</p>
+            <div class="bottom">
+                <a href="{{blog_url}}">Read more</a>
+                <i>- Repairel Team</i>
+            </div>
+        </section>
+    </div>
+</div>
 {%endfor%}
 {%endblock%}
