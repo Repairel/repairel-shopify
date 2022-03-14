@@ -299,22 +299,30 @@ body {
     padding-top: 85px;
 }
 
-.custom_hamburger_inside_mid {
-    max-width: 450px;
-}
-
 .custom_hamburger_inside_mid * {
     text-align: left;
 }
 
-.custom_hamburger_inside > :last-child {
+.custom_hamburger_inside_mid_black {
+    background-color: black;
+    padding: 10px 50px;
+    margin-left: -50px;
+    border-radius: 10px;
+}
+
+.custom_hamburger_inside_mid_black * {
+    color: white;
+}
+
+.custom_hamburger_inside_end {
     margin-top: 15px;
 }
 
-.custom_hamburger_inside > :last-child svg {
+.custom_hamburger_inside_end svg {
     width: var(--social-icon-size);
     height: var(--social-icon-size);
     margin: 10px;
+    filter: invert(100%);
 }
 
 .custom_hamburger_menu_active {
@@ -702,5 +710,18 @@ body {
 
     .custom_index_tools > * > * {
         margin: 0 10px;
+    }
+
+    .custom_hamburger_inside_mid_black {
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .custom_hamburger_inside {
+        align-items: initial;
+    }
+
+    .custom_hamburger_inside_mid {
+        padding-left: 50px;
     }
 }
