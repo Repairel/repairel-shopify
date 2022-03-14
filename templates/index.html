@@ -1,5 +1,23 @@
 {%extends "base.html"%}
-{%load templatetags%}
+{%load static templatetags%}
 {%block page%}
-test
+<div class="custom_splitter_entry">
+    <a href="{%url 'repairelapp:shoes' 'refurbished'%}">
+        <img src="{%static 'assets/img/index_shop_refurbished.jpg'%}" alt="shop refurbished">
+        <h1>SHOP REFURBISHED</h1>
+    </a>
+</div>
+<div class="custom_splitter_entry">
+    <a href="{%url 'repairelapp:shoes' 'new'%}">
+        <img src="{%static 'assets/img/index_shop_new.jpg'%}" alt="shop new">
+        <h1>SHOP NEW</h1>
+    </a>
+</div>
+<div class="custom_splitter_entry">
+    <a href="{%url 'repairelapp:all_blogs'%}">
+        <img src="{%static 'assets/img/index_read_blog.jpg'%}" alt="read blog">
+        <h1>READ OUR BLOG</h1>
+    </a>
+</div>
+
 {%endblock%}

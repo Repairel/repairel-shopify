@@ -6,7 +6,7 @@ from .shopify import api_view
 app_name = 'repairelapp'
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('shoes/<str:type>', ShoesView.as_view(), name="index"),
+    path('shoes/<str:type>', ShoesView.as_view(), name="shoes"),
     path('about/', AboutView.as_view(), name="about"),
     path('faq/', FAQView.as_view(), name="faq"),
     path('shopping_cart/', ShoppingCartView.as_view(), name="shopping_cart"),
