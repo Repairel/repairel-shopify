@@ -1,3 +1,4 @@
+from ast import Index
 from django.http import HttpResponse, JsonResponse
 import requests
 import json
@@ -23,6 +24,7 @@ except:
 
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
+
 class Variant:
     def __init__(self, id, title, price, option1, option2, option3):
         self.id = id
@@ -40,7 +42,8 @@ class Option:
         self.values = values
 
 class ShopifyProduct:
-    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, options, variants, extra_info=None):
+    
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, extra_info=None):
         self.id = id
         self.name = name
         self.description = description
@@ -48,12 +51,19 @@ class ShopifyProduct:
         self.images = images
         self.price = price
         self.tags = tags
-        self.type = product_type
+        self.product_type = product_type
         self.vendor = vendor
         self.options = options
         self.variants = variants
         self.extra_info = extra_info
-
+        self.sizes : list[float] = exact_sizes
+        self.colors = colors
+        self.material = material
+        self.condition = condition
+        self.gender = gender
+        self.group = group
+        
+        
     def __str__(self):
         return '%s: %s' % (self.id, self.name)
 
@@ -119,8 +129,43 @@ def _shopify_construct_product(shopify_product):
     variants = []
     for variant in shopify_product["variants"]:
         variants.append(Variant(variant["id"], variant["title"], variant["price"], variant["option1"], variant["option2"], variant["option3"]))
+        
+    # TODO: Search For Price Option
+    sizes = None
+    colors = None
+    sizes = shopify_product["options"][0]["values"]
+    try:
+        colors = shopify_product["options"][1]["values"]
+    except IndexError:
+        print("No colours option have been assigned to the shoe item.")
+    # price = min([var["price"] for var in shopify_product["variants"]])
+    try:
+        (condition, gender, group, material) = extract_tag(shopify_product["tags"])
+    except ValueError:
+        print("Couldn't unpack all values: one or more tags might be missing")
+    
+    return ShopifyProduct(
+        id = shopify_product["id"], 
+        name = shopify_product["title"], 
+        description = shopify_product["body_html"], 
+        thumbnail = shopify_product["image"]["src"],
+        images = images, 
+        price = shopify_product["variants"][0]["price"], 
+        tags = shopify_product["tags"],
+        product_type = shopify_product["product_type"], 
+        vendor = shopify_product["vendor"],
+        exact_sizes = sizes,
+        colors = colors,
+        condition = condition,
+        gender = gender,
+        group = group,
+        material = material,
+        options = options,
+        variants = variants
+    )
 
-    return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"].split(", "), shopify_product["product_type"], shopify_product["vendor"], options, variants)
+    # To be removed
+    # return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"].split(", "), shopify_product["product_type"], shopify_product["vendor"], options, variants)
 
 def shopify_all_products():
     result = []
@@ -234,3 +279,44 @@ def add_to_cart(request, variant_id, quantity):
 def get_cart(request):
     cart_remove_duplicates(request)
     return json.loads(request.session.get('cart', '[]'))
+
+def extract_tag(string):
+    tag = string.split(',')
+    condition = None
+    gender = None
+    group = None
+    material = None
+
+    for item in tag:
+        item = item.replace(' ', '')
+        if item == "Refurbished":
+            condition = "Refurbished"
+        elif item == "New":
+            condition = "New"
+            
+        if item == "Women":
+            gender = "Women"
+        elif item == "Men":
+            gender = "Men"
+            # print("okay")
+        elif item == "Unisex":
+            gender = "Unisex"
+            
+        if item == "Kids":
+            group = "Kids"
+        elif item == "Adults":
+            group = "Adults"
+            
+        if item == "Leather":
+            material = "Leather"
+        if item == "Suede":
+            material = "Suede"
+        if item == "Textile":
+            material = "Textile"
+        if item == "Synthetic":
+            material = "Synthetic"
+        if item == "Vegan(Synthetic)":
+            material = "Vegan (Synthetic)"
+            
+            
+    return (condition, gender, group, material)
