@@ -17,6 +17,7 @@ urlpatterns = [
     path('scoring/', ScoringView.as_view(), name="scoring"),
     path('blog/', AllBlogsView.as_view(), name="all_blogs"),
     path('blog/<str:blog_name>', BlogView.as_view(), name="blog"),
+    path('newsletter/', NewsLetterView.as_view(), name="newsletter"),
 
     #this is a path for our api
     path('api/<str:key>/<str:password>/<str:request_type>/<str:argument>/', api_view, name="api"),

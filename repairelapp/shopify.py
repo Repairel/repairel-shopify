@@ -2,6 +2,8 @@ from ast import Index
 from django.http import HttpResponse, JsonResponse
 import requests
 import json
+import shopify as shopify_lib
+
 
 SHOPIFY_API_KEY = None
 SHOPIFY_API_PASSWORD = None
@@ -23,6 +25,8 @@ except:
     REPAIREL_API_PASSWORD = os.environ.get('REPAIREL_API_PASSWORD')
 
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+
+
 
 
 class Variant:
@@ -329,3 +333,9 @@ def extract_tag(string):
             
             
     return (condition, gender, group, material)
+
+def newsletter_signup(email):
+    customer = shopify_lib.Customer()
+    customer.accepts_marketing = True
+    customer.email = email
+    customer.save()

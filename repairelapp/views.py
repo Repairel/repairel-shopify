@@ -1,4 +1,4 @@
-from urllib import request
+from http.client import HTTPResponse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import ShoeItem, ShoeRequest
@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.utils import timezone
 from repairelapp.shopify import *
 import json
+import shopify
+    
 
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
@@ -27,6 +29,7 @@ class ShoesView(View):
         rated_list = ShoeItem.objects.filter(in_stock=True).order_by("-rating")
 
         items = shopify_all_products()
+        print(items[1].product_type)
 
         tag_filter = None
         if type == "new":
@@ -114,6 +117,23 @@ class SustainabilityView(TemplateView):
         except KeyError:
             return 0
 
+# def contact(request):
+#     if request.method=="POST":
+#         email=request.POST['email']
+#         contact=Contact(email=email)
+#         contact.save()
+#     return render(request, "home/contact.html")
+
+class NewsLetterView(View):
+    def post(self, *args, **kwargs):
+        email = self.request.POST.get('email', "")
+        if email != "":
+            shopify.newsletter_signup(email)    
+        else:
+            return HTTPResponse(status=400)
+        
+
+
 class TermsView(TemplateView):
     template_name = 'terms.html'
 
@@ -167,6 +187,7 @@ class AllBlogsView(TemplateView):
 
         # if article == None:
             # return HttpResponse(status=404)
+        print(articles[0].excerpt)
 
         context = {
             'articles': articles
