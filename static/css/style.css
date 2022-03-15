@@ -724,4 +724,12 @@ body {
     .custom_hamburger_inside_mid {
         padding-left: 50px;
     }
+
+    .custom_shoe_balls_wrapper {
+        flex-direction: column;
+    }
+
+    .custom_shoe_balls {
+        
+    }
 }
