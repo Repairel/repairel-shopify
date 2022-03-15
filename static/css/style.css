@@ -1,13 +1,14 @@
 :root {
     --footer-height: 150px;
+    --footer-height: 150px;
     --white-color: white;
     --black-color: black;
     --text-hover-color: rgb(105, 105, 105);
     --hamburger-size: 29px;
     --header-personal-size: 30px;
     --text-color: rgb(90, 90, 90);
-    --primary-color: rgb(219,246,81);
-    --secondary-color: rgb(235,65,101);
+    --primary-color: rgb(219, 246, 81);
+    --secondary-color: rgb(235, 65, 101);
 }
 
 * {
@@ -17,7 +18,8 @@
     transition-property: transform, color, background-color, border-radius, opacity;
 }
 
-p, span {
+p,
+span {
     color: var(--text-color);
 }
 
@@ -28,18 +30,22 @@ body {
     overflow-x: hidden;
     min-width: 360px;
 }
+
 *::-webkit-scrollbar {
     position: absolute;
     width: 10px;
     height: 10px;
 }
+
 *::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
+
 *::-webkit-scrollbar-thumb {
     background: rgb(161, 161, 161);
     border-radius: 100px;
 }
+
 *::-webkit-scrollbar-thumb:hover {
     background: rgb(121, 121, 121);
 }
@@ -79,7 +85,8 @@ body {
 
 .p_color_change:hover {
     color: var(--white-color);
-    text-shadow: -1px -1px 0 var(--black-color), 1px -1px 0 var(--black-color), -1px 1px 0 var(--black-color), 1px 1px 0 var(--black-color);
+    text-shadow: -1px -1px 0 var(--black-color), 1px -1px 0 var(--black-color),
+        -1px 1px 0 var(--black-color), 1px 1px 0 var(--black-color);
 }
 
 .h2_light {
@@ -152,7 +159,7 @@ body {
     height: 100%;
     width: 100%;
     margin: auto;
-    padding: 0 10px;
+    padding: 0 50px;
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
@@ -427,15 +434,15 @@ body {
 }
 
 .custom_scoring_balls_green * {
-    background-color: rgb(84,173,11);
+    background-color: rgb(84, 173, 11);
 }
 
 .custom_scoring_balls_orange * {
-    background-color: rgb(255,159,56);
+    background-color: rgb(255, 159, 56);
 }
 
 .custom_scoring_balls_red * {
-    background-color: rgb(255,117,112);
+    background-color: rgb(255, 117, 112);
 }
 
 .custom_criteria_entry {
@@ -513,7 +520,7 @@ body {
     color: var(--text-color);
 }
 
-.custom_shoe_balls > div > :first-child{
+.custom_shoe_balls > div > :first-child {
     width: auto !important;
     margin-left: 0 !important;
     position: absolute;
@@ -529,7 +536,7 @@ body {
 }
 
 .custom_shoe_balls_description {
-    margin-bottom: 130px;
+    margin-bottom: 50px;
     padding: 10px 30px;
 }
 
@@ -564,18 +571,27 @@ body {
     min-width: 100px;
 }
 
-.custom_shoe_balls_black, .custom_shoe_balls:hover {
+.custom_shoe_balls_black,
+.custom_shoe_balls:hover {
     background-color: black;
     cursor: pointer;
 }
 
-.custom_shoe_balls_black *, .custom_shoe_balls:hover * {
+.custom_shoe_balls_black *,
+.custom_shoe_balls:hover * {
     color: white;
     font-weight: bold;
 }
 
-.custom_shoe_balls_black img, .custom_shoe_balls:hover img {
+.custom_shoe_balls_black img,
+.custom_shoe_balls:hover img,
+.custom_shoe_balls:hover .custom_shoe_expander,
+.custom_shoe_balls_black .custom_shoe_expander {
     filter: invert(100%);
+}
+
+.custom_shoe_balls_black .custom_shoe_expander {
+        transform: rotate(45deg) scale(-1, -1);
 }
 
 .custom_filter_inner {
@@ -634,7 +650,8 @@ body {
     margin: 5px 0px;
 }
 
-.custom_shoe_option_value:hover, .shoe_option_active {
+.custom_shoe_option_value:hover,
+.shoe_option_active {
     background-color: var(--black-color);
     color: white !important;
 }
@@ -660,7 +677,6 @@ body {
     margin-bottom: 20px;
 }
 
-
 .custom_splitter_entry {
     position: relative;
     display: block;
@@ -682,7 +698,11 @@ body {
     bottom: -70px;
     transform: translateX(-50%);
     background: var(--primary-color);
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(
+        to right,
+        var(--primary-color),
+        var(--secondary-color)
+    );
     padding: 20px 0;
     width: 80%;
     text-align: center;
@@ -695,12 +715,187 @@ body {
     transform: translateX(-50%) scale(1.05);
 }
 
+.custom_shoe_expander {
+    --size: 15px;
+    display: none;
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    border-width: 2px;
+    border-color: var(--black-color);
+    transform: rotate(45deg);
+}
+
+/* Blog CSS */
+
+.wrapper {
+    max-width: 1080px;
+    margin: 50px auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.wrapper .center-line {
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    background: rgb(0, 0, 0);
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+}
+
+.wrapper .row {
+    display: flex;
+}
+
+.wrapper .row-1 {
+    justify-content: flex-start;
+}
+
+.wrapper .row-2 {
+    justify-content: flex-end;
+}
+
+.wrapper .row section {
+    background: #fff;
+    border-radius: 5px;
+    width: calc(50% - 40px);
+    padding: 20px;
+    position: relative;
+    border-style: groove;
+}
+
+.wrapper .row section::before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    background: rgb(0, 0, 0);
+    top: 28px;
+    z-index: -1;
+    transform: rotate(45deg);
+}
+
+.row-1 section::before {
+    right: -7px;
+}
+
+.row-2 section::before {
+    left: -7px;
+}
+
+.row section .icon, .center-line .scroll-icon {
+    position: absolute;
+    background: #f2f2f2;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ff7979;
+    font-size: 17px;
+    box-shadow: 0 0 0 4px #fff, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.center-line .scroll-icon {
+    bottom: 0px;
+    left: 50%;
+    font-size: 25px;
+    transform: translateX(-50%);
+}
+
+.row-1 section .icon {
+    top: 15px;
+    right: -60px;
+}
+
+.row-2 section .icon {
+    top: 15px;
+    left: -60px;
+}
+
+.row section .details, .row section .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.row section .details .title {
+    font-size: 22px;
+    font-weight: 600;
+}
+.row section p {
+    margin: 10px 0 17px 0;
+}
+.row section .bottom a {
+    text-decoration: none;
+    background: #000000;
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 5px;
+    /* font-size: 17px; */
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+.row section .bottom a:hover {
+    transform: scale(0.97);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+    grid-gap: 20px;
+    align-items: stretch;
+}
+
+.grid > article {
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.grid > article img {
+    max-width: 100%;
+}
+
+.grid .text {
+    padding: 20px;
+}
+
+.custom_header_top_text {
+    background-color: var(--black-color);
+    color: var(--white-color);
+    text-align: center;
+    padding: 10px;
+}
+
+@media screen and (max-width: 1300px) {
+    .custom_shoe_balls_wrapper {
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .custom_body_wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
 @media screen and (max-width: 700px) {
     .custom_logo {
         height: 30px;
     }
 
-    .custom_splitter_entry h1{
+    .custom_splitter_entry h1 {
         font-size: 1.5em;
     }
 
@@ -730,6 +925,39 @@ body {
     }
 
     .custom_shoe_balls {
-        
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .custom_shoe_expander {
+        display: block;
+    }
+}
+
+@media (max-width: 440px) {
+    .wrapper .center-line, .row section::before, .row section .icon {
+        display: none;
+    }
+
+    .wrapper .row {
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 790px) {
+    .wrapper .center-line {
+        left: 40px;
+    }
+    .wrapper .row {
+        margin: 30px 0 3px 60px;
+    }
+    .wrapper .row section {
+        width: 100%;
+    }
+    .row-1 section::before {
+        left: -7px;
+    }
+    .row-1 section .icon {
+        left: -60px;
     }
 }

@@ -36,6 +36,14 @@ def product_get_sizes(product):
     return ""
 
 @register.simple_tag
+def product_get_colors(product):
+    if product.options:
+        for option in product.options:
+            if option.name == "Color":
+                return option.values
+    return ""
+
+@register.simple_tag
 def array_to_string(array):
     if array:
         return ", ".join(array)

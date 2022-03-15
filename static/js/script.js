@@ -57,6 +57,21 @@ function compute_filter() {
         var brand = get_option(".filter_option_Brand")
         if(brand)
             pass &&= element.dataset.brand.includes(brand) || brand == "All Brands"
+        var gender = get_option(".filter_option_Gender")
+        if(gender)
+            pass &&= element.dataset.gender == gender || gender == "All Genders"
+        var group = get_option(".filter_option_Group")
+        if(group)
+            pass &&= element.dataset.group == group || group == "All Groups"
+        var product_type = get_option(".filter_option_Type")
+        if(product_type)
+            pass &&= element.dataset.product_type == product_type || product_type == "All Types"
+        var color = get_option(".filter_option_Colour")
+        if(color)
+            pass &&= element.dataset.color.includes(color) || color == "All Colours"
+        var material = get_option(".filter_option_Material")
+        if(material)
+            pass &&= element.dataset.material == material || material == "All Materials"
 
         if(pass) {
             element.style.display = "block"
@@ -81,8 +96,13 @@ function toggle_filter(filter_button) {
     var filter_options = {
         Price: ["High to Low", "Low to High"],
         Condition: ["All Conditions", "New", "Refurbished"],
-        Size: ["All Sizes", "Kids", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
-        Brand: ["All Brands", "Will's Vegan Store", "Refurbished Doc Martens", "Birdsong"]
+        Size: ["All Sizes", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "11", "12", "13", "14"],
+        Brand: ["All Brands", "Birdsong", "Dr Martens", "Will's Vegan Shoes"],
+        Gender: ["All Genders", "Men", "Women", "Unisex"],
+        Group: ["All Groups", "Kids", "Adults"],
+        Type: ["All Types", "Brogues", "Flat Boots", "Heeled Boots", "High Heels", "Oxford Shoes", "Sandals", "Slip-ons", "Trainers", "Walking Boots"],
+        Colour: ["All Colours", "Black", "Blue", "Brown", "Green", "Grey", "Multicolour", "Natural", "Pink", "Purple", "Red", "White", "Yellow"],
+        Material: ["All Materials", "Leather", "Suede", "Textile", "Synthetic", "Vegan (Synthetic)"],
     }
     
     var filter = document.getElementById("filter")
