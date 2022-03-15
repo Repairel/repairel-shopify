@@ -170,29 +170,52 @@ function toggle_filter(filter_button) {
 
 //shoe_balls is the parent object - the parent of the attribute and balls.
 function show_shoe_balls_description(shoe_balls) {
-    shoe_balls_description = document.getElementById("shoe_balls_description")
-    //clear the description
-    shoe_balls_description.innerHTML = ""
 
-    //now create the necessary elements
-    var header = document.createElement("div")
+    var only_close = shoe_balls.classList.contains("custom_shoe_balls_black")
+
+    var mobile_view_cutoff = 700
+
+    //check if shoe_balls_description existss
+    var shoe_balls_description = document.getElementById("shoe_balls_description")
+    if(shoe_balls_description) {
+        shoe_balls_description.remove()
+    }
+
+    if(!only_close) {
+        shoe_balls_description = document.createElement("div")
+        shoe_balls_description.id = "shoe_balls_description"
+        shoe_balls_description.classList = "custom_shoe_balls_description"
     
-    var image = document.createElement("img")
-    image.src = shoe_balls.dataset.image
-
-    var title = document.createElement("h3")
-    title.innerHTML = shoe_balls.dataset.title
-
-    var description = document.createElement("p")
-    description.innerHTML = shoe_balls.dataset.description
+        
+        if(window.innerWidth < mobile_view_cutoff) {
+            shoe_balls.parentElement.insertBefore(shoe_balls_description, shoe_balls.nextSibling)
+        }
+        else {
+            shoe_balls.parentElement.parentElement.insertBefore(shoe_balls_description, shoe_balls.parentElement.nextSibling)
+        }
+        shoe_balls_description = document.getElementById("shoe_balls_description")
+        //clear the description
+        shoe_balls_description.innerHTML = ""
     
-
-    header.appendChild(image)
-    header.appendChild(title)
-
-    shoe_balls_description.appendChild(header)
-    shoe_balls_description.appendChild(description)
-
+        //now create the necessary elements
+        var header = document.createElement("div")
+        
+        var image = document.createElement("img")
+        image.src = shoe_balls.dataset.image
+    
+        var title = document.createElement("h3")
+        title.innerHTML = shoe_balls.dataset.title
+    
+        var description = document.createElement("p")
+        description.innerHTML = shoe_balls.dataset.description
+        
+    
+        header.appendChild(image)
+        header.appendChild(title)
+    
+        shoe_balls_description.appendChild(header)
+        shoe_balls_description.appendChild(description)
+    }
 
     //finally make the selected shoe_balls black
     var all_shoe_balls = document.querySelectorAll(".custom_shoe_balls")
@@ -200,13 +223,14 @@ function show_shoe_balls_description(shoe_balls) {
         element.classList.remove("custom_shoe_balls_black")
     })
 
-    if(shoe_balls.dataset.description == "" || shoe_balls.dataset.description == "None") {
-        shoe_balls_description.innerHTML = ""
+    if(!only_close) {
+        if(shoe_balls.dataset.description == "" || shoe_balls.dataset.description == "None") {
+            shoe_balls_description.innerHTML = ""
+        }
+        else {
+            shoe_balls.classList.add("custom_shoe_balls_black")
+        }
     }
-    else {
-        shoe_balls.classList.add("custom_shoe_balls_black")
-    }
-
 }
 
 function shoe_options_get_variant_id() {
