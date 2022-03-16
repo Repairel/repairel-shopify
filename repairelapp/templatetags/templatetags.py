@@ -79,3 +79,7 @@ def construct_checkout_url(cart):
 @register.simple_tag
 def blog_get_url(blog):
     return reverse("repairelapp:blog", kwargs={"blog_name": blog.title.replace(" ", "-")})
+
+@register.simple_tag
+def get_page_url(page):
+    return reverse("repairelapp:page", kwargs={"page_name": page.title.replace(" ", "-")})

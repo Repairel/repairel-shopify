@@ -96,16 +96,24 @@ class BlogPost:
         self.body = body
         self.excerpt = excerpt
 
+class Page:
+    def __init__(self, title, body):
+        self.title = title
+        self.body = body
+
 class Cart:
     def __init__(self, products):
         self.products = products
+
+
+def _shopify_construct_page(page):
+    return Page(page['title'], page['body_html'])
         
 def _shopify_construct_article(article):
     published = article['published_at']
     y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
     date = str(f'Published: {d}/{m}/{y} {t}')
-    print(article)
-    excerpt = None
+
     try:
         excerpt = article["summary_html"]
     except KeyError:
@@ -261,11 +269,17 @@ def api_view(request, key, password, request_type, argument=None):
 
 def all_pages():
     r = requests.get(shopify_api + "pages.json")
-    page_dict = {}
-    for i in range(len(r.json()['pages'])):
-        page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
+    pages = r.json()['pages']
+    page_list = []
 
-    return page_dict
+    for page in pages:
+        page_list.append(_shopify_construct_page(page))
+
+    # page_dict = {}
+    # for i in range(len(r.json()['pages'])):
+    #     page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
+
+    return page_list
 
 
 def cart_remove_duplicates(request):

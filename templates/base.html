@@ -28,7 +28,7 @@
                         <a href="" class="a_link a_no_link"><h3 class="h2_light">All Products</h3></a>
                     </div>
                     <div class="custom_hamburger_inside_mid_black">
-                        <a href="{%url 'repairelapp:about'%}" class="a_link"><h3 class="h2_light">About Us</h3></a>
+                        <a href="{%url 'repairelapp:pages' %}" class="a_link"><h3 class="h2_light">About Us</h3></a>
                         <a href="{%url 'repairelapp:activism'%}" class="a_link"><h3 class="h2_light">Activism</h3></a>
                         <a href="{%url 'repairelapp:sustainability'%}" class="a_link"><h3 class="h2_light">Sustainability</h3></a>
                         <a href="{%url 'repairelapp:faq'%}" class="a_link"><h3 class="h2_light">FAQ</h3></a>
@@ -80,10 +80,9 @@
                     </div>
                 </div>
                 <p class="p_small_text">©2021 Roman Polek, Lewis Haggerty, Morad Elfleet, Nadim Abdel Rahman. All Rights Reserved</p>
-                <p>Testisdja;djsaidsjad</p>
                 <form method="post" action="{% url 'repairelapp:newsletter' %}">
                     {% csrf_token %}
-                    <input name="email">
+                    <input type="email" name="email">
                     <button>Submit</button>
                 </form>
             </div>

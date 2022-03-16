@@ -241,3 +241,36 @@ class ShoeView(TemplateView):
         
         add_to_cart(self.request, post["variant_id"], 1)
         return HttpResponse(status=200)
+
+
+class AllPageView(TemplateView):
+    def get(self, *args, **kwargs):
+
+        pages = all_pages()
+
+        context = {
+            'pages': pages
+        }
+        return render(self.request, "pages.html", context)
+
+
+class PageView(TemplateView):
+    def get(self, *args, **kwargs):
+        page_name = kwargs.get("page_name", "")
+        page_name = page_name.replace("-", " ")
+
+        pages = all_pages()
+
+        page = None
+        for i in pages:
+            if i.title == page_name:
+                page = i
+                break
+
+        if page is None:
+            return HttpResponse(status=404)
+
+        context = {
+            'page': page
+        }
+        return render(self.request, "page.html", context)

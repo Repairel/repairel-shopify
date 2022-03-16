@@ -18,6 +18,8 @@ urlpatterns = [
     path('blog/', AllBlogsView.as_view(), name="all_blogs"),
     path('blog/<str:blog_name>', BlogView.as_view(), name="blog"),
     path('newsletter/', NewsLetterView.as_view(), name="newsletter"),
+    path('pages/', AllPageView.as_view(), name="pages"),
+    path('pages/<str:page_name>', PageView.as_view(), name="page"),
 
     #this is a path for our api
     path('api/<str:key>/<str:password>/<str:request_type>/<str:argument>/', api_view, name="api"),

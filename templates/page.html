@@ -1,0 +1,9 @@
+{%extends "base.html"%}
+{%block page%}
+    {% autoescape off %}
+    <div>
+        {{ page.body }}
+    </div>
+    {% endautoescape %}
+    <br>
+{%endblock%}
