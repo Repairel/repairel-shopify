@@ -235,8 +235,7 @@ function show_shoe_balls_description(shoe_balls) {
     }
 }
 
-function shoe_options_get_variant_id() {
-    //see what options are selected
+function shoe_get_variant() {
     var selected_options = document.querySelectorAll(".shoe_option_active")
     var variants = document.querySelectorAll(".shoe_variants")
 
@@ -251,10 +250,17 @@ function shoe_options_get_variant_id() {
             }
         }
         if(match) {
-            return variant.dataset.id
+            return variant
         }
     }
     return null
+}
+
+function shoe_options_get_variant_id() {
+    var variant = shoe_get_variant()
+    if(!variant) return null
+
+    return variant.dataset.id
 }
 
 function shoe_option_click(element) {
@@ -263,6 +269,13 @@ function shoe_option_click(element) {
         parent.children[i].classList.remove("shoe_option_active")
     }
     element.classList.toggle("shoe_option_active")
+
+    //change the price
+    var shoe_price = document.getElementById("shoe_price")
+    var variant = shoe_get_variant()
+    if(variant) {
+        shoe_price.innerHTML = variant.dataset.price
+    }
 }
 
 function shoe_add_to_cart(csrf_token) {
@@ -291,5 +304,52 @@ function shoe_add_to_cart(csrf_token) {
     else {
         alert("There was an error adding this product to the cart")
         console.log("there was an error adding this product to the cart")
+    }
+}
+
+function open_popup_window(url) {
+    window.open(url,'popUpWindow','height=500, width=400, left=100, top=100, resizable=yes, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+}
+
+function toggle_compare() {
+    var compare_info = document.getElementById("compare_info")
+    compare_info.classList.toggle("custom_compare_info_visible")
+    var on = compare_info.classList.contains("custom_compare_info_visible")
+
+
+    var shoe_wrappers = document.querySelectorAll(".shoe_wrapper")
+    for(var i = 0; i < shoe_wrappers.length; i++) {
+        
+        if(on) {
+            var compare_shoe_button = document.createElement("div")
+            compare_shoe_button.classList = "custom_compare_shoe_button compare_shoe_button"
+            
+            var toggle_input = document.createElement("input")
+            toggle_input.classList = "compare_shoe_button_input"
+            toggle_input.dataset.id = shoe_wrappers[i].dataset.id
+            toggle_input.type = "checkbox"
+            compare_shoe_button.appendChild(toggle_input)
+
+            var compare_shoe_button_label = document.createElement("label")
+            compare_shoe_button_label.innerHTML = "Compare"
+            compare_shoe_button.appendChild(compare_shoe_button_label)
+
+            shoe_wrappers[i].appendChild(compare_shoe_button)
+
+            compare_shoe_button.onclick = function(event) {
+                var input_checked = event.target == this.toggle_input
+                if(input_checked) return true
+                else {
+                    this.toggle_input.checked = !this.toggle_input.checked
+                    return false
+                }
+            }.bind({toggle_input: toggle_input})
+        }
+        else {
+            var compare_shoe_button = shoe_wrappers[i].querySelector(".compare_shoe_button")
+            if(compare_shoe_button) {
+                compare_shoe_button.remove()
+            }
+        }
     }
 }

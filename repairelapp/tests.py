@@ -184,5 +184,14 @@ class Shopify(TestCase):
         customer = shopify.Customer()
         self.assertIsInstance(customer, shopify.resources.customer.Customer)
 
-        
-        
+class ShopifyPasrsingTests(TestCase):
+    def test_response_parsing(self):
+        from repairelapp.shopify import _shopify_construct_product
+        import json
+        with open("repairelapp/mini.json") as fd:
+            test_response = json.loads(fd.read())
+        deserialised_object = _shopify_construct_product(test_response)
+        self.assertEquals(deserialised_object.sizes, [3,4,7])
+        self.assertEquals(deserialised_object.condition, "")
+
+    
