@@ -15,7 +15,7 @@
     font-family: "Montserrat", "Work Sans", sans-serif;
     color: var(--black-color);
     transition: all 0.2s;
-    transition-property: transform, color, background-color, border-radius, opacity, height, width, margin, padding;
+    transition-property: transform, color, background-color, border-radius, opacity;
 }
 
 p,
@@ -876,10 +876,7 @@ body {
 }
 
 .custom_header_top_text_hidden {
-    height: 0;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
+    display: none;
 }
 
 @media screen and (max-width: 1300px) {
