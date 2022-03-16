@@ -24,7 +24,7 @@ urlpatterns = [
     #this is a path for our api
     path('api/<str:key>/<str:password>/<str:request_type>/<str:argument>/', api_view, name="api"),
     path('api/<str:key>/<str:password>/<str:request_type>/', api_view, name="api"),
-
+    path('404/', Error404View.as_view(), name="404"),
 
     #TODO these. They are not working yet.
     path('product_request/', ShoesView.as_view(), name="product_request"),

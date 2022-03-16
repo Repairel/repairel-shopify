@@ -184,5 +184,40 @@ class Shopify(TestCase):
         customer = shopify.Customer()
         self.assertIsInstance(customer, shopify.resources.customer.Customer)
 
+# from repairelapp.shopify import _shopify_construct_product
+# import json
+# class ShopifyPasrsingTests(TestCase):
+#     def setUpClass(self):
+#         with open("repairelapp/mini.json") as fd:
+#             self.__test_data = json.loads(fd.read())
+
+#     def test_response_parsing(self):
+#         deserialised_object = _shopify_construct_product(self.__test_data)
+#         self.assertEquals(deserialised_object.sizes, [3,4,7])
         
+#         # self.assertEquals(deserialised_object)
+
+#     def test_response_parsing2(self):
+#         deserialised_object = _shopify_construct_product(self.__test_data)
+#         self.assertEquals(deserialised_object.condition, "Refurbished")
+
+from repairelapp.shopify import _shopify_construct_product
+import json
+class ShopifyParsingTests(TestCase):
+    __test_data = ""
+    def setUpClass():
+        with open("repairelapp/mini.json") as fd:
+            ShopifyParsingTests.__test_data = json.loads(fd.read())
+            
+    def tearDownClass():
+        pass
+
+    def test_response_parsing(self):
+        deserialised_object = _shopify_construct_product(ShopifyParsingTests.__test_data)
+        self.assertEquals(deserialised_object.sizes, [3,4,7])
         
+        # self.assertEquals(deserialised_object)
+
+    def test_response_parsing2(self):
+        deserialised_object = _shopify_construct_product(ShopifyParsingTests.__test_data)
+        self.assertEquals(deserialised_object.condition, "Refurbished")

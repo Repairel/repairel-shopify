@@ -3,7 +3,15 @@
 {%load templatetags%}
 <div class="custom_index_tools">
     <div><button class="button_primary" onclick="toggle_filter(this)">Filter</button></div>
-    <div><button class="button_primary">Compare</hbutton3></div>
+    <div><button class="button_primary" onclick="toggle_compare()">Compare</button></div>
+</div>
+<div id="compare_info" class="custom_compare_info">
+    <p>
+        Compare ethics & sustainability by ticking the<br>
+        <span class="custom_compare_info_square"></span> Compare<br>
+        on the products below
+    </p>
+    <hr>
 </div>
 <div id="filter"></div>
 <div class="custom_index_shoe_wrapper">
@@ -13,7 +21,7 @@
         {%product_get_colors i as raw_colors%}
         {%array_to_string raw_sizes as sizes%}
         {%sizes_to_limit_string raw_sizes as size_limit%}
-        <a href="{%url 'repairelapp:shoe' i.id%}" class="shoe_wrapper" data-price={{i.price}} data-condition="{{i.condition}}" data-size={{sizes}} data-brand="{{i.vendor}}" data-gender="{{i.gender}}" data-group="{{i.group}}" data-product_type="{{i.product_type}}" data-color="{{i.colors}}" data-material="{{i.material}}">
+        <a href="{%url 'repairelapp:shoe' i.id%}" class="shoe_wrapper" data-id={{i.id}} data-price={{i.price}} data-condition="{{i.condition}}" data-size={{sizes}} data-brand="{{i.vendor}}" data-gender="{{i.gender}}" data-group="{{i.group}}" data-product_type="{{i.product_type}}" data-color="{{i.colors}}" data-material="{{i.material}}">
             <div class="custom_index_shoe">
                 <div><img loading="lazy" src="{{i.thumbnail}}"></div>
                 <div>
