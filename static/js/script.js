@@ -2,6 +2,7 @@ function hamburger_menu_toggle() {
     var hamburger_button = document.getElementById("hamburger")
     var hamburger_menu = document.getElementById("hamburger_menu")
     var body_wrapper = document.getElementById("body_wrapper")
+    var header_top_bar = document.getElementById("header_top_text")
 
     if(!hamburger_menu.classList.contains("custom_hamburger_menu_active")) {
         hamburger_menu.classList.toggle("custom_hamburger_menu_active")
@@ -15,6 +16,7 @@ function hamburger_menu_toggle() {
  
     hamburger_button.classList.toggle("custom_hamburger_active")
     body_wrapper.classList.toggle("custom_body_wrapper_active")
+    header_top_bar.classList.toggle("custom_header_top_text_hidden")
 }
 
 function compute_filter() {
