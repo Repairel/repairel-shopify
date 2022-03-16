@@ -6,11 +6,21 @@ from django.views.generic import View, TemplateView
 from .forms import ShoeRequestForm
 from django.contrib import messages
 from django.utils import timezone
-from repairelapp.shopify import *
 import json
 import shopify
-    
+from repairelapp.shopify import *
 
+from repairelapp.access_keys import get_keys
+SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_KEY = get_keys()
+
+shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+
+def connect():
+    shop_url = "repairel-dev.myshopify.com"
+    api_version = '2020-10'
+    session = shopify.Session(shop_url, api_version, SHOPIFY_API_PASSWORD)
+    shopify.ShopifyResource.activate_session(session)
+    
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
 
@@ -29,7 +39,6 @@ class ShoesView(View):
         rated_list = ShoeItem.objects.filter(in_stock=True).order_by("-rating")
 
         items = shopify_all_products()
-        print(items[1].product_type)
 
         tag_filter = None
         if type == "new":
@@ -117,21 +126,18 @@ class SustainabilityView(TemplateView):
         except KeyError:
             return 0
 
-# def contact(request):
-#     if request.method=="POST":
-#         email=request.POST['email']
-#         contact=Contact(email=email)
-#         contact.save()
-#     return render(request, "home/contact.html")
-
 class NewsLetterView(View):
     def post(self, *args, **kwargs):
         email = self.request.POST.get('email', "")
         if email != "":
-            shopify.newsletter_signup(email)    
+            connect()
+            customer = shopify.Customer()
+            customer.email = email
+            customer.accepts_marketing = True
+            customer = customer.save()
         else:
-            return HTTPResponse(status=400)
-        
+            return HttpResponse(status=400)
+        return HttpResponse("Thank you for subscribing to our mailing list.", status=200)
 
 
 class TermsView(TemplateView):
@@ -187,7 +193,6 @@ class AllBlogsView(TemplateView):
 
         # if article == None:
             # return HttpResponse(status=404)
-        print(articles[0].excerpt)
 
         context = {
             'articles': articles
