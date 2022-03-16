@@ -152,6 +152,7 @@ def _shopify_construct_product(shopify_product):
     except IndexError:
         print("No colours option have been assigned to the shoe item.")
     # price = min([var["price"] for var in shopify_product["variants"]])
+    print("this")
     try:
         (condition, gender, group, material) = extract_tag(shopify_product["tags"])
     except ValueError:
@@ -294,6 +295,7 @@ def get_cart(request):
     return json.loads(request.session.get('cart', '[]'))
 
 def extract_tag(string):
+    print(string)
     tag = string.split(',')
     condition = None
     gender = None
