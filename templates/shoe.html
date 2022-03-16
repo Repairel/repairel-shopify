@@ -30,11 +30,10 @@
     <hr>
     <div class="custom_shoe_buttons">
         {%if shoe.extra_info.is_affiliate%}
-            <a href="{{shoe.extra_info.affiliate_link}}"><button class="button_white">SHOP THIS BRAND</button></a>
+            <a href="{{shoe.extra_info.affiliate_link}}"><button class="button_primary custom_shoe_button_buy">SHOP THIS BRAND</button></a>
         {%else%}
-            <button class="button_white" onclick="shoe_add_to_cart(this.dataset.csrf)" data-csrf="{{csrf_token}}">ADD TO CART</button>
+            <button class="button_primary custom_shoe_button_buy" onclick="shoe_add_to_cart(this.dataset.csrf)" data-csrf="{{csrf_token}}">ADD TO CART</button>
         {%endif%}
-        <a href="https://se04-images.s3.eu-west-2.amazonaws.com/P1_repairel_9_4d8840bed4.jpg"><button class="button_white">ADD TO WISHLIST</button></a>
     </div>
 <p><b>Description</b></p>
 {% autoescape off %}
@@ -56,8 +55,9 @@
                     </div>
                 {%endif%}
             </div>
+            <div class="custom_shoe_expander"></div>
         </div>
     {%endfor%}
 </div>
-<div id="shoe_balls_description" class="custom_shoe_balls_description"></div>
+<br><br><br>
 {%endblock%}

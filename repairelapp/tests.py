@@ -1,12 +1,16 @@
 from django.urls import (resolve,
                          reverse,
                         )
+
 from django.test import (TestCase,
                          Client,
                         )
+
+from django.utils import timezone
+from django.test.utils import setup_test_environment
                          
 from repairelapp.models import ShoeItem
-from repairelapp.views import (IndexView, 
+from repairelapp.views import (ShoesView, 
                                AboutView,
                                FAQView,
                                ShoppingCartView,
@@ -16,57 +20,40 @@ from repairelapp.views import (IndexView,
                                RequestView,
                                GDPRView,
                                ScoringView, 
+                               IndexView,
                                )
-import datetime
-from django.utils import timezone
-from django.test.utils import setup_test_environment
 
+from repairelapp import shopify
+import shopify, requests, time, datetime
 
+from repairelapp.access_keys import get_keys
+SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_KEY = get_keys()
 
+shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
-# Create your tests here.
-# setup_test_environment()
 client=Client()
 
 def create_shoe(title, days):
     time = timezone.now() + datetime.timedelta(days=days)
     return ShoeItem.objects.create(title=title, created=time)
 
+def connect():
+    shop_url = "repairel-dev.myshopify.com"
+    api_version = '2020-10'
+    session = shopify.Session(shop_url, api_version, SHOPIFY_API_PASSWORD)
+    shopify.ShopifyResource.activate_session(session)
+    
+def create_customer_subscriber():
+    customer = shopify.Customer()
+    customer.email = "subscribertest@gmail.com"
+    customer.accepts_marketing = True
+    customer = customer.save()
+
 class HomePageTest(TestCase):
     def test_resolve_to_index_page_view(self):
         resolver = resolve('/')
         self.assertEqual(resolver.func.__name__, IndexView.as_view().__name__)
-        
-    # def test_no_shoe(self):
-    #     response = self.client.get(reverse('repairelapp:index'))
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertContains(response, "No shoes are available.")
-    #     self.assertQuerysetEqual(response.context['latest_list'], [])
-    #     self.assertTemplateUsed(response, 'index.html')
-        
-    # def test_past_shoe(self):
-    #     shoe = create_shoe(title="Past shoe.", days=-30)
-    #     response = self.client.get(reverse('repairelapp:index'))
-    #     self.assertQuerysetEqual(response.context['latest_list'], [shoe])
-        
-    # def test_two_past_shoes(self):
-    #     shoe1 = create_shoe(title="Past shoe 1.", days=-30)
-    #     shoe2 = create_shoe(title="Past shoe 2.", days=-5)
-    #     response = self.client.get(reverse('repairelapp:index'))
-    #     self.assertQuerysetEqual(response.context['latest_list'], [shoe2, shoe1])
-        
-    # def test_future_shoe(self):
-    #     create_shoe(title="Future shoe.", days=30)
-    #     response = self.client.get(reverse('repairelapp:index'))
-    #     self.assertContains(response, "No shoes are available.")
-    #     self.assertQuerysetEqual(response.context['latest_list'], [])
-        
-    # def test_future_shoe_and_past_shoe(self):
-    #     shoe = create_shoe(title="Past shoe.", days=-30)
-    #     create_shoe(title="Future shoe.", days=30)
-    #     response = self.client.get(reverse('repairelapp:index'))
-    #     self.assertQuerysetEqual(response.context['latest_list'], [shoe])
-        
+
 
 class AboutPageTest(TestCase):
     def test_resolve_to_about_page_view(self):
@@ -132,9 +119,6 @@ class PageTest(TestCase):
     def test_resolve_to_faq_page_view(self):
         resolver = resolve('/faq/')
         self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
-        
-        
-
 
 
 class ShoeItemModelTests(TestCase):
@@ -167,3 +151,38 @@ class ShoeItemModelTests(TestCase):
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_shoe_item = ShoeItem(updated=time)
         self.assertIs(recent_shoe_item.was_updated_recently(), True)
+
+
+class Shopify(TestCase):        
+    def test_session_connected_successfully(self):
+        connect()
+        shop = shopify.Shop.current()
+        self.assertEqual(shopify.Shop.current().id, shop.get_id())
+        
+    def test_products_json(self):
+        r = requests.get(shopify_api + "products.json")
+        self.assertEqual(r.status_code, 200)
+        
+    def test_blog_json(self):
+        r = requests.get(shopify_api + "blogs.json")
+        self.assertEqual(r.status_code, 200)
+    
+    def test_articles_json(self):
+        r = requests.get(shopify_api + "articles.json")
+        self.assertEqual(r.status_code, 200)
+    
+    def test_pages_json(self):
+        r = requests.get(shopify_api + "pages.json")
+        self.assertEqual(r.status_code, 200)
+        
+    def test_customers_json(self):
+        r = requests.get(shopify_api + "customers.json")
+        self.assertEqual(r.status_code, 200)
+        
+    def test_created_customer_of_correct_type(self):
+        connect()
+        customer = shopify.Customer()
+        self.assertIsInstance(customer, shopify.resources.customer.Customer)
+
+        
+        

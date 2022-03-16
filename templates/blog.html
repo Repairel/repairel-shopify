@@ -1,12 +1,10 @@
 {%extends "base.html"%}
 {%block page%}
-    {% for i in blogs %}
-        <h2>{{ i.title }}</h2>
-        {% autoescape off %}
-        <div>
-            {{ i.body }}
-        </div>
-        {% endautoescape %}
-        <p>{{ i.date }}</p>
-    {% endfor %}
+    <h2>{{article.title}}</h2>
+    {% autoescape off %}
+    <div>
+        {{article.body}}
+    </div>
+    {% endautoescape %}
+    <p>{{article.date}}</p>
 {%endblock%}

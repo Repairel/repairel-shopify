@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from django.urls import reverse
 
 register = template.Library()
 
@@ -35,6 +36,14 @@ def product_get_sizes(product):
     return ""
 
 @register.simple_tag
+def product_get_colors(product):
+    if product.options:
+        for option in product.options:
+            if option.name == "Color":
+                return option.values
+    return ""
+
+@register.simple_tag
 def array_to_string(array):
     if array:
         return ", ".join(array)
@@ -66,3 +75,7 @@ def construct_checkout_url(cart):
     for item in cart:
         arguments.append(item["variant_id"] + ":" + str(item["quantity"]))
     return f"{settings.SHOPIFY_STORE_URL}cart/{','.join(arguments)}"
+
+@register.simple_tag
+def blog_get_url(blog):
+    return reverse("repairelapp:blog", kwargs={"blog_name": blog.title.replace(" ", "-")})

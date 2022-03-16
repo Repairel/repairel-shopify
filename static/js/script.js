@@ -57,6 +57,21 @@ function compute_filter() {
         var brand = get_option(".filter_option_Brand")
         if(brand)
             pass &&= element.dataset.brand.includes(brand) || brand == "All Brands"
+        var gender = get_option(".filter_option_Gender")
+        if(gender)
+            pass &&= element.dataset.gender == gender || gender == "All Genders"
+        var group = get_option(".filter_option_Group")
+        if(group)
+            pass &&= element.dataset.group == group || group == "All Groups"
+        var product_type = get_option(".filter_option_Type")
+        if(product_type)
+            pass &&= element.dataset.product_type == product_type || product_type == "All Types"
+        var color = get_option(".filter_option_Colour")
+        if(color)
+            pass &&= element.dataset.color.includes(color) || color == "All Colours"
+        var material = get_option(".filter_option_Material")
+        if(material)
+            pass &&= element.dataset.material == material || material == "All Materials"
 
         if(pass) {
             element.style.display = "block"
@@ -81,8 +96,13 @@ function toggle_filter(filter_button) {
     var filter_options = {
         Price: ["High to Low", "Low to High"],
         Condition: ["All Conditions", "New", "Refurbished"],
-        Size: ["All Sizes", "Kids", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
-        Brand: ["All Brands", "Will's Vegan Store", "Refurbished Doc Martens", "Birdsong"]
+        Size: ["All Sizes", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "11", "12", "13", "14"],
+        Brand: ["All Brands", "Birdsong", "Dr Martens", "Will's Vegan Shoes"],
+        Gender: ["All Genders", "Men", "Women", "Unisex"],
+        Group: ["All Groups", "Kids", "Adults"],
+        Type: ["All Types", "Brogues", "Flat Boots", "Heeled Boots", "High Heels", "Oxford Shoes", "Sandals", "Slip-ons", "Trainers", "Walking Boots"],
+        Colour: ["All Colours", "Black", "Blue", "Brown", "Green", "Grey", "Multicolour", "Natural", "Pink", "Purple", "Red", "White", "Yellow"],
+        Material: ["All Materials", "Leather", "Suede", "Textile", "Synthetic", "Vegan (Synthetic)"],
     }
     
     var filter = document.getElementById("filter")
@@ -150,29 +170,52 @@ function toggle_filter(filter_button) {
 
 //shoe_balls is the parent object - the parent of the attribute and balls.
 function show_shoe_balls_description(shoe_balls) {
-    shoe_balls_description = document.getElementById("shoe_balls_description")
-    //clear the description
-    shoe_balls_description.innerHTML = ""
 
-    //now create the necessary elements
-    var header = document.createElement("div")
+    var only_close = shoe_balls.classList.contains("custom_shoe_balls_black")
+
+    var mobile_view_cutoff = 700
+
+    //check if shoe_balls_description existss
+    var shoe_balls_description = document.getElementById("shoe_balls_description")
+    if(shoe_balls_description) {
+        shoe_balls_description.remove()
+    }
+
+    if(!only_close) {
+        shoe_balls_description = document.createElement("div")
+        shoe_balls_description.id = "shoe_balls_description"
+        shoe_balls_description.classList = "custom_shoe_balls_description"
     
-    var image = document.createElement("img")
-    image.src = shoe_balls.dataset.image
-
-    var title = document.createElement("h3")
-    title.innerHTML = shoe_balls.dataset.title
-
-    var description = document.createElement("p")
-    description.innerHTML = shoe_balls.dataset.description
+        
+        if(window.innerWidth < mobile_view_cutoff) {
+            shoe_balls.parentElement.insertBefore(shoe_balls_description, shoe_balls.nextSibling)
+        }
+        else {
+            shoe_balls.parentElement.parentElement.insertBefore(shoe_balls_description, shoe_balls.parentElement.nextSibling)
+        }
+        shoe_balls_description = document.getElementById("shoe_balls_description")
+        //clear the description
+        shoe_balls_description.innerHTML = ""
     
-
-    header.appendChild(image)
-    header.appendChild(title)
-
-    shoe_balls_description.appendChild(header)
-    shoe_balls_description.appendChild(description)
-
+        //now create the necessary elements
+        var header = document.createElement("div")
+        
+        var image = document.createElement("img")
+        image.src = shoe_balls.dataset.image
+    
+        var title = document.createElement("h3")
+        title.innerHTML = shoe_balls.dataset.title
+    
+        var description = document.createElement("p")
+        description.innerHTML = shoe_balls.dataset.description
+        
+    
+        header.appendChild(image)
+        header.appendChild(title)
+    
+        shoe_balls_description.appendChild(header)
+        shoe_balls_description.appendChild(description)
+    }
 
     //finally make the selected shoe_balls black
     var all_shoe_balls = document.querySelectorAll(".custom_shoe_balls")
@@ -180,13 +223,14 @@ function show_shoe_balls_description(shoe_balls) {
         element.classList.remove("custom_shoe_balls_black")
     })
 
-    if(shoe_balls.dataset.description == "" || shoe_balls.dataset.description == "None") {
-        shoe_balls_description.innerHTML = ""
+    if(!only_close) {
+        if(shoe_balls.dataset.description == "" || shoe_balls.dataset.description == "None") {
+            shoe_balls_description.innerHTML = ""
+        }
+        else {
+            shoe_balls.classList.add("custom_shoe_balls_black")
+        }
     }
-    else {
-        shoe_balls.classList.add("custom_shoe_balls_black")
-    }
-
 }
 
 function shoe_options_get_variant_id() {
