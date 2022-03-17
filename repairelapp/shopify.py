@@ -90,11 +90,12 @@ class ShopifyProductAdvancedInfo:
         self.affiliate_link = affiliate_link
 
 class BlogPost:
-    def __init__(self, title, date, body, excerpt):
+    def __init__(self, title, date, body, excerpt, image):
         self.title = title
         self.date = date
         self.body = body
         self.excerpt = excerpt
+        self.image = image
 
 class Page:
     def __init__(self, title, body):
@@ -120,8 +121,12 @@ def _shopify_construct_article(article):
         print("There is no excerpt created: will use default blog description as the excerpt instead.")
         excerpt = article['body_html']
 
+    try:
+        image = article['image']['src']
+    except KeyError:
+        image = False
 
-    return BlogPost(article['title'], date, article['body_html'], excerpt)
+    return BlogPost(article['title'], date, article['body_html'], excerpt, image)
 
 def all_articles():
     r = requests.get(shopify_api + "blogs.json")

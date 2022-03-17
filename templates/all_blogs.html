@@ -17,6 +17,11 @@
             <div class="details">
                 <span class="title">{{i.title}}</span>
                 <span>{{i.date}}</span>
+                <!-- TODO image scaling
+                {% if i.image %}
+                    <img src={{ i.image }}>
+                {% endif %}
+                -->
             </div>
             <p>{{ i.excerpt|striptags|truncatechars:250 }}</p>
             <div class="bottom">
