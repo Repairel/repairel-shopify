@@ -17,10 +17,10 @@
             cart = `{{cart|safe}}`
             local_api_url = "{%url 'repairelapp:api_local' '$request_type$' '$argument$'%}"
             csrf = "{{csrf_token}}"
+            cart_update_url = "{%url 'repairelapp:api_local_update_cart'%}"
+            checkout_url = "{%construct_checkout_url cart%}"
         </script>
-        <div id="shopping_cart" class="custom_shopping_cart">
-
-        </div>
+        <div id="shopping_cart" class="custom_shopping_cart"></div>
         <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
                 <div class="custom_hamburger_inside_mid">

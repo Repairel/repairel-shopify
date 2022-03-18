@@ -1,4 +1,5 @@
 from ast import Index
+from os import stat
 from django.http import HttpResponse, JsonResponse
 import requests
 import json
@@ -307,6 +308,14 @@ def api_local_view(request, request_type, argument=None):
     if request.method == 'GET':
         return HttpResponse("GET requests are not allowed", status=403)
 
+def api_local_update_cart_view(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        update_from_cart(request, body["variant_id"], body["quantity"])
+        return HttpResponse(status=200)
+    if request.method == 'GET':
+        return HttpResponse("GET requests are not allowed", status=403)
+
 def all_pages():
     """
     Function to get all misc pages from the Shopify backend
@@ -327,7 +336,6 @@ def all_pages():
 
     return page_list
 
-
 def cart_remove_duplicates(request):
     cart = json.loads(request.session.get('cart', '[]'))
     #merge duplicate items
@@ -335,6 +343,13 @@ def cart_remove_duplicates(request):
     for item in cart:
         dictionary[item['variant_id']] = dictionary.get(item['variant_id'], 0) + item['quantity']
 
+    #check if there are any items with quantity 0
+    new_dictionary = {}
+    for key in dictionary:
+        if int(dictionary[key]) > 0:
+            new_dictionary[key] = dictionary[key]
+    dictionary = new_dictionary
+    
     #convert to list
     result = []
     for key, value in dictionary.items():
@@ -347,6 +362,16 @@ def add_to_cart(request, variant_id, quantity):
     #TODO protection against taking more than stock
     request.session['cart'] = json.dumps(json.loads(request.session.get('cart', '[]')) + [{'variant_id': variant_id, 'quantity': quantity}])
     cart_remove_duplicates(request)
+
+def update_from_cart(request, variant_id, quantity):
+    cart = json.loads(request.session.get('cart', '[]'))
+    for item in cart:
+        if int(item['variant_id']) == int(variant_id):
+            item['quantity'] = quantity
+            break
+    request.session['cart'] = json.dumps(cart)
+    cart_remove_duplicates(request)
+
 
 #returns list [{'variant_id': x 'quantity': y}, ...]
 def get_cart(request):

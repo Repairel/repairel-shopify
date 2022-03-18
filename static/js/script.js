@@ -1,3 +1,24 @@
+function set_cookie(name, value, days) {
+    var expires = ""
+    if (days) {
+        var date = new Date()
+        date.setTime(date.getTime() + (days*24*60*60*1000))
+        expires = "; expires=" + date.toUTCString()
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/"
+}
+
+function get_cookie(name) {
+    var nameEQ = name + "="
+    var ca = document.cookie.split(';')
+    for(var i=  0; i < ca.length; i++) {
+        var c = ca[i]
+        while (c.charAt(0)==' ') c = c.substring(1,c.length)
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length)
+    }
+    return null
+}
+
 function hamburger_menu_toggle() {
     var hamburger_button = document.getElementById("hamburger")
     var hamburger_menu = document.getElementById("hamburger_menu")
@@ -649,23 +670,165 @@ function open_shopping_cart(shopping_cart) {
     shopping_cart.innerHTML = ""
 
     //add loading
-    var loading = document.createElement("div")
-    var animation_delay = 100
-    loading.classList = "div_loading custom_shopping_cart_loading"
-    for(var i = 0; i < 3; i++) {
-        var ball = document.createElement("div")
-        ball.style.animationDelay = i * animation_delay + "ms"
-        loading.appendChild(ball)
+    var add_loading = function() {
+        var loading = document.createElement("div")
+        var animation_delay = 100
+        loading.classList = "div_loading custom_shopping_cart_loading"
+        for(var i = 0; i < 3; i++) {
+            var ball = document.createElement("div")
+            ball.style.animationDelay = i * animation_delay + "ms"
+            loading.appendChild(ball)
+        }
+        shopping_cart.appendChild(loading)
+        return loading
     }
-    shopping_cart.appendChild(loading)
+    var loading = add_loading()
 
-
+    var sending_update = false
     var construct_shopping_cart = function() {
         //remove the loading animation
         loading.remove()
         var encoded_cart = JSON.parse(cart.replaceAll("'", "\""))
         var items_in_cart = get_items_in_cart(all_products_store, encoded_cart)
-        console.log(items_in_cart)
+
+        //create header
+        var header = document.createElement("span")
+        header.classList = "custom_shopping_cart_header"
+        header.innerHTML = "Shopping cart"
+        shopping_cart.appendChild(header)
+
+        var cart_close = document.createElement("div")
+        cart_close.classList = "custom_compare_close"
+        cart_close.innerHTML = "x"
+        cart_close.onclick = function() {
+            toggle_shopping_cart()
+        }
+        shopping_cart.appendChild(cart_close)
+
+        //loop over all items in cart and insert them
+        var entries = document.createElement("div")
+        entries.classList = "custom_shopping_cart_entry_wrapper"
+        shopping_cart.appendChild(entries)
+
+        cart_total_amount = 0
+        for(var item_info of items_in_cart) {
+            var entry = document.createElement("div")
+            entry.classList = "custom_shopping_cart_entry"
+            entries.appendChild(entry)
+
+            var image_wrapper = document.createElement("a")
+            image_wrapper.href = `/${item_info.product_info.id}/`
+            entry.appendChild(image_wrapper)
+
+            var image = document.createElement("img")
+            image.src = item_info.product_info.thumbnail
+            image_wrapper.appendChild(image)
+
+            var text_block = document.createElement("div")
+            text_block.classList = "custom_shopping_cart_text_block"
+            entry.appendChild(text_block)
+
+            var title = document.createElement("span")
+            title.innerHTML = item_info.product_info.name
+            text_block.appendChild(title)
+
+            var bottom_text_wrapper = document.createElement("div")
+            bottom_text_wrapper.classList = "custom_shopping_cart_bottom_text_wrapper"
+            text_block.appendChild(bottom_text_wrapper)
+
+            var description = document.createElement("span")
+            description.innerHTML = item_info.variant_info.title
+            bottom_text_wrapper.appendChild(description)
+
+            var quantity_wrapper = document.createElement("div")
+            quantity_wrapper.classList = "custom_shopping_cart_quantity_wrapper"
+            bottom_text_wrapper.appendChild(quantity_wrapper)
+
+            var quantity_text = document.createElement("span")
+            quantity_text.innerHTML = "qty: "
+            quantity_wrapper.appendChild(quantity_text)
+
+            var quantity = document.createElement("input")
+            quantity.classList = "custom_shopping_cart_text_bottom_quantity shopping_cart_text_bottom_quantity"
+            quantity.type = "number"
+            quantity.max = "9"
+            quantity.min = "0"
+            quantity.value = item_info.quantity
+            quantity_wrapper.appendChild(quantity)
+
+            quantity.oninput = function() {
+                if(parseInt(this.value) > parseInt(this.max)) {
+                    this.value = this.max
+                }
+                else if(parseInt(this.value) < parseInt(this.min)) {
+                    this.value = this.min
+                }
+            }.bind(quantity)
+
+            var remove_button = document.createElement("div")
+            remove_button.classList = "custom_shopping_cart_remove_button"
+            remove_button.innerHTML = "x"
+            entry.appendChild(remove_button)
+
+            cart_total_amount += item_info.quantity * item_info.variant_info.price
+
+            var send_update = function() {
+                if(!sending_update) {
+                    sending_update = true
+                    add_loading()
+                    var all_inputs = document.querySelectorAll(".shopping_cart_text_bottom_quantity")
+                    for(var input of all_inputs) {
+                        input.disabled = true
+                    }
+
+                    var cart_update_data = {
+                        quantity: parseInt(this.quantity.value),
+                        variant_id: parseInt(this.item_info.variant_info.id)
+                    }
+
+                    fetch(cart_update_url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrf
+                        },
+                        body: JSON.stringify(cart_update_data)
+                    }).then(function(response) {
+                        location.reload()
+                    })
+                }
+            }.bind({quantity: quantity, item_info: item_info})
+
+            quantity.oninput = send_update
+            remove_button.onclick = function() {
+                this.value = 0
+                send_update()
+            }.bind(quantity)
+        }
+        if(items_in_cart.length == 0) {
+            var empty_text = document.createElement("span")
+            empty_text.classList = "custom_shopping_cart_empty_text"
+            empty_text.innerHTML = "Your cart is empty"
+            shopping_cart.appendChild(empty_text)
+        }
+
+        var bottom_wrapper = document.createElement("div")
+        bottom_wrapper.classList = "custom_shopping_cart_bottom_wrapper"
+        shopping_cart.appendChild(bottom_wrapper)
+
+        var total_amount = document.createElement("span")
+        total_amount.classList = "custom_shopping_cart_total_amount"
+        total_amount.innerHTML = `Total: <b>&#163;${parseFloat(cart_total_amount).toFixed(2)}</b>`
+        bottom_wrapper.appendChild(total_amount)
+
+        //add checkout button
+        var checkout_button = document.createElement("button")
+        checkout_button.classList = "button_primary custom_shopping_cart_checkout_button"
+        checkout_button.innerHTML = "Checkout"
+        checkout_button.onclick = function() {
+            open_popup_window(checkout_url)
+        }
+        bottom_wrapper.appendChild(checkout_button)
     }
 
 
@@ -696,12 +859,22 @@ function toggle_shopping_cart() {
         shopping_cart.animate({transform: ["", "translateX(100%)"]}, {duration: 300, easing: "ease-out"}).onfinish = function() {
             shopping_cart.style.display = "none"
             shopping_cart.innerHTML = ""
+            set_cookie("shopping_cart_open", "false", 1)
         }
     }
     else {
         shopping_cart.style.display = "flex"
         shopping_cart.animate({transform: ["translateX(100%)", "translateX(0px)"]}, {duration: 300, easing: "ease-out"})
 
+        open_shopping_cart(shopping_cart)
+        set_cookie("shopping_cart_open", "true", 1)
+    }
+}
+
+window.onload = function() {
+    if(get_cookie("shopping_cart_open") == "true") {
+        var shopping_cart = document.getElementById("shopping_cart")
+        shopping_cart.style.display = "flex"
         open_shopping_cart(shopping_cart)
     }
 }
