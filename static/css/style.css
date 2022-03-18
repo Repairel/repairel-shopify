@@ -1117,6 +1117,11 @@ body {
     margin-top: 0px;
 }
 
+.blog_featured_image img {
+    max-width: 100%;
+    height: auto;
+}
+
 @media screen and (max-width: 800px) {
     .custom_body_wrapper {
         padding-left: 10px;
