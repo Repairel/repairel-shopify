@@ -13,7 +13,7 @@
 
 <div class="custom_shoe_title_wrapper">
     <h3 class="custom_shoe_title">{{shoe.name}}</h3>
-    <div><span>£</span><span>{{shoe.price}}</span></div>
+    <div><span>£</span><span id="shoe_price">{{shoe.price}}</span></div>
     <div class="custom_shoe_option_wrapper">
         {%for option in shoe.options%}
             <div class="custom_shoe_option">

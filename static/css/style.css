@@ -660,11 +660,11 @@ body {
     display: none;
 }
 
-.custom_shopping_cart {
+.custom_shopping_cart_icon {
     position: relative;
 }
 
-.custom_shopping_cart span {
+.custom_shopping_cart_icon span {
     position: absolute;
     top: -10px;
     right: -10px;
@@ -682,7 +682,6 @@ body {
     display: block;
     margin: auto;
     width: 100%;
-    max-width: 600px;
     margin-top: 60px;
     margin-bottom: 130px;
     cursor: pointer;
@@ -709,10 +708,19 @@ body {
     white-space: nowrap;
     font-weight: bold;
     border: solid 2px black;
+    max-width: 600px;
 }
 
 .custom_splitter_entry:hover h1 {
     transform: translateX(-50%) scale(1.05);
+}
+
+.custom_splitter_entry_image {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 4px;
 }
 
 .custom_shoe_expander {
@@ -877,6 +885,53 @@ body {
 
 .custom_header_top_text_hidden {
     display: none;
+}
+
+.custom_shopping_cart {
+/*TODO*/
+}
+
+.custom_shopping_cart_entry {
+
+}
+
+.custom_compare_info {
+    display: none;
+    margin: auto;
+    text-align: center;
+    margin-top: 40px;
+    max-width: 600px;
+}
+
+.custom_compare_info_visible {
+    display: block;
+}
+
+.custom_compare_info_square {
+    --size: 10px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border: 2px black solid;
+    vertical-align: middle;
+    margin-bottom: 2px;
+}
+
+.custom_compare_shoe_button {
+    background-color: var(--primary-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.custom_compare_shoe_button input {
+    margin-right: 15px;
 }
 
 @media screen and (max-width: 1300px) {

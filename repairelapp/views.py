@@ -24,6 +24,9 @@ def connect():
 def latest_updated_list():
     return ShoeItem.objects.order_by("-created")[:20]
 
+class Error404View(TemplateView):
+    template_name = '404.html'
+
 class IndexView(View):
     def get(self, *args, **kwargs):
         return render(self.request, "index.html", {})
@@ -100,7 +103,9 @@ class FAQView(TemplateView):
 
 
 class ShoppingCartView(TemplateView):
-    template_name = 'shopping-cart.html'
+    def get(self, *args, **kwargs):
+        all_products = shopify_all_products()
+        return render(self.request, "shopping_cart.html", {"all_products": all_products})
 
 class ActivismView(TemplateView):
     def get(self, *args, **kwargs):
@@ -241,3 +246,36 @@ class ShoeView(TemplateView):
         
         add_to_cart(self.request, post["variant_id"], 1)
         return HttpResponse(status=200)
+
+
+class AllPageView(TemplateView):
+    def get(self, *args, **kwargs):
+
+        pages = all_pages()
+
+        context = {
+            'pages': pages
+        }
+        return render(self.request, "pages.html", context)
+
+
+class PageView(TemplateView):
+    def get(self, *args, **kwargs):
+        page_name = kwargs.get("page_name", "")
+        page_name = page_name.replace("-", " ")
+
+        pages = all_pages()
+
+        page = None
+        for i in pages:
+            if i.title == page_name:
+                page = i
+                break
+
+        if page is None:
+            return HttpResponse(status=404)
+
+        context = {
+            'page': page
+        }
+        return render(self.request, "page.html", context)

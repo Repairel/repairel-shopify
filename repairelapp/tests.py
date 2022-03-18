@@ -183,6 +183,3 @@ class Shopify(TestCase):
         connect()
         customer = shopify.Customer()
         self.assertIsInstance(customer, shopify.resources.customer.Customer)
-
-        
-        
