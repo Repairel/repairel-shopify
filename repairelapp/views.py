@@ -76,6 +76,7 @@ class ShoesView(View):
         }
         return render(self.request, "shoes.html", context)
 
+# TODO REMOVE
 class AboutView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -88,7 +89,7 @@ class AboutView(TemplateView):
         except KeyError:
             return 0
 
-
+# TODO REMOVE
 class FAQView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -107,6 +108,7 @@ class ShoppingCartView(TemplateView):
         all_products = shopify_all_products()
         return render(self.request, "shopping_cart.html", {"all_products": all_products})
 
+# TODO REMOVE
 class ActivismView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -119,6 +121,7 @@ class ActivismView(TemplateView):
         except KeyError:
             return 0
 
+# TODO REMOVE
 class SustainabilityView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -144,10 +147,11 @@ class NewsLetterView(View):
             return HttpResponse(status=400)
         return HttpResponse("Thank you for subscribing to our mailing list.", status=200)
 
-
+# TODO REMOVE
 class TermsView(TemplateView):
     template_name = 'terms.html'
 
+# TODO REMOVE
 class GDPRView(TemplateView):
     template_name = 'gdpr.html'
 
@@ -180,6 +184,7 @@ class RequestView(View):
             messages.info(self.request, "Something went wrong! Please retry after some time.")
             return redirect("repairelapp:request")
 
+# TODO REMOVE
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
 
