@@ -22,8 +22,11 @@ urlpatterns = [
     path('pages/<str:page_name>', PageView.as_view(), name="page"),
 
     #this is a path for our api
+    path('api/local/<str:request_type>/<str:argument>/', api_local_view, name="api_local"),
+    path('api/local/<str:request_type>/', api_local_view, name="api_local"),
     path('api/<str:key>/<str:password>/<str:request_type>/<str:argument>/', api_view, name="api"),
     path('api/<str:key>/<str:password>/<str:request_type>/', api_view, name="api"),
+
     path('404/', Error404View.as_view(), name="404"),
 
     #TODO these. They are not working yet.

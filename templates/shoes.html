@@ -1,6 +1,10 @@
 {%extends "base.html"%}
 {%block page%}
 {%load templatetags%}
+<script>
+    local_api_url = "{%url 'repairelapp:api_local' '$request_type$' '$argument$'%}"
+    csrf = "{{csrf_token}}"
+</script>
 <div class="custom_index_tools">
     <div><button class="button_primary" onclick="toggle_filter(this)">Filter</button></div>
     <div><button class="button_primary" onclick="toggle_compare()">Compare</button></div>
@@ -18,7 +22,6 @@
     {% if items %}
     {%for i in items %}
         {%product_get_sizes i as raw_sizes%}
-        {%product_get_colors i as raw_colors%}
         {%array_to_string raw_sizes as sizes%}
         {%sizes_to_limit_string raw_sizes as size_limit%}
         <a href="{%url 'repairelapp:shoe' i.id%}" class="shoe_wrapper" data-id={{i.id}} data-price={{i.price}} data-condition="{{i.condition}}" data-size={{sizes}} data-brand="{{i.vendor}}" data-gender="{{i.gender}}" data-group="{{i.group}}" data-product_type="{{i.product_type}}" data-color="{{i.colors}}" data-material="{{i.material}}">

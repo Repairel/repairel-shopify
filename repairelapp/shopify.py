@@ -246,6 +246,24 @@ def shopify_get_product(id):
     result.extra_info = extra_info
     return result
 
+def _api_view(key, password, request_type, argument=None):
+    #verify the key and password
+    if key != REPAIREL_API_KEY or password != REPAIREL_API_PASSWORD:
+        return HttpResponse('Wrong API key or password', status=401)
+
+    result = {}
+    if request_type == 'all_products':
+        raw_result = shopify_all_products()
+        result["products"] = []
+        for i in raw_result:
+            result["products"].append(i.to_dict())
+    elif request_type == 'product':
+        result = shopify_get_product(argument).to_dict()
+    else:
+        return HttpResponse('Unknown request type', status=400)
+    
+    return JsonResponse(result, safe=False)
+        
 def api_view(request, key, password, request_type, argument=None):
     #verify the key and password
     if key != REPAIREL_API_KEY or password != REPAIREL_API_PASSWORD:
@@ -253,24 +271,18 @@ def api_view(request, key, password, request_type, argument=None):
 
     #for now we only support GET requests
     if request.method == 'GET':
-        result = {}
-
-        if request_type == 'all_products':
-            raw_result = shopify_all_products()
-            result["products"] = []
-            for i in raw_result:
-                result["products"].append(i.to_dict())
-        elif request_type == 'product':
-            result = shopify_get_product(argument).to_dict()
-        else:
-            return HttpResponse('Unknown request type', status=400)
-
-        return JsonResponse(result, safe=False)
+        return _api_view(key, password, request_type, argument)
     if request.method == 'POST':
         return HttpResponse("POST requests are not allowed", status=403)
 
     return HttpResponse(status=403)
 
+def api_local_view(request, request_type, argument=None):
+    #for now we only support POST requests. It is to force CSRF verification
+    if request.method == 'POST':
+        return _api_view(REPAIREL_API_KEY, REPAIREL_API_PASSWORD, request_type, argument)
+    if request.method == 'GET':
+        return HttpResponse("GET requests are not allowed", status=403)
 
 def all_pages():
     r = requests.get(shopify_api + "pages.json")

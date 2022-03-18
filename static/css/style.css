@@ -57,6 +57,11 @@ body {
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 
+.html_stop_scroll {
+    height: 100%;
+    overflow: hidden;
+}
+
 .a_no_link, .a_no_link * {
     color: red !important;
 }
@@ -233,7 +238,7 @@ body {
     min-height: var(--hamburger-size);
     padding: 5px;
     cursor: pointer;
-    z-index: 11;
+    z-index: 101;
     display: inline-block;
     padding-right: 30px;
 }
@@ -287,7 +292,7 @@ body {
     top: 0;
     left: 0;
     background-color: white;
-    z-index: 10;
+    z-index: 100;
     display: none;
 }
 
@@ -533,6 +538,9 @@ body {
     padding: 10px;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .custom_shoe_balls_description {
@@ -568,7 +576,7 @@ body {
     margin-left: -1px;
     position: relative;
     max-width: 170px;
-    min-width: 100px;
+    min-width: 120px;
 }
 
 .custom_shoe_balls_black,
@@ -590,8 +598,9 @@ body {
     filter: invert(100%);
 }
 
+.custom_shoe_expander_active,
 .custom_shoe_balls_black .custom_shoe_expander {
-        transform: rotate(45deg) scale(-1, -1);
+        transform: rotate(45deg) scale(-1, -1) !important;
 }
 
 .custom_filter_inner {
@@ -877,6 +886,7 @@ body {
 }
 
 .custom_header_top_text {
+    margin-top: 0;
     background-color: var(--black-color);
     color: var(--white-color);
     text-align: center;
@@ -927,19 +937,176 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 98;
+    border-radius: 3px;
 }
 
 .custom_compare_shoe_button input {
     margin-right: 15px;
 }
 
-@media screen and (max-width: 1300px) {
-    .custom_shoe_balls_wrapper {
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
+.custom_compare_popup_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+}
+
+.custom_compare_popup_outer {
+    --max-width: 800px;
+    position: relative;
+    width: var(--max-width);
+    min-width: 300px;
+}
+
+.custom_compare_popup {
+    width: 100%;
+    min-height: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 25px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.custom_compare_loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+}
+
+.custom_compare_poup_shoe_container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 2px;
+}
+
+.custom_compare_popup_shoe_container_entry {
+    flex: 1 1 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+}
+
+.custom_compare_popup_shoe_container_entry > :first-child {
+    width: 100%;
+}
+
+.custom_compare_popup_shoe_image {
+    --max-entry-width: calc(var(--max-width) / 3);
+    width: 100%;
+    height: min(var(--max-entry-width), 30vw);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.custom_compare_popup_shoe_text_block {
+    text-align: left;
+}
+
+.custom_compare_scoring_balls {
+    display: inline-block;
+}
+
+@keyframes compare_loading_animation {
+    0% {
+        transform: scale(0);
     }
+    33% {
+        transform: scale(1);
+    }
+    66% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+.custom_compare_loading * {
+    --size: 17px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 100px;
+    background-color: var(--black-color);
+    animation: 1s ease-out 0s infinite compare_loading_animation;
+    margin: 5px;
+}
+
+.custom_compare_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    margin: 5px 10px;
+    cursor: pointer;
+    font-size: 2em;
+    line-height: 20px;
+}
+
+.custom_compare_attribute {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    position: relative;
+}
+
+.custom_compare_attribute_middle_section {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0px 40px;
+}
+
+.custom_compare_attribute_middle_section * {
+    cursor: pointer;
+}
+
+.custom_compare_attribute_wrapper {
+    margin: auto;
+    max-width: 600px;
+    width: 100%;
+}
+
+.custom_compare_attribute_middle_section_arrow {
+    position: absolute;
+    top: 0;
+    right: calc(50% - 80px);
+    display: block;
+}
+
+.custom_compare_attribute_description > :first-child {
+    margin-top: 0px;
 }
 
 @media screen and (max-width: 800px) {
