@@ -200,7 +200,7 @@ def _shopify_construct_product(shopify_product):
         material = material,
         options = options,
         variants = variants,
-        shoe_or_other = shoe_or_other
+        shoe_or_other = shoe_or_other,
         compare_price = shopify_product["variants"][0]["compare_at_price"]
     )
 
