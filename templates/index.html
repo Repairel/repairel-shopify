@@ -2,13 +2,13 @@
 {%load static templatetags%}
 {%block page%}
 <div class="custom_splitter_entry">
-    <a href="{%url 'repairelapp:shoes' 'refurbished'%}">
+    <a href="{%url 'repairelapp:product' %}?t=refurbished">
         <div class="custom_splitter_entry_image" style="background-image: url('{%static 'assets/img/landing-page-image_1.jpg'%}');"></div>
         <h1>SHOP REFURBISHED</h1>
     </a>
 </div>
 <div class="custom_splitter_entry">
-    <a href="{%url 'repairelapp:shoes' 'new'%}">
+    <a href="{%url 'repairelapp:product' %}?t=new">
         <div class="custom_splitter_entry_image" style="background-image: url('{%static 'assets/img/landing-page-image_2.jpeg'%}');"></div>
         <h1>SHOP NEW</h1>
     </a>

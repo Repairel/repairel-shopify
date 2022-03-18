@@ -13,28 +13,36 @@
         <script async src="{%static 'js/script.js'%}"></script>
     </head>
     <body style="height:100%; width: 100vw; border-collapse:collapse; display: table; min-width: 450px;">
+        <script>
+            cart = `{{cart|safe}}`
+            local_api_url = "{%url 'repairelapp:api_local' '$request_type$' '$argument$'%}"
+            csrf = "{{csrf_token}}"
+            cart_update_url = "{%url 'repairelapp:api_local_update_cart'%}"
+            checkout_url = "{%construct_checkout_url cart%}"
+        </script>
+        <div id="shopping_cart" class="custom_shopping_cart"></div>
         <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
                 <div class="custom_hamburger_inside_mid">
                     <div>
-                        <a href="{%url 'repairelapp:shoes' 'new'%}" class="a_link"><h3 class="h2_light">New Shoes</h3></a>
-                        <a href="{%url 'repairelapp:shoes' 'refurbished'%}" class="a_link"><h3 class="h2_light">Refurbished Shoes</h3></a>
-                        <a href="{%url 'repairelapp:shoes' 'women'%}" class="a_link"><h3 class="h2_light">Women's Shoes</h3></a>
-                        <a href="{%url 'repairelapp:shoes' 'men'%}" class="a_link"><h3 class="h2_light">Men's Shoes</h3></a>
-                        <a href="{%url 'repairelapp:shoes' 'unisex'%}" class="a_link"><h3 class="h2_light">Unisex Shoes</h3></a>
-                        <a href="{%url 'repairelapp:shoes' 'kids'%}" class="a_link"><h3 class="h2_light">Kid's Shoes</h3></a>
-                        <a href="{%url 'repairelapp:shoes' 'all'%}" class="a_link"><h3 class="h2_light">All Shoes</h3></a>
-                        <a href="" class="a_link a_no_link"><h3 class="h2_light">Other Products</h3></a>
-                        <a href="" class="a_link a_no_link"><h3 class="h2_light">All Products</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=new" class="a_link"><h3 class="h2_light">New Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=refurbished" class="a_link"><h3 class="h2_light">Refurbished Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=women" class="a_link"><h3 class="h2_light">Women's Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=men" class="a_link"><h3 class="h2_light">Men's Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=unisex" class="a_link"><h3 class="h2_light">Unisex Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=kids" class="a_link"><h3 class="h2_light">Kid's Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=shoe" class="a_link"><h3 class="h2_light">All Shoes</h3></a>
+                        <a href="{%url 'repairelapp:product' %}?t=other" class="a_link"><h3 class="h2_light">Other Products</h3></a>
+                        <a href="{%url 'repairelapp:product' %}" class="a_link"><h3 class="h2_light">All Products</h3></a>
                     </div>
                     <div class="custom_hamburger_inside_mid_black">
                         <!-- TODO change urls -->
                         <a href="{%url 'repairelapp:pages' %}" class="a_link"><h3 class="h2_light">About Us</h3></a>
-                        <a href="{%url 'repairelapp:activism'%}" class="a_link"><h3 class="h2_light">Activism</h3></a>
-                        <a href="{%url 'repairelapp:sustainability'%}" class="a_link"><h3 class="h2_light">Sustainability</h3></a>
-                        <a href="{%url 'repairelapp:faq'%}" class="a_link"><h3 class="h2_light">FAQ</h3></a>
-                        <a href="{%url 'repairelapp:terms'%}" class="a_link"><h3 class="h2_light">Terms & Conditions</h3></a>
-                        <a href="{%url 'repairelapp:gdpr'%}" class="a_link"><h3 class="h2_light">GDPR</h3></a>
+                        <a href="{%url 'repairelapp:page' 'Activism'%}" class="a_link"><h3 class="h2_light">Activism</h3></a>
+                        <a href="{%url 'repairelapp:page' 'Sustainability'%}" class="a_link"><h3 class="h2_light">Sustainability</h3></a>
+                        <a href="{%url 'repairelapp:page' 'FAQ'%}" class="a_link"><h3 class="h2_light">FAQ</h3></a>
+                        <a href="{%url 'repairelapp:page' 'Terms & Conditions'%}" class="a_link"><h3 class="h2_light">Terms & Conditions</h3></a>
+                        <a href="{%url 'repairelapp:page' 'GDPR'%}" class="a_link"><h3 class="h2_light">GDPR</h3></a>
                         <div class="custom_hamburger_inside_end">
                             <a target="_blank" href="https://www.facebook.com/RepairelHub"><svg><image xlink:href="{%static 'assets/icons/fb.svg'%}" height="100%"></image></svg></a>
                             <a target="_blank" href="https://www.instagram.com/repairelhub?igshid=bersqmakpku6&hl=en"><svg><image xlink:href="{%static 'assets/icons/insta.svg'%}" height="100%"></image></svg></a>
@@ -52,7 +60,7 @@
                     <a href="{%url 'repairelapp:index'%}"><img class="custom_logo" src="{%static 'assets/icons/logo.png'%}" alt="Repairel logo"></a>
                     <div class="custom_header_right_wrapper">
                         <div class="custom_header_personal">
-                            <a href="{%url 'repairelapp:shopping_cart'%}" class="custom_shopping_cart_icon"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
+                            <a onclick="toggle_shopping_cart()" class="custom_shopping_cart_icon"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
                         </div>
                         <div id="hamburger" class="custom_hamburger" onclick="hamburger_menu_toggle()">
                             <div></div>
@@ -66,10 +74,9 @@
             <div class="custom_footer">
                 <div>
                     <h5>INFORMATION</h5>
-                    <!-- TODO change urls -->
-                    <a href="{%url 'repairelapp:about'%}" class="a_small_link">About</a>
-                    <a href="{%url 'repairelapp:terms'%}" class="a_small_link">Terms & Conditions</a>
-                    <a href="{%url 'repairelapp:gdpr'%}" class="a_small_link">GDPR</a>
+                    <a href="{%url 'repairelapp:pages' %}" class="a_small_link">About</a>
+                    <a href="{%url 'repairelapp:page' 'Terms & Conditions'%}" class="a_small_link">Terms & Conditions</a>
+                    <a href="{%url 'repairelapp:page' 'GDPR'%}" class="a_small_link">GDPR</a>
                     <a href="https://localgiving.org/charity/repairel/" class="a_small_link">Donate</a>
                 </div>
                 <div>
@@ -81,7 +88,7 @@
                         <a target="_blank" href="https://www.linkedin.com/company/repairel-cic"><svg><image xlink:href="{%static 'assets/icons/l_in.svg'%}" height="100%"></image></svg></a>
                     </div>
                 </div>
-                <p class="p_small_text">©2021 Roman Polek, Lewis Haggerty, Morad Elfleet, Nadim Abdel Rahman. All Rights Reserved</p>
+                <p class="p_small_text">©2022 REPAIREL CIC. All Rights Reserved</p>
                 <form method="post" action="{% url 'repairelapp:newsletter' %}">
                     {% csrf_token %}
                     <input type="email" name="email">

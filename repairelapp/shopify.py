@@ -1,4 +1,5 @@
 from ast import Index
+from os import stat
 from django.http import HttpResponse, JsonResponse
 import requests
 import json
@@ -16,7 +17,7 @@ try:
     REPAIREL_API_KEY = keys.REPAIREL_API_KEY
     REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
 
-except:
+except ImportError: #pragma: no cover
     #alternative for AWS production server
     import os
     SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
@@ -47,7 +48,7 @@ class Option:
 
 class ShopifyProduct:
     
-    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, compare_price, extra_info=None):
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, shoe_or_other, compare_price, extra_info=None):
         self.id = id
         self.name = name
         self.description = description
@@ -66,6 +67,7 @@ class ShopifyProduct:
         self.condition = condition
         self.gender = gender
         self.group = group
+        self.shoe_or_other = shoe_or_other
         self.compare_price = compare_price
         
         
@@ -175,9 +177,9 @@ def _shopify_construct_product(shopify_product):
         colors = shopify_product["options"][1]["values"]
     except IndexError:
         print("No colours option have been assigned to the shoe item.")
-    # price = min([var["price"] for var in shopify_product["variants"]])
+    price = min([var["price"] for var in shopify_product["variants"]])
     try:
-        (condition, gender, group, material) = extract_tag(shopify_product["tags"])
+        (condition, gender, group, material, shoe_or_other) = extract_tag(shopify_product["tags"])
     except ValueError:
         print("Couldn't unpack all values: one or more tags might be missing")
 
@@ -187,7 +189,7 @@ def _shopify_construct_product(shopify_product):
         description = shopify_product["body_html"], 
         thumbnail = shopify_product["image"]["src"],
         images = images, 
-        price = shopify_product["variants"][0]["price"], 
+        price = price, 
         tags = shopify_product["tags"],
         product_type = shopify_product["product_type"], 
         vendor = shopify_product["vendor"],
@@ -199,6 +201,7 @@ def _shopify_construct_product(shopify_product):
         material = material,
         options = options,
         variants = variants,
+        shoe_or_other = shoe_or_other,
         compare_price = shopify_product["variants"][0]["compare_at_price"]
     )
 
@@ -210,6 +213,8 @@ def shopify_all_products():
 
     result = []
     response = requests.get(shopify_api + "products.json")
+    if response.status_code != 200:
+        raise IOError("Shopify API is not reachable.")
     data = response.json()
     products = data["products"]
     for product in products:
@@ -226,6 +231,8 @@ def shopify_get_product(id):
     """
 
     response_product = requests.get(shopify_api + f"products/{id}.json")
+    if response_product.status_code != 200:
+        raise IOError("Product page not found: ID may be incorrect.")
     response_metafields = requests.get(shopify_api + f"products/{id}/metafields.json")
     #this is the base product
     result = _shopify_construct_product(response_product.json()["product"])
@@ -304,6 +311,14 @@ def api_local_view(request, request_type, argument=None):
     if request.method == 'GET':
         return HttpResponse("GET requests are not allowed", status=403)
 
+def api_local_update_cart_view(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        update_from_cart(request, body["variant_id"], body["quantity"])
+        return HttpResponse(status=200)
+    if request.method == 'GET':
+        return HttpResponse("GET requests are not allowed", status=403)
+
 def all_pages():
     """
     Function to get all misc pages from the Shopify backend
@@ -319,7 +334,6 @@ def all_pages():
 
     return page_list
 
-
 def cart_remove_duplicates(request):
     cart = json.loads(request.session.get('cart', '[]'))
     #merge duplicate items
@@ -327,6 +341,13 @@ def cart_remove_duplicates(request):
     for item in cart:
         dictionary[item['variant_id']] = dictionary.get(item['variant_id'], 0) + item['quantity']
 
+    #check if there are any items with quantity 0
+    new_dictionary = {}
+    for key in dictionary:
+        if int(dictionary[key]) > 0:
+            new_dictionary[key] = dictionary[key]
+    dictionary = new_dictionary
+    
     #convert to list
     result = []
     for key, value in dictionary.items():
@@ -340,21 +361,31 @@ def add_to_cart(request, variant_id, quantity):
     request.session['cart'] = json.dumps(json.loads(request.session.get('cart', '[]')) + [{'variant_id': variant_id, 'quantity': quantity}])
     cart_remove_duplicates(request)
 
+def update_from_cart(request, variant_id, quantity):
+    cart = json.loads(request.session.get('cart', '[]'))
+    for item in cart:
+        if int(item['variant_id']) == int(variant_id):
+            item['quantity'] = quantity
+            break
+    request.session['cart'] = json.dumps(cart)
+    cart_remove_duplicates(request)
+
 #returns list [{'variant_id': x 'quantity': y}, ...]
 def get_cart(request):
     cart_remove_duplicates(request)
     return json.loads(request.session.get('cart', '[]'))
 
 def extract_tag(string):
-    print(string)
-    tag = string.split(',')
+    # print(string)
+    tag = string.replace(" ", "").split(',')
     condition = None
     gender = None
     group = None
     material = None
+    shoe_or_other = None
 
     for item in tag:
-        item = item.replace(' ', '')
+        # Change all ifs to elifs
         if item == "Refurbished":
             condition = "Refurbished"
         elif item == "New":
@@ -383,8 +414,12 @@ def extract_tag(string):
         if item == "Vegan(Synthetic)":
             material = "Vegan (Synthetic)"
             
+        if item == "Shoe":
+            shoe_or_other = "Shoe"
+        elif item == "Other":
+            shoe_or_other = "Other"
             
-    return (condition, gender, group, material)
+    return (condition, gender, group, material, shoe_or_other)
 
 def newsletter_signup(email):
     customer = shopify_lib.Customer()
