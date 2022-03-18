@@ -75,17 +75,3 @@ def blog_get_url(blog):
 @register.simple_tag
 def page_get_url(page):
     return reverse("repairelapp:page", kwargs={"page_name": page.title.replace(" ", "-")})
-
-@register.simple_tag
-def get_product_and_variant_from_variant_id(all_products, variant_id):
-    for product in all_products:
-        for variant in product.variants:
-            if int(variant.id) == int(variant_id):
-                return product, variant
-    return None, None
-
-
-
-@register.simple_tag
-def get_page_url(page):
-    return reverse("repairelapp:page", kwargs={"page_name": page.title.replace(" ", "-")})

@@ -14,14 +14,12 @@
     <div class="{% if forloop.counter|divisibleby:2 %}row row-1{% else %}row row-2{% endif %}">
         <section>
             <i class="icon fas fa-home"></i>
+            {% if i.image %}
+                <span class="blog_featured_image"><img src={{ i.image }}></span>
+            {% endif %}
             <div class="details">
                 <span class="title">{{i.title}}</span>
                 <span>{{i.date}}</span>
-                <!-- TODO image scaling
-                {% if i.image %}
-                    <img src={{ i.image }}>
-                {% endif %}
-                -->
             </div>
             {% autoescape off %}
             <p>{{ i.excerpt|truncatechars:250 }}</p>

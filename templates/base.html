@@ -13,6 +13,14 @@
         <script async src="{%static 'js/script.js'%}"></script>
     </head>
     <body style="height:100%; width: 100vw; border-collapse:collapse; display: table; min-width: 450px;">
+        <script>
+            cart = `{{cart|safe}}`
+            local_api_url = "{%url 'repairelapp:api_local' '$request_type$' '$argument$'%}"
+            csrf = "{{csrf_token}}"
+        </script>
+        <div id="shopping_cart" class="custom_shopping_cart">
+
+        </div>
         <div id="hamburger_menu" class="custom_hamburger_menu">
             <div class="custom_hamburger_inside">
                 <div class="custom_hamburger_inside_mid">
@@ -52,7 +60,7 @@
                     <a href="{%url 'repairelapp:index'%}"><img class="custom_logo" src="{%static 'assets/icons/logo.png'%}" alt="Repairel logo"></a>
                     <div class="custom_header_right_wrapper">
                         <div class="custom_header_personal">
-                            <a href="{%url 'repairelapp:shopping_cart'%}" class="custom_shopping_cart_icon"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
+                            <a onclick="toggle_shopping_cart()" class="custom_shopping_cart_icon"><svg><image xlink:href="{%static 'assets/icons/shopping_cart.svg'%}" height="100%"></image></svg><span>{%cart_total_quantity cart%}</span></a>
                         </div>
                         <div id="hamburger" class="custom_hamburger" onclick="hamburger_menu_toggle()">
                             <div></div>
