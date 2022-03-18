@@ -367,6 +367,14 @@ body {
     font-size: 1.1em;
 }
 
+.custom_index_shoe_vendor {
+    font-weight: 600;
+}
+
+.custom_index_shoe_price {
+    font-weight: 600;
+}
+
 .custom_index_shoe_faded {
     opacity: 0.5;
 }

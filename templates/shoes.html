@@ -1,7 +1,7 @@
 {%extends "base.html"%}
 {%block page%}
 {%load templatetags%}
-<div class="custom_index_tools">
+<div class="custom_index_tools" xmlns="http://www.w3.org/1999/html">
     <div><button class="button_primary" onclick="toggle_filter(this)">Filter</button></div>
     <div><button class="button_primary" onclick="toggle_compare()">Compare</button></div>
 </div>
@@ -25,8 +25,13 @@
             <div class="custom_index_shoe">
                 <div><img loading="lazy" src="{{i.thumbnail}}"></div>
                 <div>
+                    <div><span class="custom_index_shoe_vendor">{{i.vendor}}</span></div>
                     <div><span class="custom_index_shoe_name">{{i.name}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{size_limit}}</span></div>
-                    <div><span>£</span><span>{{i.price}}</span></div>
+                    {% if i.compare_price %}
+                        <div><span class="custom_index_shoe_price">Was: <strike>£</strike><strike>{{i.compare_price}}</strike> | Now: £{{i.price}}</span></div>
+                    {% else %}
+                        <div><span class="custom_index_shoe_price">£{{i.price}}</span></div>
+                    {% endif %}
                 </div>
             </div>
         </a>

@@ -47,7 +47,7 @@ class Option:
 
 class ShopifyProduct:
     
-    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, extra_info=None):
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, compare_price, extra_info=None):
         self.id = id
         self.name = name
         self.description = description
@@ -66,6 +66,7 @@ class ShopifyProduct:
         self.condition = condition
         self.gender = gender
         self.group = group
+        self.compare_price = compare_price
         
         
     def __str__(self):
@@ -136,7 +137,7 @@ def _shopify_construct_article(article):
 def all_articles():
     """
     Function to access all blog posts (known as articles in the API)
-    :return: An array of blog posts only with required data
+    :return: An array of blog post classes
     """
 
     r = requests.get(shopify_api + "blogs.json")
@@ -179,7 +180,7 @@ def _shopify_construct_product(shopify_product):
         (condition, gender, group, material) = extract_tag(shopify_product["tags"])
     except ValueError:
         print("Couldn't unpack all values: one or more tags might be missing")
-    
+
     return ShopifyProduct(
         id = shopify_product["id"], 
         name = shopify_product["title"], 
@@ -197,7 +198,8 @@ def _shopify_construct_product(shopify_product):
         group = group,
         material = material,
         options = options,
-        variants = variants
+        variants = variants,
+        compare_price = shopify_product["variants"][0]["compare_at_price"]
     )
 
     # TODO To be removed
