@@ -1,5 +1,5 @@
-from http.client import HTTPResponse
-from django.http import HttpResponse
+# from http.client import HTTPResponse
+from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
 from .models import ShoeItem, ShoeRequest
 from django.views.generic import View, TemplateView
@@ -35,39 +35,61 @@ class ShoesView(View):
     def get_queryset(self):
         return ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
 
-    def get(self, *args, **kwargs):
-        type = kwargs.get("type", "")
+    def get(self, request, *args, **kwargs):
         latest_updated = ShoeItem.objects.filter(created__lte=timezone.now()).order_by('-created')[:5]
         ongoing_list = ShoeItem.objects.filter(in_stock=True).order_by("-updated")
         rated_list = ShoeItem.objects.filter(in_stock=True).order_by("-rating")
+        type = kwargs.get("type", "")
 
         items = shopify_all_products()
+        
 
-        tag_filter = None
-        if type == "new":
-            tag_filter = "New"
-        elif type == "refurbished":
-            tag_filter = "Refurbished"
-        elif type == "women":
-            tag_filter = "Women"
-        elif type == "men":
-            tag_filter = "Men"
-        elif type == "unisex":
-            tag_filter = "Unisex"
-        elif type == "kids":
-            tag_filter = "Kids"
-        elif type == "all":
-            tag_filter = ""
-        else:
-            return HttpResponse(status=404)
+        filters = request.GET.getlist("t")
+        
+        # tag_filter = None
+        # if type == "new" or type == "refurbished" or type == "women" or type == "men" or type == "unisex" or type == "kids":
+            # tag_filter = type.
+            
+        def translate(tag:str)->str: 
+            tag = tag.replace(" ", "").lower().rstrip("s")
+            if tag == "new":
+                tag_filter = "New"
+            elif tag == "refurbished":
+                tag_filter = "Refurbished"
+            elif tag == "women":
+                tag_filter = "Women"
+            elif tag == "men":
+                tag_filter = "Men"
+            elif tag == "unisex":
+                tag_filter = "Unisex"
+            elif tag == "kid":
+                tag_filter = "Kids"
+            elif tag == "other":
+                tag_filter = "Other"
+            elif tag == "shoe":
+                tag_filter = "Shoe"
+            
+            return tag_filter
+        
+        for tag in filters:
+            search_tag = translate(tag)
+            
+            items = [item for item in items if search_tag in item.tags]
+        
+        # else:
+        #     tag_filter = ""
+        #     # return HttpResponse(status=404)
 
-        if tag_filter != "":
-            filtered_items = []
-            for i in items:
-                if tag_filter in i.tags:
-                    filtered_items.append(i)
-            items = filtered_items
-
+        # if tag_filter != "":
+        #     filtered_items = []
+        #     for i in items:
+        #         if tag_filter in i.tags:
+        #             print(tag_filter)
+        #             print(filtered_items)
+        #             filtered_items.append(i)
+        #     items = filtered_items
+        #     # print("-----------------------")
+        # print("--------------------------")
         context = {
             'latest_list': latest_updated,
             'ongoing_list': ongoing_list,
@@ -139,15 +161,42 @@ class NewsLetterView(View):
             customer = customer.save()
         else:
             return HttpResponse(status=400)
+        try:
+            body = all_pages()['Welcome Page']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "sustainability.html", context)
+        except KeyError:
+            return 0
         return HttpResponse("Thank you for subscribing to our mailing list.", status=200)
 
 # TODO REMOVE
 class TermsView(TemplateView):
-    template_name = 'terms.html'
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['Terms & Conditions']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "terms.html", context)
+        except KeyError:
+            return 0
 
 # TODO REMOVE
 class GDPRView(TemplateView):
-    template_name = 'gdpr.html'
+    def get(self, *args, **kwargs):
+        try:
+            body = all_pages()['GDPR']
+            context = {
+                'body': body
+            }
+
+            return render(self.request, "gdpr.html", context)
+        except KeyError:
+            return 0
 
 class RequestView(View):
     def get(self, *args, **kwargs):
@@ -248,10 +297,13 @@ class ShoeView(TemplateView):
         add_to_cart(self.request, post["variant_id"], 1)
         return HttpResponse(status=200)
 
+# blog_name = kwargs.get("blog_name", "") 
+# blog_name = blog_name.replace("-", " ")
 
 class AllPageView(TemplateView):
     def get(self, *args, **kwargs):
-
+        page_name = kwargs.get("page_name", "")
+        page_name = page_name.replace("-", " ")
         pages = all_pages()
 
         context = {

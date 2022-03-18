@@ -183,3 +183,60 @@ class Shopify(TestCase):
         connect()
         customer = shopify.Customer()
         self.assertIsInstance(customer, shopify.resources.customer.Customer)
+        
+# class ShopifyProduct:
+#     def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, extra_info=None):
+#         self.id = id
+#         self.name = name
+#         self.description = description
+#         self.thumbnail = thumbnail
+#         self.images = images
+#         self.price = price
+#         self.tags = tags
+#         self.product_type = product_type
+#         self.vendor = vendor
+#         self.options = options
+#         self.variants = variants
+#         self.extra_info = extra_info
+#         self.sizes : list[float] = exact_sizes
+#         self.colors = colors
+#         self.material = material
+        # Below not needed to be tested
+#         self.condition = condition
+#         self.gender = gender
+#         self.group = group
+from repairelapp.shopify import ShopifyProduct, _shopify_construct_product
+import json
+class ProductDeserialiser(TestCase):
+    __product : ShopifyProduct = None
+    def setUpClass():
+        with open("repairelapp\mini.json") as fd:
+            obj:dict = json.load(fd)
+        ProductDeserialiser.__product = _shopify_construct_product(obj["products"][0])
+        
+    def tearDownClass(): 
+        pass
+    
+    def test_present(self):
+        self.assertIsNotNone(ProductDeserialiser.__product)
+        self.assertIsInstance(ProductDeserialiser.__product, ShopifyProduct)
+    def test_id(self):
+        self.assertEqual(ProductDeserialiser.__product.id, 7547817984231)
+    def test_name(self):
+        self.assertEqual(ProductDeserialiser.__product.name, "Juta Shoes @ Birdsong- Green Marble Reclaimed Leather Crossover Sandal Women")
+    def test_price(self):
+        # Fix: make SP.price a number, not a string
+        self.assertEqual(ProductDeserialiser.__product.price, "42.00")
+    def test_size(self):
+        self.assertListEqual(ProductDeserialiser.__product.sizes, ["35","36","42"])
+    def test_position(self):
+        self.assertEqual(ProductDeserialiser.__product.description, "this is a gray hat description example test")
+    def test_vendor(self):
+        self.assertEqual(ProductDeserialiser.__product.vendor, "Birdsong")
+    def test_image(self):
+        self.assertGreaterEqual(len(ProductDeserialiser.__product.images), 1)
+        self.assertTrue(ProductDeserialiser.__product.images[0].startswith("https"))
+    def test_tag(self):
+        self.assertListEqual(ProductDeserialiser.__product.tags, ["Adults", "Birdsong", "Green", "Leather", "New", "Sandals", "Women"])
+    # def test_pro
+    
