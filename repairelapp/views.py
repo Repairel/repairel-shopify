@@ -102,12 +102,6 @@ class FAQView(TemplateView):
         except KeyError:
             return 0
 
-
-class ShoppingCartView(TemplateView):
-    def get(self, *args, **kwargs):
-        all_products = shopify_all_products()
-        return render(self.request, "shopping_cart.html", {"all_products": all_products})
-
 # TODO REMOVE
 class ActivismView(TemplateView):
     def get(self, *args, **kwargs):

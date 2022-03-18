@@ -377,7 +377,7 @@ function open_compare(first_checkbox, second_checkbox) {
     var loading = document.createElement("div")
     var animation_delay = 100
     loading.id = "compare_popup_loading"
-    loading.classList = "custom_compare_loading"
+    loading.classList = "custom_compare_loading div_loading"
     for(var i = 0; i < 3; i++) {
         var ball = document.createElement("div")
         ball.style.animationDelay = i * animation_delay + "ms"
@@ -399,8 +399,6 @@ function open_compare(first_checkbox, second_checkbox) {
         shoe_container.classList = "custom_compare_poup_shoe_container"
 
         for(var shoe_info of [first_shoe_info, second_shoe_info]) {
-            //TODO remove
-            console.log(shoe_info)
             var shoe_container_entry = document.createElement("div")
             shoe_container_entry.classList = "custom_compare_popup_shoe_container_entry"
             shoe_container.appendChild(shoe_container_entry)
@@ -537,7 +535,6 @@ function open_compare(first_checkbox, second_checkbox) {
         }
     }
 
-
     request_shoe_info(first_id).then(function(first_shoe_info) {
         if(!closed) {
             request_shoe_info(second_id).then(function(second_shoe_info) {
@@ -611,5 +608,100 @@ function toggle_compare() {
                 compare_shoe_button.remove()
             }
         }
+    }
+}
+
+//returns array of dicts
+function get_items_in_cart(all_products, cart) {
+    var result = []
+    for(var cart_item of cart) {
+        var product_info = null
+        var variant_info = null
+        var found = false
+        for(var product of all_products.products) {
+            if(found) break
+            var variants = product.variants
+            for(var variant of variants) {
+                if(variant.id == cart_item.variant_id) {
+                    product_info = product
+                    variant_info = variant
+                    found = true
+                    break
+                }
+            }
+        }
+        if(!found) {
+            console.log("Could not find product for cart item: " + cart_item.variant_id)
+        }
+        else {
+            result.push({
+                product_info: product_info,
+                variant_info: variant_info,
+                quantity: cart_item.quantity
+            })
+        }
+    }
+    return result
+}
+
+var all_products_store = null
+function open_shopping_cart(shopping_cart) {
+    shopping_cart.innerHTML = ""
+
+    //add loading
+    var loading = document.createElement("div")
+    var animation_delay = 100
+    loading.classList = "div_loading custom_shopping_cart_loading"
+    for(var i = 0; i < 3; i++) {
+        var ball = document.createElement("div")
+        ball.style.animationDelay = i * animation_delay + "ms"
+        loading.appendChild(ball)
+    }
+    shopping_cart.appendChild(loading)
+
+
+    var construct_shopping_cart = function() {
+        //remove the loading animation
+        loading.remove()
+        var encoded_cart = JSON.parse(cart.replaceAll("'", "\""))
+        var items_in_cart = get_items_in_cart(all_products_store, encoded_cart)
+        console.log(items_in_cart)
+    }
+
+
+    if(all_products_store == null) {
+        //request all products from the server
+        var url = local_api_url.replace("$request_type$", "all_products").replace("/$argument$", "")
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrf
+            }
+        }).then(function(response) {
+            response.json().then(function(data) {
+                all_products_store = data
+                construct_shopping_cart()
+            })
+        })
+    }
+    else {
+        construct_shopping_cart()
+    }
+
+}
+
+function toggle_shopping_cart() {
+    var shopping_cart = document.getElementById("shopping_cart")
+    if(shopping_cart.style.display == "flex") {
+        shopping_cart.animate({transform: ["", "translateX(100%)"]}, {duration: 300, easing: "ease-out"}).onfinish = function() {
+            shopping_cart.style.display = "none"
+            shopping_cart.innerHTML = ""
+        }
+    }
+    else {
+        shopping_cart.style.display = "flex"
+        shopping_cart.animate({transform: ["translateX(100%)", "translateX(0px)"]}, {duration: 300, easing: "ease-out"})
+
+        open_shopping_cart(shopping_cart)
     }
 }

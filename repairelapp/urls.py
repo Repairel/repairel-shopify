@@ -9,7 +9,6 @@ urlpatterns = [
     path('shoes/<str:type>', ShoesView.as_view(), name="shoes"),
     path('about/', AboutView.as_view(), name="about"), # TODO REMOVE - about.html
     path('faq/', FAQView.as_view(), name="faq"), # TODO REMOVE - faq.html
-    path('shopping_cart/', ShoppingCartView.as_view(), name="shopping_cart"),
     path('activism/', ActivismView.as_view(), name="activism"), # TODO REMOVE - activism.html
     path('sustainability/', SustainabilityView.as_view(), name="sustainability"), # TODO REMOVE - sustainability.html
     path('terms/', TermsView.as_view(), name="terms"), # TODO REMOVE - terms.html
