@@ -189,7 +189,7 @@ def _shopify_construct_product(shopify_product):
         thumbnail = shopify_product["image"]["src"],
         images = images, 
         price = price, 
-        tags = shopify_product["tags"].replace(" ", "").split(","),
+        tags = shopify_product["tags"],
         product_type = shopify_product["product_type"], 
         vendor = shopify_product["vendor"],
         exact_sizes = sizes,
