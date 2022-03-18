@@ -73,5 +73,5 @@ def blog_get_url(blog):
     return reverse("repairelapp:blog", kwargs={"blog_name": blog.title.replace(" ", "-")})
 
 @register.simple_tag
-def page_get_url(page):
+def get_page_url(page):
     return reverse("repairelapp:page", kwargs={"page_name": page.title.replace(" ", "-")})

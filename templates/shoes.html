@@ -1,7 +1,11 @@
 {%extends "base.html"%}
 {%block page%}
 {%load templatetags%}
-<div class="custom_index_tools">
+<script>
+    local_api_url = "{%url 'repairelapp:api_local' '$request_type$' '$argument$'%}"
+    csrf = "{{csrf_token}}"
+</script>
+    <div class="custom_index_tools">
     <div><button class="button_primary" onclick="toggle_filter(this)">Filter</button></div>
     <div><button class="button_primary" onclick="toggle_compare()">Compare</button></div>
 </div>

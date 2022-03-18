@@ -1005,6 +1005,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
 }
 
 .custom_compare_poup_shoe_container {
@@ -1062,6 +1064,18 @@ body {
         transform: scale(0);
     }
 }
+
+.custom_compare_loading * {
+    --size: 17px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 100px;
+    background-color: var(--black-color);
+    animation: 1s ease-out 0s infinite compare_loading_animation;
+    margin: 5px;
+}
+
 
 .custom_compare_close {
     position: absolute;
