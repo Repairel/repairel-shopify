@@ -1,24 +1,24 @@
 {%extends "base.html"%}
 {%block page%}
-    {%load templatetags%}
-    {% load static %}
-    <center>
-        <h1>About Us</h1>
-    </center>
-    {%for i in pages%}
-        {%get_page_url i as page_url%}
-        <div class="wrapper">
-            <div class="center-line">
-                <a href="#" class="scroll-icon"><i class="fas fa-caret-up"></i></a>
+{%load templatetags%}
+{% load static %}
+<center>
+    <h1>About Us</h1>
+</center>
+{%for i in pages%}
+{%page_get_url i as page_url%}
+<div class="wrapper">
+    <div class="center-line">
+        <a href="#" class="scroll-icon"><i class="fas fa-caret-up"></i></a>
+    </div>
+    <div class="{% if forloop.counter|divisibleby:2 %}row row-1{% else %}row row-2{% endif %}">
+        <section>
+            <i class="icon fas fa-home"></i>
+            <div class="details">
+                <span class="title"><a href="{{page_url}}">{{i.title}}</a></span>
             </div>
-            <div class="{% if forloop.counter|divisibleby:2 %}row row-1{% else %}row row-2{% endif %}">
-                <section>
-                    <i class="icon fas fa-home"></i>
-                    <div class="details">
-                        <span class="title"><a href="{{page_url}}">{{i.title}}</a></span>
-                    </div>
-                </section>
-            </div>
-        </div>
-    {%endfor%}
+        </section>
+    </div>
+</div>
+{%endfor%}
 {%endblock%}

@@ -16,7 +16,7 @@ try:
     REPAIREL_API_KEY = keys.REPAIREL_API_KEY
     REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
 
-except:
+except ImportError: #pragma: no cover
     #alternative for AWS production server
     import os
     SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
@@ -47,7 +47,7 @@ class Option:
 
 class ShopifyProduct:
     
-    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, extra_info=None):
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, shoe_or_other, extra_info=None):
         self.id = id
         self.name = name
         self.description = description
@@ -66,6 +66,7 @@ class ShopifyProduct:
         self.condition = condition
         self.gender = gender
         self.group = group
+        self.shoe_or_other = shoe_or_other
         
         
     def __str__(self):
@@ -164,9 +165,9 @@ def _shopify_construct_product(shopify_product):
         colors = shopify_product["options"][1]["values"]
     except IndexError:
         print("No colours option have been assigned to the shoe item.")
-    # price = min([var["price"] for var in shopify_product["variants"]])
+    price = min([var["price"] for var in shopify_product["variants"]])
     try:
-        (condition, gender, group, material) = extract_tag(shopify_product["tags"])
+        (condition, gender, group, material, shoe_or_other) = extract_tag(shopify_product["tags"])
     except ValueError:
         print("Couldn't unpack all values: one or more tags might be missing")
     
@@ -176,8 +177,8 @@ def _shopify_construct_product(shopify_product):
         description = shopify_product["body_html"], 
         thumbnail = shopify_product["image"]["src"],
         images = images, 
-        price = shopify_product["variants"][0]["price"], 
-        tags = shopify_product["tags"],
+        price = price, 
+        tags = shopify_product["tags"].replace(" ", "").split(","),
         product_type = shopify_product["product_type"], 
         vendor = shopify_product["vendor"],
         exact_sizes = sizes,
@@ -187,7 +188,8 @@ def _shopify_construct_product(shopify_product):
         group = group,
         material = material,
         options = options,
-        variants = variants
+        variants = variants,
+        shoe_or_other = shoe_or_other
     )
 
     # To be removed
@@ -196,6 +198,8 @@ def _shopify_construct_product(shopify_product):
 def shopify_all_products():
     result = []
     response = requests.get(shopify_api + "products.json")
+    if response.status_code != 200:
+        raise IOError("Shopify API is not reachable.")
     data = response.json()
     products = data["products"]
     for product in products:
@@ -206,6 +210,8 @@ def shopify_all_products():
 
 def shopify_get_product(id):
     response_product = requests.get(shopify_api + f"products/{id}.json")
+    if response_product.status_code != 200:
+        raise IOError("Product page not found: ID may be incorrect.")
     response_metafields = requests.get(shopify_api + f"products/{id}/metafields.json")
     #this is the base product
     result = _shopify_construct_product(response_product.json()["product"])
@@ -313,15 +319,16 @@ def get_cart(request):
     return json.loads(request.session.get('cart', '[]'))
 
 def extract_tag(string):
-    print(string)
-    tag = string.split(',')
+    # print(string)
+    tag = string.replace(" ", "").split(',')
     condition = None
     gender = None
     group = None
     material = None
+    shoe_or_other = None
 
     for item in tag:
-        item = item.replace(' ', '')
+        # Change all ifs to elifs
         if item == "Refurbished":
             condition = "Refurbished"
         elif item == "New":
@@ -350,8 +357,12 @@ def extract_tag(string):
         if item == "Vegan(Synthetic)":
             material = "Vegan (Synthetic)"
             
+        if item == "Shoe":
+            shoe_or_other = "Shoe"
+        elif item == "Other":
+            shoe_or_other = "Other"
             
-    return (condition, gender, group, material)
+    return (condition, gender, group, material, shoe_or_other)
 
 def newsletter_signup(email):
     customer = shopify_lib.Customer()

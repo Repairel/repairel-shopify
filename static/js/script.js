@@ -74,6 +74,9 @@ function compute_filter() {
         var material = get_option(".filter_option_Material")
         if(material)
             pass &&= element.dataset.material == material || material == "All Materials"
+        var shoe_or_other = get_option(".filter_option_Material")
+        if(shoe_or_other)
+            pass &&= element.dataset.shoe_or_other == shoe_or_other || shoe_or_other == "Shoe or Other"
 
         if(pass) {
             element.style.display = "block"
