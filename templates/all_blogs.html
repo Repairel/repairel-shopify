@@ -23,7 +23,9 @@
                 {% endif %}
                 -->
             </div>
-            <p>{{ i.excerpt|striptags|truncatechars:250 }}</p>
+            {% autoescape off %}
+            <p>{{ i.excerpt|truncatechars:250 }}</p>
+            {% endautoescape %}
             <div class="bottom">
                 <a href="{{blog_url}}">Read more</a>
                 <i>- Repairel Team</i>
