@@ -822,13 +822,15 @@ function open_shopping_cart(shopping_cart) {
         bottom_wrapper.appendChild(total_amount)
 
         //add checkout button
-        var checkout_button = document.createElement("button")
-        checkout_button.classList = "button_primary custom_shopping_cart_checkout_button"
-        checkout_button.innerHTML = "Checkout"
-        checkout_button.onclick = function() {
-            open_popup_window(checkout_url)
+        if(items_in_cart.length != 0) {
+            var checkout_button = document.createElement("button")
+            checkout_button.classList = "button_primary custom_shopping_cart_checkout_button"
+            checkout_button.innerHTML = "Checkout"
+            checkout_button.onclick = function() {
+                open_popup_window(checkout_url)
+            }
+            bottom_wrapper.appendChild(checkout_button)
         }
-        bottom_wrapper.appendChild(checkout_button)
     }
 
 
