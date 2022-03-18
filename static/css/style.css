@@ -1,6 +1,5 @@
 :root {
-    --footer-height: 150px;
-    --footer-height: 150px;
+    --footer-height: 350px;
     --white-color: white;
     --black-color: black;
     --text-hover-color: rgb(105, 105, 105);
@@ -196,16 +195,36 @@ body {
     height: var(--footer-height);
     width: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.custom_newsletter_form {
+    margin-left: auto;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+}
+
+.custom_newsletter_form * {
+    display: inline-block;
+    width: 100%;
+}
+
+.custom_newsletter_form input {
+    border-style: none;
+    outline: none;
+    border-bottom: solid 2px black;
+    margin-bottom: 10px;
 }
 
 .custom_footer svg {
     width: var(--social-icon-size);
     height: var(--social-icon-size);
-}
-
-.custom_footer * {
-    display: inline-block;
-    vertical-align: top;
 }
 
 .custom_footer h5 {
@@ -217,10 +236,6 @@ body {
 .custom_footer > :first-child a {
     display: block;
     margin-right: 40px;
-}
-
-.custom_footer > :last-child {
-    display: block;
 }
 
 .custom_footer_social_link_wrapper {
@@ -1273,6 +1288,12 @@ body {
     text-align: center;
     margin: 40px 20px;
     font-weight: bold;
+}
+
+@media screen and (max-width: 900px) {
+    .custom_newsletter_form {
+        display: block;
+    }
 }
 
 @media screen and (max-width: 800px) {

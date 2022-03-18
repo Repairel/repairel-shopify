@@ -130,7 +130,6 @@ class NewsLetterView(View):
             return render(self.request, "sustainability.html", context)
         except KeyError:
             return 0
-        # return HttpResponse("Thank you for subscribing to our mailing list.", status=200)
 
 # TODO REMOVE
 class TermsView(TemplateView):

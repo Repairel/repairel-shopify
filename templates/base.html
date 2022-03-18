@@ -78,6 +78,7 @@
                     <a href="{%url 'repairelapp:page' 'Terms & Conditions'%}" class="a_small_link">Terms & Conditions</a>
                     <a href="{%url 'repairelapp:page' 'GDPR'%}" class="a_small_link">GDPR</a>
                     <a href="https://localgiving.org/charity/repairel/" class="a_small_link">Donate</a>
+                    <p class="p_small_text">©2022 REPAIREL CIC. All Rights Reserved</p>
                 </div>
                 <div>
                     <h5>CONNECT WITH US</h5>
@@ -88,11 +89,12 @@
                         <a target="_blank" href="https://www.linkedin.com/company/repairel-cic"><svg><image xlink:href="{%static 'assets/icons/l_in.svg'%}" height="100%"></image></svg></a>
                     </div>
                 </div>
-                <p class="p_small_text">©2022 REPAIREL CIC. All Rights Reserved</p>
-                <form method="post" action="{% url 'repairelapp:newsletter' %}">
+                <form method="post" action="{% url 'repairelapp:newsletter' %}" class="custom_newsletter_form">
+                    <h3>Get on the REPAIREL Email list</h3>
                     {% csrf_token %}
-                    <input type="email" name="email">
-                    <button>Submit</button>
+                    <input type="email" name="email" placeholder="Enter Your Email Address">
+                    <button class="button_black">SIGN UP</button>
+                    <p>*By entering your email address and clicking 'SIGN UP', you are opting in to receive REPAIREL email and agree to our Privacy Policy & Terms of Use. You can unsubscribe at any time by clicking the unsubscribe link in our emails.</p>
                 </form>
             </div>
         </div>
