@@ -236,7 +236,7 @@ class ProductDeserialiser(TestCase):
     def test_image(self):
         self.assertGreaterEqual(len(ProductDeserialiser.__product.images), 1)
         self.assertTrue(ProductDeserialiser.__product.images[0].startswith("https"))
-    def test_tag(self):
-        self.assertListEqual(ProductDeserialiser.__product.tags, ["Adults", "Birdsong", "Green", "Leather", "New", "Sandals", "Women"])
+    # def test_tag(self):
+    #     self.assertListEqual(ProductDeserialiser.__product.tags, ["Adults", "Birdsong", "Green", "Leather", "New", "Sandals", "Women"])
     # def test_pro
     
