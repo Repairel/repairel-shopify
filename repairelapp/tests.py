@@ -10,16 +10,7 @@ from django.utils import timezone
 from django.test.utils import setup_test_environment
                          
 from repairelapp.models import ShoeItem
-from repairelapp.views import (ShoesView, 
-                               AboutView,
-                               FAQView,
-                               ShoppingCartView,
-                               ActivismView,
-                               SustainabilityView,
-                               TermsView,
-                               RequestView,
-                               GDPRView,
-                               ScoringView, 
+from repairelapp.views import (ShoppingCartView,
                                IndexView,
                                )
 
