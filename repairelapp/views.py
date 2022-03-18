@@ -98,6 +98,7 @@ class ShoesView(View):
         }
         return render(self.request, "shoes.html", context)
 
+# TODO REMOVE
 class AboutView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -110,7 +111,7 @@ class AboutView(TemplateView):
         except KeyError:
             return 0
 
-
+# TODO REMOVE
 class FAQView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -129,6 +130,7 @@ class ShoppingCartView(TemplateView):
         all_products = shopify_all_products()
         return render(self.request, "shopping_cart.html", {"all_products": all_products})
 
+# TODO REMOVE
 class ActivismView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -141,6 +143,7 @@ class ActivismView(TemplateView):
         except KeyError:
             return 0
 
+# TODO REMOVE
 class SustainabilityView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -175,7 +178,7 @@ class NewsLetterView(View):
             return 0
         return HttpResponse("Thank you for subscribing to our mailing list.", status=200)
 
-
+# TODO REMOVE
 class TermsView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -188,6 +191,7 @@ class TermsView(TemplateView):
         except KeyError:
             return 0
 
+# TODO REMOVE
 class GDPRView(TemplateView):
     def get(self, *args, **kwargs):
         try:
@@ -229,6 +233,7 @@ class RequestView(View):
             messages.info(self.request, "Something went wrong! Please retry after some time.")
             return redirect("repairelapp:request")
 
+# TODO REMOVE
 class ScoringView(TemplateView):
     template_name = 'scoring.html'
 
@@ -277,6 +282,8 @@ class BlogView(TemplateView):
 class ShoeView(TemplateView):
     def get(self, *args, **kwargs):
         shoe = shopify_get_product(self.kwargs['shoe_id'])
+
+        #IMPORTANT when modifying attributes, please also update script.js attributes
         attributes = {
             "design": {"title": "Design", "image": "data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTAuMTMxIDUxMC4xMzEiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA1MTAuMTMxIDUxMC4xMzEiIHdpZHRoPSI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Zz48cGF0aCBkPSJtNDYxLjkxNCA1MDkuODYzIDQ4LjIxNy00OC4yMDgtMjcuOTExLTM0LjI0NyAyNy45MTEtMzQuMjUtMjcuOTExLTM0LjI1MSAyNy45MTEtMzQuMjU1LTI3LjkxMS0zNC4yNTYgMjcuOTExLTM0LjI1NS0yNy45MTEtMzQuMjU3IDI3LjkxMS0zNC4yNjItNDguMjA4LTQ4LjIxNy0zNC4yNDcgMjcuOTExLTM0LjI1LTI3LjkxMS0zNC4yNTEgMjcuOTExLTM0LjI1NS0yNy45MTEtMzQuMjU2IDI3LjkxMS0zNC4yNTUtMjcuOTExLTM0LjI1NyAyNy45MTEtMzQuMjYyLTI3LjkxMS00OC4yMTcgNDguMjA4IDI3LjkxMSAzNC4yNDctMjcuOTExIDM0LjI1IDI3LjkxMSAzNC4yNTEtMjcuOTExIDM0LjI1NSAyNy45MTEgMzQuMjU2LTI3LjkxMSAzNC4yNTUgNC40NjggNS40ODQgMjMuNDQzIDI4Ljc3My0yNy43MTggMzYuNTc3IDQ4LjAxNSA0NS45MDIgMzQuMjQ3LTI3LjkxMSAzNC4yNSAyNy45MTEgMzQuMjUxLTI3LjkxMSAzNC4yNTUgMjcuOTExIDM0LjI1Ni0yNy45MTEgMzQuMjU1IDI3LjkxMSAzNC4yNTctMjcuOTExem0tMjEyLjAxMy04MC4yM2gtMzB2LTMwaDMwem0wLTYwaC0zMHYtMzBoMzB6bTAtNjBoLTMwdi0zMGgzMHptMC02MGgtMzB2LTMwaDMwem02MCAxODBoLTMwdi0zMGgzMHptMC02MGgtMzB2LTMwaDMwem0wLTYwaC0zMHYtMzBoMzB6bTAtNjBoLTMwdi0zMGgzMHptNjAgMTgwaC0zMHYtMzBoMzB6bTAtNjBoLTMwdi0zMGgzMHptMC02MGgtMzB2LTMwaDMwem0wLTYwaC0zMHYtMzBoMzB6bTMwLTMwaDMwdjMwaC0zMHptMCA2MGgzMHYzMGgtMzB6bTAgNjBoMzB2MzBoLTMwem0wIDYwaDMwdjMwaC0zMHoiLz48cGF0aCBkPSJtMTI4Ljg4NiAzNTguODcxLTI3LjkxMS0zNC4yNTUgMjcuOTEtMzQuMjU0LTI3LjkxMi0zNC4yNTMgMjcuOTEtMzQuMjQ5LTI5LjU4Ni0zNi4zMDIgODYuNTM5LTg2LjUyMiAzNi4zMTQgMjkuNTg0IDM0LjI1OS0yNy45MTMgMzQuMjU1IDI3LjkxMSAzNC4yNTYtMjcuOTExIDM0LjI1NCAyNy45MSAyNC43NzMtMjAuMTg3LTIzLjg1NC0yMS40NTggMjkuMzQtMzYuMDE3LTUwLjY3Ny01MC42ODctMzYuMDAxIDI5LjM0MS0zNi4wMDQtMjkuMzQxLTM2LjAwNiAyOS4zNDEtMzYuMDEtMjkuMzQxLTM2LjAxIDI5LjM0MS0zNi4wMS0yOS4zNDEtMzYuMDExIDI5LjM0MS0zNi4wMTctMjkuMzQxLTUwLjY4NyA1MC42NzggMjkuMzQxIDM2LTI5LjM0MSAzNi4wMDUgMjkuMzQxIDM2LjAwNS0yOS4zNDEgMzYuMDEgMjkuMzQxIDM2LjAxMS0yOS4zNDEgMzYuMDA5IDI5LjM0MSAzNi4wMTItMjkuMTM4IDM4LjQ1MSA1MC40NzQgNDguMjUzIDM2LjAwMS0yOS4zNDEgMjIuNjUzIDIyLjUxMXoiLz48L2c+PC9zdmc+"},
             "raw_materials": {"title": "Raw Materials", "image": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnICBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAuMTA3IC05LjU2NyAxNDEuNzMyIDE0MS43MzIiIHdpZHRoPSc0MCcgaGVpZ2h0PSc0MCcgaWQ9IkxpdmVsbG9fMSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwLjEwNyAtOS41NjcgMTQxLjczMiAxNDEuNzMyIiAgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGcgaWQ9IkxpdmVsbG9fNTQiPjxwYXRoIGQ9Ik0yOS4xMTYsMTE1LjM4M2gxMy40Mzh2LTExLjk5NkgyOS4xMTZWMTE1LjM4M3ogTTk5LjM5MywxMTUuMzgzaDEzLjQzOHYtMTEuOTk2SDk5LjM5M1YxMTUuMzgzeiBNMTMuNDM4LDQ4LjE5aDYuNzU2ICAgTDQuNDgxLDcwLjY5NWgxMy4xNjhMMCw5Ny40NjVoMjkuMTE1djIuMjEzTDQ2LjY0LDcxLjUzMUgzMS44NGwxNy42NjItMjYuNzc0aC03LjU5NGw2Ljg4NS0xMS42NjJMMzUuODM0LDEyLjM1NkwxMy40MzgsNDguMTl6ICAgIE05My4xNTIsMzMuMDkybDYuODg1LDExLjY2MmgtNy41OTRsMTcuNjYyLDI2Ljc3NEg5NS4zMDNsMTcuNTI0LDI4LjE0NnYtMi4yMTNoMjkuMTE3bC0xNy42NS0yNi43NzFoMTMuMTcxTDEyMS43NTIsNDguMTloNi43NTYgICBsLTIyLjM5Ni0zNS44MzRMOTMuMTUyLDMzLjA5MnogTTQ1Ljk1LDQyLjY0M2g3LjU5MkwzNS44NzksNjkuNDJoMTQuODA2bC0xOS44MzYsMzEuODU0aDMyLjcyNXYyMS4zMjNoMTUuMTA0di0yMS4zMjNoMzIuNzI3ICAgTDkxLjU2MSw2OS40MmgxNC44MDNMODguNzAxLDQyLjY0M2g3LjU5Mkw3MS4xMjIsMEw0NS45NSw0Mi42NDN6Ii8+PC9nPjxnIGlkPSJMaXZlbGxvXzFfMV8iLz48L3N2Zz4="},

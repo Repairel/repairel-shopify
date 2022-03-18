@@ -47,7 +47,7 @@ class Option:
 
 class ShopifyProduct:
     
-    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, shoe_or_other, extra_info=None):
+    def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, shoe_or_other, compare_price, extra_info=None):
         self.id = id
         self.name = name
         self.description = description
@@ -67,6 +67,7 @@ class ShopifyProduct:
         self.gender = gender
         self.group = group
         self.shoe_or_other = shoe_or_other
+        self.compare_price = compare_price
         
         
     def __str__(self):
@@ -112,6 +113,11 @@ def _shopify_construct_page(page):
     return Page(page['title'], page['body_html'])
         
 def _shopify_construct_article(article):
+    """
+    :param article: The blog post to be constructed
+    :return: A class containing a blog post
+    """
+
     published = article['published_at']
     y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
     date = str(f'Published: {d}/{m}/{y} {t}')
@@ -130,6 +136,11 @@ def _shopify_construct_article(article):
     return BlogPost(article['title'], date, article['body_html'], excerpt, image)
 
 def all_articles():
+    """
+    Function to access all blog posts (known as articles in the API)
+    :return: An array of blog post classes
+    """
+
     r = requests.get(shopify_api + "blogs.json")
     blog = r.json()["blogs"][0]["id"]
     articles = requests.get(shopify_api + f"blogs/{blog}/articles.json")
@@ -170,7 +181,7 @@ def _shopify_construct_product(shopify_product):
         (condition, gender, group, material, shoe_or_other) = extract_tag(shopify_product["tags"])
     except ValueError:
         print("Couldn't unpack all values: one or more tags might be missing")
-    
+
     return ShopifyProduct(
         id = shopify_product["id"], 
         name = shopify_product["title"], 
@@ -190,12 +201,18 @@ def _shopify_construct_product(shopify_product):
         options = options,
         variants = variants,
         shoe_or_other = shoe_or_other
+        compare_price = shopify_product["variants"][0]["compare_at_price"]
     )
 
-    # To be removed
+    # TODO To be removed
     # return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"].split(", "), shopify_product["product_type"], shopify_product["vendor"], options, variants)
 
 def shopify_all_products():
+    """
+    Get all active products from Shopify
+    :return: An array of product classes
+    """
+
     result = []
     response = requests.get(shopify_api + "products.json")
     if response.status_code != 200:
@@ -209,6 +226,12 @@ def shopify_all_products():
     return result
 
 def shopify_get_product(id):
+    """
+    Get data on a specific product from its ID
+    :param id: Shopify Product ID
+    :return: A product class
+    """
+
     response_product = requests.get(shopify_api + f"products/{id}.json")
     if response_product.status_code != 200:
         raise IOError("Product page not found: ID may be incorrect.")
@@ -252,6 +275,24 @@ def shopify_get_product(id):
     result.extra_info = extra_info
     return result
 
+def _api_view(key, password, request_type, argument=None):
+    #verify the key and password
+    if key != REPAIREL_API_KEY or password != REPAIREL_API_PASSWORD:
+        return HttpResponse('Wrong API key or password', status=401)
+
+    result = {}
+    if request_type == 'all_products':
+        raw_result = shopify_all_products()
+        result["products"] = []
+        for i in raw_result:
+            result["products"].append(i.to_dict())
+    elif request_type == 'product':
+        result = shopify_get_product(argument).to_dict()
+    else:
+        return HttpResponse('Unknown request type', status=400)
+    
+    return JsonResponse(result, safe=False)
+        
 def api_view(request, key, password, request_type, argument=None):
     #verify the key and password
     if key != REPAIREL_API_KEY or password != REPAIREL_API_PASSWORD:
@@ -259,26 +300,25 @@ def api_view(request, key, password, request_type, argument=None):
 
     #for now we only support GET requests
     if request.method == 'GET':
-        result = {}
-
-        if request_type == 'all_products':
-            raw_result = shopify_all_products()
-            result["products"] = []
-            for i in raw_result:
-                result["products"].append(i.to_dict())
-        elif request_type == 'product':
-            result = shopify_get_product(argument).to_dict()
-        else:
-            return HttpResponse('Unknown request type', status=400)
-
-        return JsonResponse(result, safe=False)
+        return _api_view(key, password, request_type, argument)
     if request.method == 'POST':
         return HttpResponse("POST requests are not allowed", status=403)
 
     return HttpResponse(status=403)
 
+def api_local_view(request, request_type, argument=None):
+    #for now we only support POST requests. It is to force CSRF verification
+    if request.method == 'POST':
+        return _api_view(REPAIREL_API_KEY, REPAIREL_API_PASSWORD, request_type, argument)
+    if request.method == 'GET':
+        return HttpResponse("GET requests are not allowed", status=403)
 
 def all_pages():
+    """
+    Function to get all misc pages from the Shopify backend
+    :return: An array of page classes
+    """
+
     r = requests.get(shopify_api + "pages.json")
     pages = r.json()['pages']
     page_list = []
@@ -286,6 +326,7 @@ def all_pages():
     for page in pages:
         page_list.append(_shopify_construct_page(page))
 
+    # TODO REMOVE
     # page_dict = {}
     # for i in range(len(r.json()['pages'])):
     #     page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
