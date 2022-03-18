@@ -50,18 +50,6 @@ class ShoppingCartPageTest(TestCase):
     def test_resolve_to_shopping_cart_page_view(self):
         resolver = resolve('/shopping_cart/')
         self.assertEqual(resolver.func.__name__, ShoppingCartView.as_view().__name__)
-        
-
-class ScoringPageTest(TestCase):
-    def test_resolve_to_scoring_page_view(self):
-        resolver = resolve('/scoring/')
-        self.assertEqual(resolver.func.__name__, ScoringView.as_view().__name__)
-        
-
-class PageTest(TestCase):
-    def test_resolve_to_faq_page_view(self):
-        resolver = resolve('/faq/')
-        self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
 
 
 class ShoeItemModelTests(TestCase):
