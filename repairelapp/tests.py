@@ -13,7 +13,7 @@ from repairelapp.models import ShoeItem
 from repairelapp.views import (ShoesView, 
                                AboutView,
                                FAQView,
-                               ShoppingCartView,
+                            #    ShoppingCartView,
                                ActivismView,
                                SustainabilityView,
                                TermsView,
@@ -73,10 +73,10 @@ class FAQPageTest(TestCase):
         self.assertEqual(resolver.func.__name__, FAQView.as_view().__name__)
         
 
-class ShoppingCartPageTest(TestCase):
-    def test_resolve_to_shopping_cart_page_view(self):
-        resolver = resolve('/shopping_cart/')
-        self.assertEqual(resolver.func.__name__, ShoppingCartView.as_view().__name__)
+# class ShoppingCartPageTest(TestCase):
+#     def test_resolve_to_shopping_cart_page_view(self):
+#         resolver = resolve('/shopping_cart/')
+#         self.assertEqual(resolver.func.__name__, ShoppingCartView.as_view().__name__)
         
         
 class ActivismPageTest(TestCase):
