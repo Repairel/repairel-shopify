@@ -378,7 +378,6 @@ def update_from_cart(request, variant_id, quantity):
     request.session['cart'] = json.dumps(cart)
     cart_remove_duplicates(request)
 
-
 #returns list [{'variant_id': x 'quantity': y}, ...]
 def get_cart(request):
     cart_remove_duplicates(request)
