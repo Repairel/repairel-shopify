@@ -58,7 +58,7 @@ function compute_filter() {
 
         var brand = get_option(".filter_option_Brand")
         if(brand)
-            pass &&= element.dataset.brand.includes(brand) || brand == "All Brands"
+            pass &&= element.dataset.brand == brand || brand == "All Gender"
         var gender = get_option(".filter_option_Gender")
         if(gender)
             pass &&= element.dataset.gender == gender || gender == "All Genders"
