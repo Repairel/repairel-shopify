@@ -205,9 +205,6 @@ def _shopify_construct_product(shopify_product):
         compare_price = shopify_product["variants"][0]["compare_at_price"]
     )
 
-    # TODO To be removed
-    # return ShopifyProduct(shopify_product["id"], shopify_product["title"], shopify_product["body_html"], shopify_product["image"]["src"], images, shopify_product["variants"][0]["price"], shopify_product["tags"].split(", "), shopify_product["product_type"], shopify_product["vendor"], options, variants)
-
 def shopify_all_products():
     """
     Get all active products from Shopify
@@ -334,11 +331,6 @@ def all_pages():
 
     for page in pages:
         page_list.append(_shopify_construct_page(page))
-
-    # TODO REMOVE
-    # page_dict = {}
-    # for i in range(len(r.json()['pages'])):
-    #     page_dict[r.json()["pages"][i]["title"]] = r.json()["pages"][i]["body_html"]
 
     return page_list
 

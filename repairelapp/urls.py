@@ -6,11 +6,8 @@ from .shopify import api_view
 app_name = 'repairelapp'
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    # Should this line stay? Otherwise, /shoes/ is an error an unrecognised url not in the path
-    path('products/', ShoesView.as_view(), name="product"),
-    path('terms/', TermsView.as_view(), name="terms"), # TODO REMOVE - terms.html
-    path('gdpr/', GDPRView.as_view(), name="gdpr"), # TODO REMOVE - gdpr.html
-    path('scoring/', ScoringView.as_view(), name="scoring"), # TODO REMOVE - scoring.html
+    path('shoes/<str:type>', ShoesView.as_view(), name="shoes"),
+    path('shopping_cart/', ShoppingCartView.as_view(), name="shopping_cart"),
     path('blog/', AllBlogsView.as_view(), name="all_blogs"),
     path('blog/<str:blog_name>', BlogView.as_view(), name="blog"),
     path('newsletter/', NewsLetterView.as_view(), name="newsletter"),
