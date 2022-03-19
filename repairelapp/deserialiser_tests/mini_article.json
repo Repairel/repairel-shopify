@@ -1,0 +1,27 @@
+{
+  "articles": [
+    {
+      "id": 589911752935,
+      "title": "Test post",
+      "created_at": "2022-02-13T13:44:52+00:00",
+      "body_html": "Test blog post to see how it interacts with the API",
+      "blog_id": 83775946983,
+      "author": "Lewis Haggerty",
+      "user_id": 78996504807,
+      "published_at": "2022-02-13T13:44:52+00:00",
+      "updated_at": "2022-03-14T22:18:33+00:00",
+      "summary_html": "Excerpt, do you work?",
+      "template_suffix": "",
+      "handle": "test-post",
+      "tags": "blog",
+      "admin_graphql_api_id": "gid://shopify/OnlineStoreArticle/589911752935",
+      "image": {
+        "created_at": "2022-03-12T20:59:46+00:00",
+        "alt": "",
+        "width": 1050,
+        "height": 591,
+        "src": "https://cdn.shopify.com/s/files/1/0613/3242/2887/articles/cat_bc582251-3672-4176-84f1-5f79059e6a46.png?v=1647118786"
+      }
+    }
+  ]
+}

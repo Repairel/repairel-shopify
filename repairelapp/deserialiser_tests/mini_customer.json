@@ -1,0 +1,29 @@
+{
+  "customers": [
+    {
+      "id": 6135297769703,
+      "email": "thisissomeemail@mail.com",
+      "accepts_marketing": true,
+      "created_at": "2022-03-20T21:50:17+00:00",
+      "updated_at": "2022-03-20T21:50:18+00:00",
+      "first_name": null,
+      "last_name": null,
+      "orders_count": 0,
+      "state": "disabled",
+      "total_spent": "0.00",
+      "last_order_id": null,
+      "note": null,
+      "verified_email": true,
+      "multipass_identifier": null,
+      "tax_exempt": false,
+      "phone": null,
+      "tags": "",
+      "last_order_name": null,
+      "currency": "GBP",
+      "addresses": [],
+      "accepts_marketing_updated_at": "2022-03-20T21:50:18+00:00",
+      "marketing_opt_in_level": "single_opt_in",
+      "admin_graphql_api_id": "gid://shopify/Customer/6135297769703"
+    }
+  ]
+}
