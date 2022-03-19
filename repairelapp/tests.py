@@ -10,9 +10,7 @@ from django.utils import timezone
 from django.test.utils import setup_test_environment
                          
 from repairelapp.models import ShoeItem
-from repairelapp.views import (ShoppingCartView,
-                               IndexView,
-                               )
+from repairelapp.views import IndexView
 
 from repairelapp import shopify
 import shopify, requests, time, datetime
@@ -44,12 +42,6 @@ class HomePageTest(TestCase):
     def test_resolve_to_index_page_view(self):
         resolver = resolve('/')
         self.assertEqual(resolver.func.__name__, IndexView.as_view().__name__)
-        
-
-class ShoppingCartPageTest(TestCase):
-    def test_resolve_to_shopping_cart_page_view(self):
-        resolver = resolve('/shopping_cart/')
-        self.assertEqual(resolver.func.__name__, ShoppingCartView.as_view().__name__)
 
 
 class ShoeItemModelTests(TestCase):
@@ -141,7 +133,7 @@ import json
 class ProductDeserialiser(TestCase):
     __product : ShopifyProduct = None
     def setUpClass():
-        with open("repairelapp\mini.json") as fd:
+        with open("mini.json") as fd:
             obj:dict = json.load(fd)
         ProductDeserialiser.__product = _shopify_construct_product(obj["products"][0])
         
