@@ -133,7 +133,7 @@ import json
 class ProductDeserialiser(TestCase):
     __product : ShopifyProduct = None
     def setUpClass():
-        with open("mini.json") as fd:
+        with open("repairelapp/mini.json") as fd:
             obj:dict = json.load(fd)
         ProductDeserialiser.__product = _shopify_construct_product(obj["products"][0])
         
