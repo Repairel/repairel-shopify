@@ -323,8 +323,8 @@ body {
 .custom_hamburger_menu {
     --logo-size: 150px;
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     background-color: white;
@@ -347,15 +347,29 @@ body {
     padding-top: 85px;
 }
 
-.custom_hamburger_inside_mid * {
+.custom_hamburger_inside_mid {
+    width: 100%;
+}
+
+.custom_hamburger_inside_mid > * {
+    width: 100%;
+}
+
+.custom_hamburger_inside_mid > * {
     text-align: left;
+}
+
+.custom_hamburger_inside_mid > * > * {
+    margin-left: 120px;
+}
+
+.custom_hamburger_inside_mid * {
+    display: inline-block;
 }
 
 .custom_hamburger_inside_mid_black {
     background-color: black;
-    padding: 10px 50px;
-    margin-left: -50px;
-    border-radius: 10px;
+    padding: 10px 0;
 }
 
 .custom_hamburger_inside_mid_black * {
@@ -1340,10 +1354,6 @@ body {
 
     .custom_hamburger_inside {
         align-items: initial;
-    }
-
-    .custom_hamburger_inside_mid {
-        padding-left: 50px;
     }
 
     .custom_shoe_balls_wrapper {

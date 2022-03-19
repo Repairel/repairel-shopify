@@ -1,4 +1,5 @@
 # from http.client import HTTPResponse
+from django.urls import reverse
 from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
 from .models import ShoeItem, ShoeRequest
@@ -102,15 +103,30 @@ class NewsLetterView(View):
             customer = customer.save()
         else:
             return HttpResponse(status=400)
-        try:
-            body = all_pages()['Sustainability']
-            context = {
-                'body': body
-            }
+        # try:
+            # body = all_pages()['Sustainability']
+            # context = {
+                # 'body': body
+            # }
 
-            return render(self.request, "sustainability.html", context)
-        except KeyError:
-            return 0
+        return redirect(reverse("repairelapp:page", kwargs={"page_name":"Welcome Page"}))
+            # return render(self.request, "sustainability.html", context)
+        # except KeyError:
+            # return 0
+
+# class NewsLetterView(View):
+#     def post(self, *args, **kwargs):
+#         email = self.request.POST.get('email', "")
+#         if email != "":
+#             connect()
+#             customer = shopify.Customer()
+#             customer.email = email
+#             customer.accepts_marketing = True
+#             customer = customer.save()
+#         else:
+#             return HttpResponse(status=400)
+#         return HttpResponse("Thank you for subscribing to our mailing list.", status=200)
+
 
 # TODO REMOVE
 class TermsView(TemplateView):
