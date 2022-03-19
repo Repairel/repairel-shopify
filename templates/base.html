@@ -72,21 +72,23 @@
                 {% block page %}{% endblock %}
             </div>
             <div class="custom_footer">
-                <div>
-                    <h5>INFORMATION</h5>
-                    <a href="{%url 'repairelapp:pages' %}" class="a_small_link">About</a>
-                    <a href="{%url 'repairelapp:page' 'Terms & Conditions'%}" class="a_small_link">Terms & Conditions</a>
-                    <a href="{%url 'repairelapp:page' 'GDPR'%}" class="a_small_link">GDPR</a>
-                    <a href="https://localgiving.org/charity/repairel/" class="a_small_link">Donate</a>
-                    <p class="p_small_text">©2022 REPAIREL CIC. All Rights Reserved</p>
-                </div>
-                <div>
-                    <h5>CONNECT WITH US</h5>
-                    <div class="custom_footer_social_link_wrapper">
-                        <a target="_blank" href="https://www.facebook.com/RepairelHub"><svg><image xlink:href="{%static 'assets/icons/fb.svg'%}" height="100%"></image></svg></a>
-                        <a target="_blank" href="https://www.instagram.com/repairelhub?igshid=bersqmakpku6&hl=en"><svg><image xlink:href="{%static 'assets/icons/insta.svg'%}" height="100%"></image></svg></a>
-                        <a target="_blank" href="https://twitter.com/repairelhub?lang=en"><svg><image xlink:href="{%static 'assets/icons/twitter.svg'%}" height="100%"></image></svg></a>
-                        <a target="_blank" href="https://www.linkedin.com/company/repairel-cic"><svg><image xlink:href="{%static 'assets/icons/l_in.svg'%}" height="100%"></image></svg></a>
+                <div class="custom_footer_inner">
+                    <div>
+                        <h5>INFORMATION</h5>
+                        <a href="{%url 'repairelapp:pages' %}" class="a_small_link">About</a>
+                        <a href="{%url 'repairelapp:page' 'Terms & Conditions'%}" class="a_small_link">Terms & Conditions</a>
+                        <a href="{%url 'repairelapp:page' 'GDPR'%}" class="a_small_link">GDPR</a>
+                        <a href="https://localgiving.org/charity/repairel/" class="a_small_link">Donate</a>
+                        <p class="p_small_text">©2022 REPAIREL CIC. All Rights Reserved</p>
+                    </div>
+                    <div>
+                        <h5>CONNECT WITH US</h5>
+                        <div class="custom_footer_social_link_wrapper">
+                            <a target="_blank" href="https://www.facebook.com/RepairelHub"><svg><image xlink:href="{%static 'assets/icons/fb.svg'%}" height="100%"></image></svg></a>
+                            <a target="_blank" href="https://www.instagram.com/repairelhub?igshid=bersqmakpku6&hl=en"><svg><image xlink:href="{%static 'assets/icons/insta.svg'%}" height="100%"></image></svg></a>
+                            <a target="_blank" href="https://twitter.com/repairelhub?lang=en"><svg><image xlink:href="{%static 'assets/icons/twitter.svg'%}" height="100%"></image></svg></a>
+                            <a target="_blank" href="https://www.linkedin.com/company/repairel-cic"><svg><image xlink:href="{%static 'assets/icons/l_in.svg'%}" height="100%"></image></svg></a>
+                        </div>
                     </div>
                 </div>
                 <form method="post" action="{% url 'repairelapp:newsletter' %}" class="custom_newsletter_form">

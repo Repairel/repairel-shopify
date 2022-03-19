@@ -8,9 +8,16 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     # Should this line stay? Otherwise, /shoes/ is an error an unrecognised url not in the path
     path('products/', ShoesView.as_view(), name="product"),
+    # path('all_products/<str:type>/', ShoesView.as_view(), name="shoes"),
+    # Modify the below
+    # path('all_shoes/shoe/', ShoesView.as_view(), name="shoes"),
+    # path('products/<str:type>', ShoesView.as_view(), name="products"),
+    # path('about/', AboutView.as_view(), name="about"),
+    # path('faq/', FAQView.as_view(), name="faq"),
+    # path('activism/', ActivismView.as_view(), name="activism"), # TODO REMOVE - activism.html
+    # path('sustainability/', SustainabilityView.as_view(), name="sustainability"), # TODO REMOVE - sustainability.html
     path('terms/', TermsView.as_view(), name="terms"), # TODO REMOVE - terms.html
     path('gdpr/', GDPRView.as_view(), name="gdpr"), # TODO REMOVE - gdpr.html
-    path('scoring/', ScoringView.as_view(), name="scoring"), # TODO REMOVE - scoring.html
     path('blog/', AllBlogsView.as_view(), name="all_blogs"),
     path('blog/<str:blog_name>', BlogView.as_view(), name="blog"),
     path('newsletter/', NewsLetterView.as_view(), name="newsletter"),
@@ -23,7 +30,6 @@ urlpatterns = [
     path('api/local/<str:request_type>/', api_local_view, name="api_local"),
     path('api/<str:key>/<str:password>/<str:request_type>/<str:argument>/', api_view, name="api"),
     path('api/<str:key>/<str:password>/<str:request_type>/', api_view, name="api"),
-
 
     path('404/', Error404View.as_view(), name="404"),
 

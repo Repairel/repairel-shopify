@@ -39,7 +39,7 @@
 {% autoescape off %}
 {{shoe.description|safe}}
 {%  endautoescape %}
-<a href="{%url 'repairelapp:scoring'%}" class="custom_shoe_eas_link"><p><b>Ethics and Sustainability</b></p></a>
+<a href="{%url 'repairelapp:page' 'Sustainability'%}" class="custom_shoe_eas_link"><p><b>Ethics and Sustainability</b></p></a>
 <div class="custom_shoe_balls_wrapper">
     {%for attribute, attribute_info in attributes.items%}
         {%get_value shoe.extra_info.environmental_impact attribute_info.title as extra_info%}
