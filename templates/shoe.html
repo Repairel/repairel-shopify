@@ -3,60 +3,74 @@
 {%block page%}
 <div class="custom_shoe_image_area">
     {%for i in shoe.images%}
-        <img loading="lazy" src="{{i}}">
+    <img loading="lazy" src="{{i}}">
     {%endfor%}
 </div>
 
 {%for i in shoe.variants%}
-<span class="custom_shoe_variants shoe_variants" data-id="{{i.id}}" data-title="{{i.title}}" data-price="{{i.price}}" data-option1="{{i.option1}}" data-option2="{{i.option2}}" data-option3="{{i.option3}}"></span>
+<span class="custom_shoe_variants shoe_variants" data-id="{{i.id}}" data-title="{{i.title}}" data-price="{{i.price}}"
+    data-option1="{{i.option1}}" data-option2="{{i.option2}}" data-option3="{{i.option3}}"></span>
 {%endfor%}
 
 <div class="custom_shoe_title_wrapper">
-    <h3 class="custom_shoe_title">{{shoe.name}}</h3>
-    <div><span>£</span><span id="shoe_price">{{shoe.price}}</span></div>
+    <h3 class="shoe_product_heavy_text">{{shoe.vendor}}</h3>
+    <h3 class="shoe_product_light_text">{{shoe.name}}</h3>
+    <h3 class="shoe_product_heavy_text">£{{shoe.price}}</h3>
     <div class="custom_shoe_option_wrapper">
         {%for option in shoe.options%}
-            <div class="custom_shoe_option">
-                <h4>{{option.name}}</h4>
-                <div class="custom_shoe_option_values">
-                    {%for i in option.values%}
-                        <span class="custom_shoe_option_value {%if forloop.counter0 == 0%}shoe_option_active{%endif%}" data-position="{{option.position}}" data-value="{{i}}" onclick="shoe_option_click(this)">{{i}}</span>
-                    {%endfor%}
-                </div>
+        <div class="custom_shoe_option">
+            <h4>{{option.name}}</h4>
+            <div class="custom_shoe_option_values">
+                {%for i in option.values%}
+                <span class="custom_shoe_option_value {%if forloop.counter0 == 0%}shoe_option_active{%endif%}"
+                    data-position="{{option.position}}" data-value="{{i}}"
+                    onclick="shoe_option_click(this)">{{i}}</span>
+                {%endfor%}
             </div>
+        </div>
         {%endfor%}
     </div>
 </div>
-    <hr>
-    <div class="custom_shoe_buttons">
-        {%if shoe.extra_info.is_affiliate%}
-            <a href="{{shoe.extra_info.affiliate_link}}"><button class="button_primary custom_shoe_button_buy">SHOP THIS BRAND</button></a>
-        {%else%}
-            <button class="button_primary custom_shoe_button_buy" onclick="shoe_add_to_cart(this.dataset.csrf)" data-csrf="{{csrf_token}}">ADD TO CART</button>
-        {%endif%}
-    </div>
+<hr>
+<div class="custom_shoe_buttons">
+    {%if shoe.extra_info.is_affiliate%}
+    <a href="{{shoe.extra_info.affiliate_link}}"><button class="button_primary custom_shoe_button_buy">SHOP THIS
+            BRAND</button></a>
+    {%else%}
+    <button class="button_primary custom_shoe_button_buy" onclick="shoe_add_to_cart(this.dataset.csrf)"
+        data-csrf="{{csrf_token}}">ADD TO CART</button>
+    {%endif%}
+</div>
 <p><b>Description</b></p>
 {% autoescape off %}
 {{shoe.description|safe}}
-{%  endautoescape %}
-<a href="{%url 'repairelapp:scoring'%}" class="custom_shoe_eas_link"><p><b>Ethics and Sustainability</b></p></a>
+{% endautoescape %}
+<a href="{%url 'repairelapp:page' 'Sustainability'%}" class="custom_shoe_eas_link">
+    <p><b>Ethics and Sustainability</b></p>
+</a>
 <div class="custom_shoe_balls_wrapper">
     {%for attribute, attribute_info in attributes.items%}
-        {%get_value shoe.extra_info.environmental_impact attribute_info.title as extra_info%}
-        <div class="custom_shoe_balls" data-title="{{attribute_info.title}}" data-description="{{extra_info.text}}" data-image="{{attribute_info.image}}" onclick=show_shoe_balls_description(this)>
-            <img src={{attribute_info.image}}>
-            <p>{{attribute_info.title}}</p>
-            <div class="custom_scoring_balls">
-                {%if extra_info.rating%}
-                    <div class="{%shoe_decide_ball_color extra_info.rating%}">
-                        {%for i in extra_info.rating|times%}
-                            <div></div>
-                        {%endfor%}
-                    </div>
-                {%endif%}
+    {%get_value shoe.extra_info.environmental_impact attribute_info.title as extra_info%}
+    <div class="custom_shoe_balls" data-title="{{attribute_info.title}}" data-description="{{extra_info.text}}"
+        data-image="{{attribute_info.image}}" onclick=show_shoe_balls_description(this)>
+        <img src={{attribute_info.image}}>
+        <p>{{attribute_info.title}}</p>
+        <div class="custom_scoring_balls">
+            {%if extra_info.rating%}
+            <div class="{%shoe_decide_ball_color extra_info.rating%}">
+                {%for i in extra_info.rating|times%}
+                <div></div>
+                {%endfor%}
             </div>
-            <div class="custom_shoe_expander"></div>
+            {%endif%}
+            <div class="{%shoe_decide_ball_color -1%}">
+                {% for i in "12345" %}
+                <div></div>
+                {% endfor %}
+            </div>
         </div>
+        <div class="custom_shoe_expander"></div>
+    </div>
     {%endfor%}
 </div>
 <br><br><br>

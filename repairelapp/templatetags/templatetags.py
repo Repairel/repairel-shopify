@@ -20,26 +20,21 @@ def times(number):
 def shoe_decide_ball_color(number):
     number = int(number)
     base = "custom_scoring_balls_"
-    if(number < 3):
+    if number == -1:
+        return base + "grey"
+    elif(number < 3):
         return base + "red"
     elif(number == 3):
         return base + "orange"
     else:
         return base + "green"
+    
 
 @register.simple_tag
 def product_get_sizes(product):
     if product.options:
         for option in product.options:
             if option.name == "Size":
-                return option.values
-    return ""
-
-@register.simple_tag
-def product_get_colors(product):
-    if product.options:
-        for option in product.options:
-            if option.name == "Color":
                 return option.values
     return ""
 
@@ -79,16 +74,6 @@ def construct_checkout_url(cart):
 @register.simple_tag
 def blog_get_url(blog):
     return reverse("repairelapp:blog", kwargs={"blog_name": blog.title.replace(" ", "-")})
-
-@register.simple_tag
-def get_product_and_variant_from_variant_id(all_products, variant_id):
-    for product in all_products:
-        for variant in product.variants:
-            if int(variant.id) == int(variant_id):
-                return product, variant
-    return None, None
-
-
 
 @register.simple_tag
 def get_page_url(page):

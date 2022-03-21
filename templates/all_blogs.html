@@ -3,30 +3,30 @@
 {%load templatetags%}
 {% load static %}
 <center>
-    <h1>Blog Menu</h1>
+    <h1>Blogs</h1>
 </center>
 {%for i in articles%}
 {%blog_get_url i as blog_url%}
 <div class="wrapper">
     <div class="center-line">
-        <a href="#" class="scroll-icon"><i class="fas fa-caret-up"></i></a>
+        <a href="{{blog_url}}" class="scroll-icon"><i class="fas fa-caret-up"></i></a>
     </div>
     <div class="{% if forloop.counter|divisibleby:2 %}row row-1{% else %}row row-2{% endif %}">
         <section>
             <i class="icon fas fa-home"></i>
+            {% if i.image %}
+                <span class="blog_featured_image"><img class="img-blog-preview" src={{ i.image }}></span>
+            {% endif %}
             <div class="details">
                 <span class="title">{{i.title}}</span>
                 <span>{{i.date}}</span>
-                <!-- TODO image scaling
-                {% if i.image %}
-                    <img src={{ i.image }}>
-                {% endif %}
-                -->
             </div>
-            <p>{{ i.excerpt|striptags|truncatechars:250 }}</p>
+            {% autoescape off %}
+            <p>{{ i.excerpt|truncatechars:250 }}</p>
+            {% endautoescape %}
             <div class="bottom">
                 <a href="{{blog_url}}">Read more</a>
-                <i>- Repairel Team</i>
+                <i class="pl1">- Repairel Team</i>
             </div>
         </section>
     </div>

@@ -1,6 +1,5 @@
 :root {
-    --footer-height: 150px;
-    --footer-height: 150px;
+    --footer-height: 350px;
     --white-color: white;
     --black-color: black;
     --text-hover-color: rgb(105, 105, 105);
@@ -8,7 +7,8 @@
     --header-personal-size: 30px;
     --text-color: rgb(90, 90, 90);
     --primary-color: rgb(219, 246, 81);
-    --secondary-color: rgb(235, 65, 101);
+    --secondary-color: rgb(253, 14, 66);
+    --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -56,6 +56,11 @@ body {
 }
 
 /*////////////////////////////////////////////////////////////////////////////////*/
+
+.html_stop_scroll {
+    height: 100%;
+    overflow: hidden;
+}
 
 .a_no_link, .a_no_link * {
     color: red !important;
@@ -152,6 +157,22 @@ body {
     transform: scale(1.05);
 }
 
+.div_loading {
+    display: flex;
+    align-items: center;
+}
+
+.div_loading * {
+    --size: 17px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 100px;
+    background-color: var(--black-color);
+    animation: 1s ease-out 0s infinite compare_loading_animation;
+    margin: 5px;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////*/
 
 .custom_body_wrapper {
@@ -174,6 +195,31 @@ body {
     height: var(--footer-height);
     width: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.custom_newsletter_form {
+    margin-left: auto;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+}
+
+.custom_newsletter_form * {
+    display: inline-block;
+    width: 100%;
+}
+
+.custom_newsletter_form input {
+    border-style: none;
+    outline: none;
+    border-bottom: solid 2px black;
+    margin-bottom: 10px;
 }
 
 .custom_footer svg {
@@ -181,28 +227,23 @@ body {
     height: var(--social-icon-size);
 }
 
-.custom_footer * {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.custom_footer h5 {
+.custom_footer_inner h5 {
     margin-top: 0;
     margin-bottom: 10px;
     display: block;
 }
 
-.custom_footer > :first-child a {
+.custom_footer_inner > :first-child a {
     display: block;
     margin-right: 40px;
 }
 
-.custom_footer > :last-child {
-    display: block;
-}
-
 .custom_footer_social_link_wrapper {
     margin-top: 10px;
+}
+
+.custom_footer_inner {
+    display: flex;
 }
 
 .custom_header {
@@ -233,7 +274,7 @@ body {
     min-height: var(--hamburger-size);
     padding: 5px;
     cursor: pointer;
-    z-index: 11;
+    z-index: 101;
     display: inline-block;
     padding-right: 30px;
 }
@@ -282,12 +323,12 @@ body {
 .custom_hamburger_menu {
     --logo-size: 150px;
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     background-color: white;
-    z-index: 10;
+    z-index: 100;
     display: none;
 }
 
@@ -306,15 +347,29 @@ body {
     padding-top: 85px;
 }
 
-.custom_hamburger_inside_mid * {
+.custom_hamburger_inside_mid {
+    width: 100%;
+}
+
+.custom_hamburger_inside_mid > * {
+    width: 100%;
+}
+
+.custom_hamburger_inside_mid > * {
     text-align: left;
+}
+
+.custom_hamburger_inside_mid > * > * {
+    margin-left: 120px;
+}
+
+.custom_hamburger_inside_mid * {
+    display: inline-block;
 }
 
 .custom_hamburger_inside_mid_black {
     background-color: black;
-    padding: 10px 50px;
-    margin-left: -50px;
-    border-radius: 10px;
+    padding: 10px 0;
 }
 
 .custom_hamburger_inside_mid_black * {
@@ -367,13 +422,22 @@ body {
     font-size: 1.1em;
 }
 
+.custom_index_shoe_vendor {
+    font-weight: 600;
+}
+
+.custom_index_shoe_price {
+    font-weight: 600;
+}
+
 .custom_index_shoe_faded {
     opacity: 0.5;
 }
 
 .custom_index_shoe_wrapper {
     padding: 30px;
-    padding-top: 70px;
+    /* Disabling padding-top makes the shoes lay out more nicely on the grid by removing the space between the buttons and the first shoe item*/
+    /* padding-top: 70px; */
     padding-bottom: 150px;
     display: grid;
     gap: 20px;
@@ -407,6 +471,8 @@ body {
 
 .custom_index_shoe > :first-child {
     overflow: hidden;
+    /* Slight tweak makes the shoes display more nicely */
+    margin: 2rem; 
 }
 
 .custom_engage_button {
@@ -443,6 +509,10 @@ body {
 
 .custom_scoring_balls_red * {
     background-color: rgb(255, 117, 112);
+}
+
+.custom_scoring_balls_grey * {
+    background-color: rgb(128, 128, 128);
 }
 
 .custom_criteria_entry {
@@ -533,6 +603,9 @@ body {
     padding: 10px;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .custom_shoe_balls_description {
@@ -568,7 +641,7 @@ body {
     margin-left: -1px;
     position: relative;
     max-width: 170px;
-    min-width: 100px;
+    min-width: 120px;
 }
 
 .custom_shoe_balls_black,
@@ -590,8 +663,9 @@ body {
     filter: invert(100%);
 }
 
+.custom_shoe_expander_active,
 .custom_shoe_balls_black .custom_shoe_expander {
-        transform: rotate(45deg) scale(-1, -1);
+        transform: rotate(45deg) scale(-1, -1) !important;
 }
 
 .custom_filter_inner {
@@ -662,6 +736,8 @@ body {
 
 .custom_shopping_cart_icon {
     position: relative;
+    z-index: 151;
+    cursor: pointer;
 }
 
 .custom_shopping_cart_icon span {
@@ -709,6 +785,10 @@ body {
     font-weight: bold;
     border: solid 2px black;
     max-width: 600px;
+    font-family: 'montserrat-extrabold-italic', sans-serif;
+    font-style: italic;
+    font-weight: 850px;
+    
 }
 
 .custom_splitter_entry:hover h1 {
@@ -877,6 +957,7 @@ body {
 }
 
 .custom_header_top_text {
+    margin-top: 0;
     background-color: var(--black-color);
     color: var(--white-color);
     text-align: center;
@@ -885,14 +966,6 @@ body {
 
 .custom_header_top_text_hidden {
     display: none;
-}
-
-.custom_shopping_cart {
-/*TODO*/
-}
-
-.custom_shopping_cart_entry {
-
 }
 
 .custom_compare_info {
@@ -927,25 +1000,344 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 98;
+    border-radius: 3px;
 }
 
 .custom_compare_shoe_button input {
     margin-right: 15px;
 }
 
-@media screen and (max-width: 1300px) {
-    .custom_shoe_balls_wrapper {
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
+.custom_compare_popup_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 220;
+}
+
+.custom_compare_popup_outer {
+    --max-width: 800px;
+    position: relative;
+    width: var(--max-width);
+    min-width: 300px;
+}
+
+.custom_compare_popup {
+    width: 100%;
+    min-height: 400px;
+    max-height: 85%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 25px;
+    position: relative;
+    box-shadow: var(--box-shadow);
+    box-sizing: border-box;
+}
+
+.custom_compare_loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+}
+
+.custom_compare_poup_shoe_container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 2px;
+}
+
+.custom_compare_popup_shoe_container_entry {
+    flex: 1 1 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+}
+
+.custom_compare_popup_shoe_container_entry > :first-child {
+    width: 100%;
+}
+
+.custom_compare_popup_shoe_image {
+    --max-entry-width: calc(var(--max-width) / 3);
+    width: 100%;
+    height: min(var(--max-entry-width), 30vw);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.custom_compare_popup_shoe_text_block {
+    text-align: left;
+}
+
+.custom_compare_scoring_balls {
+    display: inline-block;
+}
+
+.custom_shopping_cart_header {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 30px;
+}
+
+@keyframes compare_loading_animation {
+    0% {
+        transform: scale(0);
     }
+    33% {
+        transform: scale(1);
+    }
+    66% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+.custom_compare_loading * {
+    --size: 17px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 100px;
+    background-color: var(--black-color);
+    animation: 1s ease-out 0s infinite compare_loading_animation;
+    margin: 5px;
+}
+
+
+.custom_compare_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    margin: 5px 10px;
+    cursor: pointer;
+    font-size: 2em;
+    line-height: 20px;
+}
+
+.custom_compare_attribute {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    position: relative;
+}
+
+.custom_compare_attribute_middle_section {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0px 40px;
+}
+
+.custom_compare_attribute_middle_section * {
+    cursor: pointer;
+}
+
+.custom_compare_attribute_wrapper {
+    margin: auto;
+    max-width: 600px;
+    width: 100%;
+}
+
+.custom_compare_attribute_middle_section_arrow {
+    position: absolute;
+    top: 0;
+    right: calc(50% - 80px);
+    display: block;
+}
+
+.custom_compare_attribute_description > :first-child {
+    margin-top: 0px;
+}
+
+.blog_featured_image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.custom_shopping_cart {
+    --top-offset: 150px;
+    position: fixed;
+    top: var(--top-offset);
+    right: 0;
+    z-index: 99;
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    padding-left: 30px;
+    padding-top: 60px;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    width: 450px;
+    max-width: 100%;
+    height: calc(100% - var(--top-offset));
+    border-top-left-radius: 30px;
+    box-sizing: border-box;
+}
+
+.custom_shopping_cart_loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom_shopping_cart_entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    margin: 10px 5px;
+    position: relative;
+}
+
+.custom_shopping_cart_entry img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.custom_shopping_cart_text_block {
+    width: 240px;
+    margin-left: 10px;
+}
+
+.custom_shopping_cart_text_block * {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom_shopping_cart_text_block > :first-child {
+    font-weight: bold;
+}
+
+.custom_shopping_cart_bottom_text_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 7px 0;
+}
+
+.custom_shopping_cart_bottom_text_wrapper > :first-child {
+    flex: 1 1 auto;
+}
+
+.custom_shopping_cart_bottom_text_wrapper > :last-child {
+    flex: 0 0 auto;
+}
+
+.custom_shopping_cart_quantity_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.custom_shopping_cart_quantity_wrapper * {
+    display: inline-block;
+    margin: 2px;
+}
+
+.custom_shopping_cart_text_bottom_quantity {
+    width: 50px;
+}
+
+.custom_shopping_cart_remove_button {
+    --size: 20px;
+    font-size: 1.5em;
+    margin-left: auto;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 100px;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    text-align: center;
+}
+
+.custom_shopping_cart_remove_button:hover {
+    background-color: var(--black-color);
+    color: white;
+}
+
+.custom_shopping_cart_entry_wrapper {
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.custom_shopping_cart_bottom_wrapper {
+    margin-top: auto;
+    margin: 30px 20px;
+    text-align: center;
+}
+
+.custom_shopping_cart_total_amount {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.custom_shopping_cart_checkout_button {
+    width: 100%;
+}
+
+.custom_shopping_cart_empty_text {
+    text-align: center;
+    margin: 40px 20px;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 800px) {
     .custom_body_wrapper {
         padding-left: 10px;
         padding-right: 10px;
+    }
+
+    .custom_compare_attribute_middle_section {
+        padding: 0px 10px;
+    }
+
+    .custom_footer {
+        --footer-height: 500px;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .custom_newsletter_form {
+        margin-left: initial;
+        margin-bottom: 50px;
     }
 }
 
@@ -975,10 +1367,6 @@ body {
         align-items: initial;
     }
 
-    .custom_hamburger_inside_mid {
-        padding-left: 50px;
-    }
-
     .custom_shoe_balls_wrapper {
         flex-direction: column;
     }
@@ -990,6 +1378,13 @@ body {
 
     .custom_shoe_expander {
         display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .custom_compare_attribute_middle_section {
+        padding: 0px;
+        margin: 5px 0;
     }
 }
 
@@ -1008,7 +1403,7 @@ body {
         left: 40px;
     }
     .wrapper .row {
-        margin: 30px 0 3px 60px;
+        margin: 30px 0 3px 0px;
     }
     .wrapper .row section {
         width: 100%;
@@ -1019,4 +1414,35 @@ body {
     .row-1 section .icon {
         left: -60px;
     }
+}
+
+/* Shopify's images made using the admin UI needs to be readjusted to make images fit on pages so this class.
+   Adding this tag to an image on the code section of the text editor will make it fit correctly. */
+.img-page {
+    width: 100%;
+    height: auto;
+}
+
+/* Allows the images of blogs added in the blog page to fit better. */
+.img-blog-preview {
+    width: 100%; 
+    height: auto; 
+    max-height: 350px;
+}
+
+.pl1-publisher {
+    padding-left: 2rem;
+}
+
+/* Keep this if you want bold writings when vendor name and price are shown on a product's page, otherwise disable it for a lighter look */
+.shoe_product_heavy_text {
+    font-weight: 900;
+    margin: 0px;
+}
+
+/* This is connected with shoes_product_heavy_text, applying only to the product's name to give the desired effect. */
+.shoe_product_light_text {
+    color: var(--text-color);
+    margin-top: 3px;
+    margin-bottom: 3px;
 }

@@ -9,10 +9,10 @@ def get_keys():
         return (SHOPIFY_API_KEY,
                 SHOPIFY_API_PASSWORD,
                 REPAIREL_API_KEY,
-                REPAIREL_API_KEY
+                REPAIREL_API_PASSWORD
                 )
         
-    except:
+    except ImportError:
         #alternative for AWS production server
         import os
         SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
@@ -23,5 +23,5 @@ def get_keys():
         return (SHOPIFY_API_KEY,
                 SHOPIFY_API_PASSWORD,
                 REPAIREL_API_KEY,
-                REPAIREL_API_KEY
+                REPAIREL_API_PASSWORD
                 )

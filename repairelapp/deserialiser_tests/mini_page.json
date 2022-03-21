@@ -1,0 +1,17 @@
+{
+  "pages": [
+    {
+      "id": 100153327847,
+      "title": "Team",
+      "shop_id": 61332422887,
+      "handle": "team",
+      "body_html": "Meet the REPAIREL team!",
+      "author": null,
+      "created_at": "2022-03-18T16:25:44+00:00",
+      "updated_at": "2022-03-18T16:25:44+00:00",
+      "published_at": "2022-03-18T16:25:44+00:00",
+      "template_suffix": "",
+      "admin_graphql_api_id": "gid://shopify/OnlineStorePage/100153327847"
+    }
+  ]
+}
