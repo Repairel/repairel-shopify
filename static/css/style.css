@@ -7,7 +7,7 @@
     --header-personal-size: 30px;
     --text-color: rgb(90, 90, 90);
     --primary-color: rgb(219, 246, 81);
-    --secondary-color: rgb(235, 65, 101);
+    --secondary-color: rgb(253, 14, 66);
     --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -436,7 +436,8 @@ body {
 
 .custom_index_shoe_wrapper {
     padding: 30px;
-    padding-top: 70px;
+    /* Disabling padding-top makes the shoes lay out more nicely on the grid by removing the space between the buttons and the first shoe item*/
+    /* padding-top: 70px; */
     padding-bottom: 150px;
     display: grid;
     gap: 20px;
@@ -470,6 +471,8 @@ body {
 
 .custom_index_shoe > :first-child {
     overflow: hidden;
+    /* Slight tweak makes the shoes display more nicely */
+    margin: 2rem; 
 }
 
 .custom_engage_button {
@@ -506,6 +509,10 @@ body {
 
 .custom_scoring_balls_red * {
     background-color: rgb(255, 117, 112);
+}
+
+.custom_scoring_balls_grey * {
+    background-color: rgb(128, 128, 128);
 }
 
 .custom_criteria_entry {
@@ -778,6 +785,10 @@ body {
     font-weight: bold;
     border: solid 2px black;
     max-width: 600px;
+    font-family: 'montserrat-extrabold-italic', sans-serif;
+    font-style: italic;
+    font-weight: 850px;
+    
 }
 
 .custom_splitter_entry:hover h1 {
@@ -1392,7 +1403,7 @@ body {
         left: 40px;
     }
     .wrapper .row {
-        margin: 30px 0 3px 60px;
+        margin: 30px 0 3px 0px;
     }
     .wrapper .row section {
         width: 100%;
@@ -1403,4 +1414,35 @@ body {
     .row-1 section .icon {
         left: -60px;
     }
+}
+
+/* Shopify's images made using the admin UI needs to be readjusted to make images fit on pages so this class.
+   Adding this tag to an image on the code section of the text editor will make it fit correctly. */
+.img-page {
+    width: 100%;
+    height: auto;
+}
+
+/* Allows the images of blogs added in the blog page to fit better. */
+.img-blog-preview {
+    width: 100%; 
+    height: auto; 
+    max-height: 350px;
+}
+
+.pl1-publisher {
+    padding-left: 2rem;
+}
+
+/* Keep this if you want bold writings when vendor name and price are shown on a product's page, otherwise disable it for a lighter look */
+.shoe_product_heavy_text {
+    font-weight: 900;
+    margin: 0px;
+}
+
+/* This is connected with shoes_product_heavy_text, applying only to the product's name to give the desired effect. */
+.shoe_product_light_text {
+    color: var(--text-color);
+    margin-top: 3px;
+    margin-bottom: 3px;
 }

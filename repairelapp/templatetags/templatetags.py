@@ -20,12 +20,15 @@ def times(number):
 def shoe_decide_ball_color(number):
     number = int(number)
     base = "custom_scoring_balls_"
-    if(number < 3):
+    if number == -1:
+        return base + "grey"
+    elif(number < 3):
         return base + "red"
     elif(number == 3):
         return base + "orange"
     else:
         return base + "green"
+    
 
 @register.simple_tag
 def product_get_sizes(product):

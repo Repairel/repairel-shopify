@@ -5,30 +5,10 @@ import requests
 import json
 import shopify as shopify_lib
 
-
-SHOPIFY_API_KEY = None
-SHOPIFY_API_PASSWORD = None
-REPAIREL_API_KEY = None
-REPAIREL_API_PASSWORD = None
-try:
-    from repairelapp import keys
-    SHOPIFY_API_KEY = keys.API_KEY
-    SHOPIFY_API_PASSWORD = keys.PASSWORD
-    REPAIREL_API_KEY = keys.REPAIREL_API_KEY
-    REPAIREL_API_PASSWORD = keys.REPAIREL_API_PASSWORD
-
-except ImportError: #pragma: no cover
-    #alternative for AWS production server
-    import os
-    SHOPIFY_API_KEY = os.environ.get('SHOPIFY_API_KEY')
-    SHOPIFY_API_PASSWORD = os.environ.get('SHOPIFY_API_PASSWORD')
-    REPAIREL_API_KEY = os.environ.get('REPAIREL_API_KEY')
-    REPAIREL_API_PASSWORD = os.environ.get('REPAIREL_API_PASSWORD')
+from repairelapp.access_keys import get_keys
+SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_PASSWORD = get_keys()
 
 shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
-
-
-
 
 class Variant:
     def __init__(self, id, title, price, option1, option2, option3):
@@ -47,7 +27,6 @@ class Option:
         self.values = values
 
 class ShopifyProduct:
-    
     def __init__(self, id, name, description, thumbnail, images, price, tags, product_type, vendor, exact_sizes, colors, condition, gender, group, material, options, variants, shoe_or_other, compare_price, extra_info=None):
         self.id = id
         self.name = name
@@ -101,7 +80,8 @@ class BlogPost:
         self.image = image
 
 class Page:
-    def __init__(self, title, body):
+    def __init__(self, id, title, body):
+        self.id = id
         self.title = title
         self.body = body
 
@@ -110,8 +90,41 @@ class Cart:
         self.products = products
 
 
+class Customer:
+    def __init__(self, id, email, accepts_marketing):
+        self.id = id
+        self.email = email
+        self.accepts_marketing = accepts_marketing
+        
+def _shopify_construct_customer(customer):
+    return Customer(
+        id = customer['id'],
+        email = customer['email'],
+        accepts_marketing = customer['accepts_marketing']
+    )
+    
+def all_customers():
+    """
+    Function to get all customers from the Shopify backend
+    :return: An array of customer classes
+    """
+
+    r = requests.get(shopify_api + "customers.json")
+    customers = r.json()['customers']
+    customer_list = []
+
+    for customer in customers:
+        customer_list.append(_shopify_construct_customer(customer))
+
+    return customer_list
+
+
 def _shopify_construct_page(page):
-    return Page(page['title'], page['body_html'])
+    return Page(
+        id = page['id'], 
+        title = page['title'], 
+        body = page['body_html']
+        )
         
 def _shopify_construct_article(article):
     """
@@ -120,8 +133,9 @@ def _shopify_construct_article(article):
     """
 
     published = article['published_at']
+    # Time not used as it's too exact. If wanted, simply include it in the date string.
     y, m, d, t = published[:4], published[5:7], published[8:10], published[11:16]
-    date = str(f'Published: {d}/{m}/{y} {t}')
+    date = str(f'Published: {d}/{m}/{y}')
 
     try:
         excerpt = article["summary_html"]
@@ -134,7 +148,13 @@ def _shopify_construct_article(article):
     except KeyError:
         image = False
 
-    return BlogPost(article['title'], date, article['body_html'], excerpt, image)
+    return BlogPost(
+        title = article['title'], 
+        date = date, 
+        body = article['body_html'], 
+        excerpt = excerpt, 
+        image = image
+        )
 
 def all_articles():
     """
@@ -176,7 +196,7 @@ def _shopify_construct_product(shopify_product):
     try:
         colors = shopify_product["options"][1]["values"]
     except IndexError:
-        print("No colours option have been assigned to the shoe item.")
+        print(f"No colour options have been assigned to the shoe item {shopify_product['title']}.")
     price = min([var["price"] for var in shopify_product["variants"]])
     try:
         (condition, gender, group, material, shoe_or_other) = extract_tag(shopify_product["tags"])
@@ -376,7 +396,6 @@ def get_cart(request):
     return json.loads(request.session.get('cart', '[]'))
 
 def extract_tag(string):
-    # print(string)
     tag = string.replace(" ", "").split(',')
     condition = None
     gender = None
@@ -420,9 +439,3 @@ def extract_tag(string):
             shoe_or_other = "Other"
             
     return (condition, gender, group, material, shoe_or_other)
-
-def newsletter_signup(email):
-    customer = shopify_lib.Customer()
-    customer.accepts_marketing = True
-    customer.email = email
-    customer.save()
