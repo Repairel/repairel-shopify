@@ -31,7 +31,7 @@
                     <div><span class="shoe_product_heavy_text">{{i.vendor}}</span></div>
                     <div><span class="shoe_product_light_text">{{i.name}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{size_limit}}</span></div>
                     {% if i.compare_price %}
-                        <div><span class="custom_index_shoe_price">Was: <s>£</s><s>{{i.compare_price}}</s> | Now: £{{i.price}}</span></div>
+                        <div><span class="custom_index_shoe_price">Was: <s>£{{i.compare_price}}</s> | Now: £{{i.price}}</span></div>
                     {% else %}
                         <div><span class="custom_index_shoe_price">£{{i.price}}</span></div>
                     {% endif %}
