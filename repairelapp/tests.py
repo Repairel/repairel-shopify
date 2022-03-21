@@ -1,4 +1,3 @@
-from re import S
 from django.urls import (resolve,
                          reverse,
                         )
