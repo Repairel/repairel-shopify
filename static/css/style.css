@@ -296,6 +296,7 @@ body {
 
 .custom_hamburger_active > :nth-child(2) {
     opacity: 0;
+    transform-origin: top left;
 }
 
 .custom_hamburger_active > :nth-child(1) {
@@ -304,6 +305,7 @@ body {
 
 .custom_hamburger_active > :nth-child(3) {
     transform: rotate(-45deg);
+    transform-origin: bottom left;
 }
 
 .custom_header_buttons * {
@@ -584,6 +586,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    padding-left: 0;
 }
 
 .custom_shoe_eas_link {
@@ -614,6 +617,7 @@ body {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 2px;
 }
 
 .custom_shoe_balls_description {
@@ -782,9 +786,10 @@ body {
     transform: translateX(-50%);
     background: var(--primary-color);
     background: linear-gradient(
-        to right,
+        15deg,
         var(--primary-color),
-        var(--secondary-color)
+        rgb(221,230,70) 20%,
+        rgb(250,83,107) 80%
     );
     padding: 20px 0;
     width: 80%;

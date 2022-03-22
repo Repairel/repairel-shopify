@@ -116,7 +116,7 @@ function compute_filter() {
 function toggle_filter(filter_button) {
     var filter_options = {
         Price: ["High to Low", "Low to High"],
-        Size: ["All Sizes", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "11", "12", "13", "14"],
+        Size: ["All Sizes", "Kids", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "11", "12", "13", "14"],
         Condition: ["All Conditions", "New", "Refurbished"],
         Brand: ["All Brands", "Birdsong", "Dr Martens", "Will's Vegan Shoes"],
         Material: ["All Materials", "Leather", "Suede", "Textile", "Synthetic", "Vegan (Synthetic)"],

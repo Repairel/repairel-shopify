@@ -45,25 +45,38 @@ def array_to_string(array):
     return ""
 
 @register.simple_tag
-def sizes_to_limit_string(array):
-    if array:
-        if len(array) == 1:
-            return array[0]
-        #convert each element to float
-        try:
-            array = [float(x) for x in array]
-        except:
-            return ""
-        maximum = max(array)
-        minimum = min(array)
-        
-        def get_rid_of_zero(x):
-            if x % 1 == 0:
-                return int(x)
+def sizes_to_limit_string(value):
+    if value:
+        if type(value) is list or type(value) is tuple:
+            if len(value) == 1:
+                return value[0]
+            elif len(value) > 1:
+                values = []
+                non_values = []
+                for a in value:
+                    try:
+                        values.append(float(a))
+                    except:
+                        non_values.append(a)
+                if len(values) > 0:
+                    maximum = max(values)
+                    minimum = min(values)
+                    def get_rid_of_zero(x):
+                        if x % 1 == 0:
+                            return int(x)
+                        else:
+                            return x
+                    
+                    comma = " "
+                    if len(non_values) > 0:
+                        comma = ", "
+                    return f"{get_rid_of_zero(minimum)}-{get_rid_of_zero(maximum)}{comma}{', '.join(non_values)}"
+                else:
+                    return ", ".join(non_values)
             else:
-                return x
-
-        return f"{get_rid_of_zero(minimum)}-{get_rid_of_zero(maximum)}"
+                return ""
+        else:
+            return value
     return ""
 
 @register.simple_tag

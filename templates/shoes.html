@@ -26,7 +26,7 @@
         {%sizes_to_limit_string raw_sizes as size_limit%}
         <a href="{%url 'repairelapp:shoe' i.id%}" class="shoe_wrapper" data-id="{{i.id}}" data-price="{{i.price}}" data-size="{{sizes}}" data-condition="{{i.condition}}" data-brand="{{i.vendor}}" data-material="{{i.material}}" data-product_type="{{i.product_type}}" data-color="{{i.colors}}">
             <div class="custom_index_shoe">
-                <div><img loading="lazy" src="{{i.thumbnail}}"></div>
+                <div class="shoe_image"><img loading="lazy" src="{{i.thumbnail}}"></div>
                 <div>
                     <div><span class="shoe_product_heavy_text">{{i.vendor}}</span></div>
                     <div><span class="shoe_product_light_text">{{i.name}}</span><span class="custom_index_shoe_faded"> / </span><span class="custom_index_shoe_faded">size: {{size_limit}}</span></div>
