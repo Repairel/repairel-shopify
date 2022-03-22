@@ -8,7 +8,9 @@ import shopify as shopify_lib
 from repairelapp.access_keys import get_keys
 SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_PASSWORD = get_keys()
 
-shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+# Previous
+# shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+shopify_api = 'https://%s:%s@repairel-clone.myshopify.com/admin/api/2022-01/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
 class Variant:
     def __init__(self, id, title, price, option1, option2, option3):

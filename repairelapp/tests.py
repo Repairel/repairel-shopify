@@ -32,7 +32,10 @@ import shopify, requests, time, datetime
 from repairelapp.access_keys import get_keys
 SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_PASSWORD = get_keys()
 
-shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+# Temporarily (seemingly) using the new API.
+# shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+
+shopify_api = 'https://%s:%s@repairel-clone.myshopify.com/admin/api/2022-01/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
 client=Client()
 
@@ -45,7 +48,10 @@ def create_shoe(title, days):
     return ShoeItem.objects.create(title=title, created=time)
 
 def connect():
-    shop_url = "repairel-dev.myshopify.com"
+    # Client accidentally transferred the Shopify store, commenting the old link out for now.
+    # shop_url = "repairel-dev.myshopify.com"
+    # This is the current one.
+    shop_url = "https://repairel-clone.myshopify.com/"
     api_version = '2020-10'
     session = shopify.Session(shop_url, api_version, SHOPIFY_API_PASSWORD)
     shopify.ShopifyResource.activate_session(session)
