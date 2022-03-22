@@ -1,6 +1,8 @@
 {%extends "base.html"%}
 {%block page%}
+    {% if article_image %}
     <img src={{ article.image }}>
+    {% endif %}
     <h2>{{article.title}}</h2>
     {% autoescape off %}
     <div>
