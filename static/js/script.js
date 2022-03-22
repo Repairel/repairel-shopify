@@ -579,20 +579,22 @@ function open_compare(first_checkbox, second_checkbox) {
 }
 
 function check_if_open_compare() {
-    var all_check_boxes = document.querySelectorAll(".compare_checkbox")
-    //find how many are checked and get the checked checkboxes
-    var checked_check_boxes = []
-    for(var i = 0; i < all_check_boxes.length; i++) {
-        if(all_check_boxes[i].checked) {
-            checked_check_boxes.push(all_check_boxes[i])
+    setTimeout(()=>{
+        var all_check_boxes = document.querySelectorAll(".compare_checkbox")
+        //find how many are checked and get the checked checkboxes
+        var checked_check_boxes = []
+        for(var i = 0; i < all_check_boxes.length; i++) {
+            if(all_check_boxes[i].checked) {
+                checked_check_boxes.push(all_check_boxes[i])
+            }
         }
-    }
-    if(checked_check_boxes.length >= 2) {
-        open_compare(checked_check_boxes[0], checked_check_boxes[1])
-        for(var i = 0; i < checked_check_boxes.length; i++) {
-            all_check_boxes[i].checked = false
+        if(checked_check_boxes.length >= 2) {
+            open_compare(checked_check_boxes[0], checked_check_boxes[1])
+            for(var i = 0; i < checked_check_boxes.length; i++) {
+                checked_check_boxes[i].checked = false
+            }
         }
-    }
+    }, 100)
 }
 
 function toggle_compare() {
@@ -613,9 +615,15 @@ function toggle_compare() {
             toggle_input.classList = "compare_checkbox"
             toggle_input.dataset.id = shoe_wrappers[i].dataset.id
             toggle_input.type = "checkbox"
-            toggle_input.addEventListener("input", function() {
+            toggle_input.addEventListener("click", function(event) {
                 check_if_open_compare()
-            })
+                event.preventDefault()
+
+                setTimeout(function() {
+                    this.checked = !this.checked
+                }.bind(this), 0)
+                return false
+            }.bind(toggle_input))
             compare_shoe_button.appendChild(toggle_input)
 
             var compare_shoe_button_label = document.createElement("label")

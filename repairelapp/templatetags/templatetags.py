@@ -56,7 +56,14 @@ def sizes_to_limit_string(array):
             return ""
         maximum = max(array)
         minimum = min(array)
-        return f"{minimum}-{maximum}"
+        
+        def get_rid_of_zero(x):
+            if x % 1 == 0:
+                return int(x)
+            else:
+                return x
+
+        return f"{get_rid_of_zero(minimum)}-{get_rid_of_zero(maximum)}"
     return ""
 
 @register.simple_tag

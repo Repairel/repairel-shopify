@@ -210,6 +210,11 @@ body {
     width: 300px;
 }
 
+.custom_newsletter_form p {
+    text-align: left;
+    font-size: 0.7em;
+}
+
 .custom_newsletter_form * {
     display: inline-block;
     width: 100%;
@@ -244,6 +249,7 @@ body {
 
 .custom_footer_inner {
     display: flex;
+    margin-bottom: 70px;
 }
 
 .custom_header {
@@ -324,6 +330,7 @@ body {
     --logo-size: 150px;
     position: absolute;
     width: 100%;
+    min-width: 450px;
     height: 100%;
     top: 0;
     left: 0;
@@ -370,6 +377,7 @@ body {
 .custom_hamburger_inside_mid_black {
     background-color: black;
     padding: 10px 0;
+    padding-bottom: 50px;
 }
 
 .custom_hamburger_inside_mid_black * {
@@ -411,7 +419,7 @@ body {
     display: inline-block;
     margin: 0 50px;
     cursor: pointer;
-    width: 180px;
+    width: 500px;
 }
 
 .custom_index_shoe {
@@ -472,7 +480,7 @@ body {
 .custom_index_shoe > :first-child {
     overflow: hidden;
     /* Slight tweak makes the shoes display more nicely */
-    margin: 2rem; 
+    margin: 2rem;
 }
 
 .custom_engage_button {
@@ -1031,7 +1039,7 @@ body {
 .custom_compare_popup {
     width: 100%;
     min-height: 400px;
-    max-height: 85%;
+    max-height: 85vh;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
@@ -1319,6 +1327,22 @@ body {
     font-weight: bold;
 }
 
+.custom_hamburger_inside h3 {
+    margin: 10px 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .custom_index_tools > * > * {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .custom_index_tools > * > * {
+        width: 220px;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .custom_body_wrapper {
         padding-left: 10px;
@@ -1339,6 +1363,11 @@ body {
         margin-left: initial;
         margin-bottom: 50px;
     }
+
+    .custom_index_shoe > :first-child {
+        margin: 0;
+    }
+    
 }
 
 @media screen and (max-width: 700px) {
@@ -1379,6 +1408,11 @@ body {
     .custom_shoe_expander {
         display: block;
     }
+
+    .custom_index_tools > * > * {
+        width: 180px;
+    }
+    
 }
 
 @media (max-width: 500px) {
