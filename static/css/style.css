@@ -1469,6 +1469,7 @@ body {
     max-height: 350px;
 }
 
+/* Adds a bit of left padding */
 .pl1-publisher {
     padding-left: 2rem;
 }
