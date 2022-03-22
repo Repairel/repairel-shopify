@@ -13,11 +13,11 @@ from repairelapp.shopify import *
 from repairelapp.access_keys import get_keys
 SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD, REPAIREL_API_KEY, REPAIREL_API_PASSWORD = get_keys()
 
-shopify_api = 'https://%s:%s@repairel-dev.myshopify.com/admin/api/2021-10/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
+shopify_api = 'https://%s:%s@repairel-clone.myshopify.com/admin/api/2022-01/' % (SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
 
 def connect():
-    shop_url = "repairel-dev.myshopify.com"
-    api_version = '2020-10'
+    shop_url = "repairel-clone.myshopify.com"
+    api_version = '2022-01'
     session = shopify.Session(shop_url, api_version, SHOPIFY_API_PASSWORD)
     shopify.ShopifyResource.activate_session(session)
     
